@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'Pally';
+    src: local('Pally-Bold'), url('/fonts/Pally/Pally-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Supreme';
+    src: local('Supreme-Regular'), url('/fonts/Supreme/Supreme-Regular.ttf') format('truetype');
+}
+
+body {
+    font-family: 'Supreme', sans-serif !important;
+}
+
+.pally {
+    font-family: 'Pally', sans-serif !important;
+}
