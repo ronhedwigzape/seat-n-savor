@@ -29,32 +29,36 @@
             </v-card-title>
             <v-card-text>
                 <v-container>
-                    <v-row>
-                        <v-col cols="12">
-                            <v-text-field
-                                label="Username"
-                                variant="outlined"
-                                v-model="username"
-                                prepend-inner-icon="mdi-account"
-                                :rules="[rules.required]"
-                                required
-                                autofocus
-                            ></v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                            <v-text-field
-                                label="Password"
-                                variant="outlined"
-                                v-model="password"
-                                prepend-inner-icon="mdi-lock"
-                                :append-inner-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                                :type="show ? 'text' : 'password'"
-                                :rules="[rules.required]"
-                                @click:append-inner="show = !show"
-                                required
-                            ></v-text-field>
-                        </v-col>
-                    </v-row>
+                    <v-form
+                        @submit.prevent="handleSubmit"
+                    >
+                        <v-row>
+                            <v-col cols="12">
+                                <v-text-field
+                                    label="Username"
+                                    variant="outlined"
+                                    v-model="username"
+                                    prepend-inner-icon="mdi-account"
+                                    :rules="[rules.required]"
+                                    required
+                                    autofocus
+                                ></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-text-field
+                                    label="Password"
+                                    variant="outlined"
+                                    v-model="password"
+                                    prepend-inner-icon="mdi-lock"
+                                    :append-inner-icon="isPasswordShown ? 'mdi-eye' : 'mdi-eye-off'"
+                                    :type="isPasswordShown ? 'text' : 'password'"
+                                    :rules="[rules.required]"
+                                    @click:append-inner="isPasswordShown = !isPasswordShown"
+                                    required
+                                ></v-text-field>
+                            </v-col>
+                        </v-row>
+                    </v-form>
                 </v-container>
             </v-card-text>
             <v-card-actions>
@@ -77,17 +81,60 @@
 <script setup>
 
 import {reactive, ref} from "vue";
+import {useStore} from "@/stores";
+import {useAuthStore} from "@/stores/store-auth";
+import {useRouter} from "vue-router";
 
 // data
 const dialog = ref(false);
+const isPasswordShown = ref(false);
+const loading = ref(false);
 const username = ref('');
 const password = ref('');
-const show = ref(false);
+
+// store
+const store = useStore();
+const authStore = useAuthStore();
+
+// router
+const router = useRouter();
 
 const rules = reactive({
    required: value => !!value || 'Required.',
 });
 
+const handleSubmit = async () => {
+    loading.value = true;
+    await $.ajax({
+        url: `${store.appURL}/index.php`,
+        type: 'POST',
+        xhrFields: {
+            withCredentials: true
+        },
+        data: {
+            username: username.value,
+            password: password.value,
+        },
+        success: (data) => {
+            if(loading.value) {
+                setTimeout(() => {
+                    loading.value = false;
+                }, 1000);
+            }
+            data = JSON.parse(data);
+            authStore.setUser(data.user);
+            router.replace({name: data.user.userType});
+        },
+        error: (error) => {
+            if(loading.value) {
+                setTimeout(() => {
+                    loading.value = false;
+                    alert(`ERROR ${error.status}: ${error.statusText}`);
+                }, 500);
+            }
+        },
+    });
+}
 
 // methods
 
