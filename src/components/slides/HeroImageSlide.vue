@@ -5,30 +5,31 @@
                 <img :src="`/img/${image.file}`" :alt="image.name">
             </li>
         </ul>
-        <v-row class="heading">
+        <v-row class="heading heading-top">
             <v-col>
-                <h2 class="text-h1 pally text-shades-white">{{ store.app.title }}</h2>
+                <h2 class="text-h1 pally text-shades-white appName">{{ store.app.title }}</h2>
+                <v-card
+                    class="mx-auto searchBar searchBar-top"
+                    color="grey-lighten-3"
+                    max-height="300"
+                    max-width="400"
+                >
+                    <v-card-text>
+                        <v-text-field
+                            :loading="loading"
+                            density="comfortable"
+                            variant="solo"
+                            label="Search restaurants, tables.."
+                            append-inner-icon="mdi-magnify"
+                            single-line
+                            hide-details
+                            @click:append-inner="onClick"
+                        ></v-text-field>
+                    </v-card-text>
+                </v-card>
             </v-col>
         </v-row>
-        <v-card
-            class="mx-auto searchBar"
-            color="grey-lighten-3"
-            max-height="300"
-            max-width="400"
-        >
-            <v-card-text>
-                <v-text-field
-                    :loading="loading"
-                    density="comfortable"
-                    variant="solo"
-                    label="Search restaurants, tables.."
-                    append-inner-icon="mdi-magnify"
-                    single-line
-                    hide-details
-                    @click:append-inner="onClick"
-                ></v-text-field>
-            </v-card-text>
-        </v-card>
+
     </div>
 </template>
 <script setup>
@@ -98,7 +99,7 @@ onMounted(() => {
     overflow: hidden;
     width: 100%;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
     background-size: cover;
 }
 
@@ -109,6 +110,7 @@ onMounted(() => {
     width: 100%;
     left: 0;
     top: 0;
+    margin: 0 auto;
 }
 
 .rslides li:first-child {
@@ -123,22 +125,81 @@ onMounted(() => {
     float: left;
     width: 100%;
     border: 0;
+    margin: 0 auto;
 }
 
 .searchBar {
     position: absolute;
-    top: 40%;
-    left: 25%;
-    right: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 5;
     width: 100%;
 }
 
 .heading {
     position: absolute;
-    top: 15%;
-    left: 37%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 5;
+}
+
+.appName {
     text-shadow: black 4px 4px 6px;
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .appName {
+        font-size: 4rem !important;
+    }
+    .heading-top {
+        top: 50%;
+    }
+    .searchBar-top {
+        top: 130%;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, between 600px and 768px) */
+@media only screen and (min-width: 600px) and (max-width: 768px) {
+    .appName {
+        font-size: 5rem !important;
+    }
+    .heading-top {
+        top: 45%;
+    }
+    .searchBar-top {
+        top: 150%;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .heading-top {
+        top: 40%;
+    }
+    .searchBar-top {
+        top: 160%;
+    }
+}
+
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .heading-top {
+        top: 35%;
+    }
+    .searchBar-top {
+        top: 170%;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .heading-top {
+        top: 30%;
+    }
+    .searchBar-top {
+        top: 180%;
+    }
 }
 </style>

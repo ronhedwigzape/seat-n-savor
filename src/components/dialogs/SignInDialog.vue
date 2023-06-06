@@ -34,14 +34,24 @@
                             <v-text-field
                                 label="Username"
                                 variant="outlined"
+                                v-model="username"
+                                prepend-inner-icon="mdi-account"
+                                :rules="[rules.required]"
                                 required
+                                autofocus
                             ></v-text-field>
                         </v-col>
                         <v-col cols="12">
                             <v-text-field
                                 label="Password"
-                                variant="outlined"
                                 type="password"
+                                variant="outlined"
+                                v-model="password"
+                                prepend-inner-icon="mdi-lock"
+                                :append-inner-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="show1 ? 'text' : 'password'"
+                                :rules="[rules.required]"
+                                @click:appendInner="show1 = !show1"
                                 required
                             ></v-text-field>
                         </v-col>
@@ -67,9 +77,19 @@
 
 <script setup>
 
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 
+// data
 const dialog = ref(false);
+const username = ref('');
+const password = ref('');
+const show1 = ref(false);
+const rules = reactive({
+   required: value => !!value || 'Required.',
+});
+
+
+// methods
 
 </script>
 
