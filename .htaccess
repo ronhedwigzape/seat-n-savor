@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteBase /seatsavor/
+RewriteBase /seat.n.savor/
 
 # Exclude assets from rewrite rule
 RewriteCond %{REQUEST_URI} !\.(css|js|svg|jpg|jpeg|png|gif|woff2|ico|ttf)$ [NC]
@@ -7,10 +7,10 @@ RewriteCond %{REQUEST_URI} !\.(css|js|svg|jpg|jpeg|png|gif|woff2|ico|ttf)$ [NC]
 # Redirect all requests to index.html
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /seatsavor/public/index.html [L]
+RewriteRule ^(.*)$ /seat.n.savor/public/index.html [L]
 
 # Exclude the public and app directories from the rewrite rule
-RewriteCond %{REQUEST_URI} !^/seatsavor/public/
-RewriteCond %{REQUEST_URI} !^/seatsavor/app/
-RewriteRule ^(.*)$ /seatsavor/public/$1 [L]
+RewriteCond %{REQUEST_URI} !^/seat.n.savor/public/
+RewriteCond %{REQUEST_URI} !^/seat.n.savor/app/
+RewriteRule ^(.*)$ /seat.n.savor/public/$1 [L]
 

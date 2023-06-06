@@ -6,7 +6,7 @@ export const useStore = defineStore('store', {
         return {
             app: {
                 backendDir: 'app',
-                title: 'SeatSavor',
+                title: 'Seat.n.Savor',
                 brand: 'SS'
             }
         }
