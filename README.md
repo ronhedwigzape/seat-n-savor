@@ -1,6 +1,6 @@
 # seat.n.savor
 
-This template should help get you started developing with Vue 3 in Vite.
+A restaurant booking web app
 
 ## Recommended IDE Setup
 
