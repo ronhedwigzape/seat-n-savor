@@ -44,14 +44,13 @@
                         <v-col cols="12">
                             <v-text-field
                                 label="Password"
-                                type="password"
                                 variant="outlined"
                                 v-model="password"
                                 prepend-inner-icon="mdi-lock"
-                                :append-inner-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                                :type="show1 ? 'text' : 'password'"
+                                :append-inner-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="show ? 'text' : 'password'"
                                 :rules="[rules.required]"
-                                @click:appendInner="show1 = !show1"
+                                @click:append-inner="show = !show"
                                 required
                             ></v-text-field>
                         </v-col>
@@ -83,7 +82,8 @@ import {reactive, ref} from "vue";
 const dialog = ref(false);
 const username = ref('');
 const password = ref('');
-const show1 = ref(false);
+const show = ref(false);
+
 const rules = reactive({
    required: value => !!value || 'Required.',
 });
