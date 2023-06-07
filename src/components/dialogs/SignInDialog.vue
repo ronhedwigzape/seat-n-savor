@@ -41,7 +41,6 @@
                                     prepend-inner-icon="mdi-account"
                                     :rules="[rules.required]"
                                     required
-                                    autofocus
                                 ></v-text-field>
                             </v-col>
                             <v-col cols="12">
@@ -58,21 +57,19 @@
                                 ></v-text-field>
                             </v-col>
                         </v-row>
+                        <v-btn
+                            color="blue-darken-1"
+                            variant="tonal"
+                            type="submit"
+                            :loading="loading"
+                            :disabled="loading"
+                            block
+                        >
+                            Login
+                        </v-btn>
                     </v-form>
                 </v-container>
             </v-card-text>
-            <v-card-actions>
-                <v-container>
-                    <v-btn
-                        color="blue-darken-1"
-                        variant="text"
-                        @click="dialog = false"
-                        block
-                    >
-                        Login
-                    </v-btn>
-                </v-container>
-            </v-card-actions>
         </v-card>
         </v-row>
     </v-dialog>

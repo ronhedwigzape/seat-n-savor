@@ -1,8 +1,7 @@
 <script setup>
 
-import TopNavbar from "@/components/navbar/TopNavbar.vue";
 import HeroImageSlide from "@/components/slides/HeroImageSlide.vue";
-
+import TopNavbar from "@/components/navbar/TopNavbar.vue";
 </script>
 
 <template>
