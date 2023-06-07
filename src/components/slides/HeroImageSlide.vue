@@ -8,6 +8,7 @@
         <v-row class="heading heading-top">
             <v-col>
                 <h2 class="text-h1 pally text-shades-white appName">{{ store.app.title }}</h2>
+                <p align="center" class="appName">The fastest restaurant booking in Rinconada</p>
                 <v-card
                     class="mx-auto searchBar searchBar-top "
                     color="grey-lighten-3"
