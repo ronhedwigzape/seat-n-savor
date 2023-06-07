@@ -14,6 +14,7 @@ class User extends App
     protected mixed $name;
     protected mixed $email;
     protected mixed $phone;
+    protected mixed $avatar;
     protected string $userType;
 
     /***************************************************************************
@@ -43,6 +44,7 @@ class User extends App
                 $this->name = $row['name'];
                 $this->email = $row['email'];
                 $this->phone = $row['phone'];
+                $this->avatar = $row['avatar'];
             }
         }
     }
@@ -62,7 +64,8 @@ class User extends App
             'username' => $this->username,
             'email'    => $this->email,
             'phone'    => $this->phone,
-            'userType' => $this->userType,
+            'avatar'   => $this->avatar,
+            'userType' => $this->userType
         ];
 
         // append

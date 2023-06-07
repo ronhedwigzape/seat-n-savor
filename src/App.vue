@@ -8,7 +8,7 @@
                 <span class="circle"></span>
             </div>
         </div>
-        <router-view v-else></router-view>
+        <router-view v-else />
     </v-app>
 </template>
 
@@ -42,11 +42,11 @@ const getUser = async () => {
                     name: data.user.userType
                 });
             }
-            loading.value = false; // Set loading to false after fetching user data
+            loading.value = false;
         },
         error: (error) => {
             alert(`ERROR ${error.status}: ${error.statusText}`);
-            loading.value = false; // Set loading to false even if an error occurs
+            loading.value = false;
 
         },
     });

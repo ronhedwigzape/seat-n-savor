@@ -16,6 +16,17 @@
         <v-app-bar-title class="pally">{{ store.app.brand }}</v-app-bar-title>
 
         <v-spacer />
+
+        <v-chip
+            v-if="authStore.isAuthenticated"
+            pill
+        >
+            <v-avatar start>
+                <v-img :src="`/img/avatars/${authStore.getUser.avatar}`"></v-img>
+            </v-avatar>
+            {{ authStore.getUser.name }}
+        </v-chip>
+
         <template v-if="authStore.isAuthenticated">
             <!--	Sign out	-->
             <v-dialog
@@ -77,7 +88,6 @@
             <SignIn />
             <SignUp />
         </template>
-
 
     </v-app-bar>
 </template>

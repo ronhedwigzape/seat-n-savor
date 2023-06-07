@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2023 at 12:42 PM
+-- Generation Time: Jun 07, 2023 at 01:41 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -31,6 +31,7 @@ CREATE TABLE `admins` (
   `id` tinyint(5) UNSIGNED NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `avatar` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
@@ -42,8 +43,8 @@ CREATE TABLE `admins` (
 -- Dumping data for table `admins`
 --
 
-INSERT INTO `admins` (`id`, `username`, `password`, `name`, `email`, `phone`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin', 'ADMIN', 'admin@email.com', '09123456789', '2023-06-07 07:13:52', '2023-06-07 07:13:52');
+INSERT INTO `admins` (`id`, `username`, `password`, `avatar`, `name`, `email`, `phone`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'admin', 'avatar.png', 'ADMIN', 'admin@email.com', '09123456789', '2023-06-07 07:13:52', '2023-06-07 11:23:50');
 
 -- --------------------------------------------------------
 
@@ -75,6 +76,7 @@ CREATE TABLE `customers` (
   `id` int(255) UNSIGNED NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `avatar` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
@@ -87,10 +89,10 @@ CREATE TABLE `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`id`, `username`, `password`, `name`, `email`, `phone`, `address`, `created_at`, `updated_at`) VALUES
-(1, 'customer1', 'customer1', 'CUSTOMER 01', 'customer1@email.com', '09133678462', 'Iriga City, Camarines Sur', '2023-06-07 07:15:39', '2023-06-07 07:17:42'),
-(2, 'customer2', 'customer2', 'CUSTOMER 02', 'customer2@email.com', '09133648462', 'Nabua, Camarines Sur', '2023-06-07 07:17:28', '2023-06-07 07:17:28'),
-(3, 'customer3', 'customer3', 'CUSTOMER 03', 'customer3@email.com', '09133648463', 'Baao, Camarines Sur', '2023-06-07 07:17:28', '2023-06-07 07:17:28');
+INSERT INTO `customers` (`id`, `username`, `password`, `avatar`, `name`, `email`, `phone`, `address`, `created_at`, `updated_at`) VALUES
+(1, 'customer01', 'customer01', 'avatar.png', 'CUSTOMER 01', 'customer1@email.com', '09133678462', 'Iriga City, Camarines Sur', '2023-06-07 07:15:39', '2023-06-07 11:20:23'),
+(2, 'customer02', 'customer02', 'avatar.png', 'CUSTOMER 02', 'customer2@email.com', '09133648462', 'Nabua, Camarines Sur', '2023-06-07 07:17:28', '2023-06-07 11:20:26'),
+(3, 'customer03', 'customer03', 'avatar03.jpg', 'CUSTOMER 03', 'customer3@email.com', '09133648463', 'Sta. Cruz, Iriga City, Camarines Sur', '2023-06-07 07:17:28', '2023-06-07 11:20:31');
 
 -- --------------------------------------------------------
 
@@ -139,6 +141,7 @@ CREATE TABLE `restaurateurs` (
   `id` int(255) UNSIGNED NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `avatar` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
@@ -152,8 +155,8 @@ CREATE TABLE `restaurateurs` (
 -- Dumping data for table `restaurateurs`
 --
 
-INSERT INTO `restaurateurs` (`id`, `username`, `password`, `name`, `email`, `phone`, `address`, `restaurant_id`, `created_at`, `updated_at`) VALUES
-(1, 'chowkingAdmin', 'chowkingAdmin', 'ROBERT KUAN', 'robertkuan@chowking.com', '092345678765', 'Makati, Philippines', 1, '2023-06-07 10:22:41', '2023-06-07 10:22:41');
+INSERT INTO `restaurateurs` (`id`, `username`, `password`, `avatar`, `name`, `email`, `phone`, `address`, `restaurant_id`, `created_at`, `updated_at`) VALUES
+(1, 'chowkingAdmin', 'chowkingAdmin', 'avatar.png', 'ROBERT KUAN', 'robertkuan@chowking.com', '092345678765', 'Makati, Philippines', 1, '2023-06-07 10:22:41', '2023-06-07 11:24:01');
 
 -- --------------------------------------------------------
 
