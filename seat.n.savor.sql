@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2023 at 01:41 PM
+-- Generation Time: Jun 07, 2023 at 09:05 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -129,7 +129,19 @@ CREATE TABLE `restaurants` (
 --
 
 INSERT INTO `restaurants` (`id`, `name`, `address`, `phone`, `created_at`, `updated_at`) VALUES
-(1, 'Chowking', 'San Roque, Iriga City 4431 Philippines ', '09176282476', '2023-06-07 07:20:20', '2023-06-07 07:20:20');
+(1, 'Chowking - Iriga', 'New, Public Market, City of Iriga, 4431 Camarines Sur', '0917 628 2476', '2023-06-07 07:20:20', '2023-06-07 18:46:40'),
+(2, 'Desny Grill Bar Resto & Cafe', 'Lourdes Hospital Rd, City of Iriga, 4431 Camarines Sur', '(054) 456 1512', '2023-06-07 18:22:37', '2023-06-07 18:37:43'),
+(3, 'Yanyan Frappe Restaurant', 'Buhi, Camarines Sur', '0917 555 4867', '2023-06-07 18:22:37', '2023-06-07 18:44:24'),
+(4, 'Pomodoro - Iriga', 'Nabua - Iriga Rd, City of Iriga, Camarines Sur', '09214452234', '2023-06-07 18:25:06', '2023-06-07 18:37:52'),
+(5, 'Above Sea Level - Iriga', 'City of Iriga, 4431 Camarines Sur', '0917 107 3738', '2023-06-07 18:25:58', '2023-06-07 18:37:57'),
+(6, 'Bigg\'s Diner - Iriga', 'Highway 1, Trinidad Bldg, San Roque, City of Iriga, 4431 Camarines Sur', '(054) 299 1111', '2023-06-07 18:27:20', '2023-06-07 18:46:47'),
+(7, 'Eatlog - Iriga', 'Zone 1, High-way 1, AF Building, San Jose, City of Iriga, 4431', '0921 864 6351', '2023-06-07 18:27:20', '2023-06-07 18:46:58'),
+(8, 'MCM Restaurant', 'Ortega Street, City of Iriga, Camarines Sur', '(054) 299 2303', '2023-06-07 18:30:15', '2023-06-07 18:38:53'),
+(9, 'Highway Grill', 'Zone 7 Nabua - Iriga Rd, Nabua, 4434 Camarines Sur', '(054) 871 5811', '2023-06-07 18:30:15', '2023-06-07 18:30:15'),
+(10, 'Mang Inasal', 'G/F Angena Bldg San Francisco, Nabua', '(02) 8724 1111', '2023-06-07 18:30:56', '2023-06-07 18:30:56'),
+(11, 'Lolo Ding\'s', 'Baao, Camarines Sur', '0999 807 0930', '2023-06-07 18:35:59', '2023-06-07 18:35:59'),
+(12, 'Chef Romeo\'s Kitchen', 'Iriga - Baao Rd, Baao, Camarines Sur', '0915 200 1161', '2023-06-07 18:35:59', '2023-06-07 18:38:04'),
+(13, 'Graziela\'s Resto & Events Hall', 'Baao, Camarines Sur', '0927 464 6206', '2023-06-07 18:37:01', '2023-06-07 18:38:11');
 
 -- --------------------------------------------------------
 
@@ -286,7 +298,7 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `restaurants`
 --
 ALTER TABLE `restaurants`
-  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `restaurateurs`
