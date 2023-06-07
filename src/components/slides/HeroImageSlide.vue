@@ -9,7 +9,7 @@
             <v-col>
                 <h2 class="text-h1 pally text-shades-white appName">{{ store.app.title }}</h2>
                 <v-card
-                    class="mx-auto searchBar searchBar-top"
+                    class="mx-auto searchBar searchBar-top "
                     color="grey-lighten-3"
                     max-height="300"
                     max-width="400"
@@ -29,16 +29,17 @@
                 </v-card>
             </v-col>
         </v-row>
-
     </div>
 </template>
 <script setup>
 import {onMounted, reactive, ref} from "vue";
 import {useStore} from "@/stores";
+import {useAuthStore} from "@/stores/store-auth";
 
 const store = useStore();
 const loaded = ref(false);
 const loading = ref(false);
+
 
 const images = reactive([
     {
@@ -144,7 +145,7 @@ onMounted(() => {
 }
 
 .appName {
-    text-shadow: black 4px 4px 6px;
+    text-shadow: black 6px 6px 7px;
 }
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
@@ -156,6 +157,10 @@ onMounted(() => {
     }
     .searchBar-top {
         top: 130%;
+    }
+    .book {
+        font-size: 1rem !important;
+        top: 50%;
     }
 }
 
@@ -170,6 +175,9 @@ onMounted(() => {
     .searchBar-top {
         top: 150%;
     }
+    .book {
+        font-size: 1.1rem !important;
+    }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -179,6 +187,9 @@ onMounted(() => {
     }
     .searchBar-top {
         top: 160%;
+    }
+    .book {
+        font-size: 1.3rem !important;
     }
 }
 
@@ -191,6 +202,9 @@ onMounted(() => {
     .searchBar-top {
         top: 170%;
     }
+    .book {
+        font-size: 1.3rem !important;
+    }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
@@ -200,6 +214,9 @@ onMounted(() => {
     }
     .searchBar-top {
         top: 180%;
+    }
+    .book {
+        font-size: 1.5rem !important;
     }
 }
 </style>
