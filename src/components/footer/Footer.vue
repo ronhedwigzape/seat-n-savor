@@ -1,3 +1,13 @@
+<script setup>
+import {useStore} from "@/stores";
+import {reactive} from "vue";
+
+const store = useStore();
+
+const leftFooterLinks = reactive([store.app.title, 'About Us', 'FAQ']);
+const rightFooterLinks = reactive(['Support', 'Contact Us', 'Terms of Use']);
+
+</script>
 <template>
     <v-footer class="mt-16">
         <v-row class="d-flex ma-16">
@@ -13,8 +23,8 @@
                     </li>
                 </ul>
             </v-col>
-            <v-col class="d-flex justify-center align-center">
-                <ul class="">
+            <v-col class="d-flex justify-center align-center px-8">
+                <ul>
                     <li class=" text-h2 pally py-5">{{ store.app.title }}</li>
                 </ul>
             </v-col>
@@ -33,18 +43,6 @@
         </v-row>
     </v-footer>
 </template>
-
-<script setup>
-import {useStore} from "@/stores";
-import {reactive} from "vue";
-
-const store = useStore();
-
-const leftFooterLinks = reactive([store.app.title, 'About Us', 'FAQ']);
-const rightFooterLinks = reactive(['Support', 'Contact Us', 'Terms of Use']);
-
-
-</script>
 
 <style scoped>
 li {
