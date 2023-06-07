@@ -85,10 +85,6 @@
                             ></v-text-field>
                         </v-col>
                     </v-row>
-                </v-container>
-            </v-card-text>
-            <v-card-actions>
-                <v-container>
                     <v-btn
                         color="blue-darken-1"
                         variant="text"
@@ -98,7 +94,7 @@
                         Create Account
                     </v-btn>
                 </v-container>
-            </v-card-actions>
+            </v-card-text>
 <!--                <v-card-text>-->
 <!--                    <v-col class="d-flex justify-center align-center" cols="12">-->
 <!--                        <p>Already have an account? Sign in Now!</p>-->

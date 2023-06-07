@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2023 at 02:26 PM
+-- Generation Time: Jun 07, 2023 at 12:42 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -38,6 +38,13 @@ CREATE TABLE `admins` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`id`, `username`, `password`, `name`, `email`, `phone`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'admin', 'ADMIN', 'admin@email.com', '09123456789', '2023-06-07 07:13:52', '2023-06-07 07:13:52');
+
 -- --------------------------------------------------------
 
 --
@@ -49,6 +56,7 @@ CREATE TABLE `bookings` (
   `customer_id` int(255) UNSIGNED NOT NULL,
   `restaurant_id` int(255) UNSIGNED NOT NULL,
   `table_id` int(255) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
   `party_size` smallint(100) UNSIGNED NOT NULL,
@@ -74,6 +82,15 @@ CREATE TABLE `customers` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`id`, `username`, `password`, `name`, `email`, `phone`, `address`, `created_at`, `updated_at`) VALUES
+(1, 'customer1', 'customer1', 'CUSTOMER 01', 'customer1@email.com', '09133678462', 'Iriga City, Camarines Sur', '2023-06-07 07:15:39', '2023-06-07 07:17:42'),
+(2, 'customer2', 'customer2', 'CUSTOMER 02', 'customer2@email.com', '09133648462', 'Nabua, Camarines Sur', '2023-06-07 07:17:28', '2023-06-07 07:17:28'),
+(3, 'customer3', 'customer3', 'CUSTOMER 03', 'customer3@email.com', '09133648463', 'Baao, Camarines Sur', '2023-06-07 07:17:28', '2023-06-07 07:17:28');
 
 -- --------------------------------------------------------
 
@@ -105,6 +122,13 @@ CREATE TABLE `restaurants` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `restaurants`
+--
+
+INSERT INTO `restaurants` (`id`, `name`, `address`, `phone`, `created_at`, `updated_at`) VALUES
+(1, 'Chowking', 'San Roque, Iriga City 4431 Philippines ', '09176282476', '2023-06-07 07:20:20', '2023-06-07 07:20:20');
+
 -- --------------------------------------------------------
 
 --
@@ -124,6 +148,13 @@ CREATE TABLE `restaurateurs` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `restaurateurs`
+--
+
+INSERT INTO `restaurateurs` (`id`, `username`, `password`, `name`, `email`, `phone`, `address`, `restaurant_id`, `created_at`, `updated_at`) VALUES
+(1, 'chowkingAdmin', 'chowkingAdmin', 'ROBERT KUAN', 'robertkuan@chowking.com', '092345678765', 'Makati, Philippines', 1, '2023-06-07 10:22:41', '2023-06-07 10:22:41');
+
 -- --------------------------------------------------------
 
 --
@@ -134,7 +165,7 @@ CREATE TABLE `status` (
   `id` int(255) UNSIGNED NOT NULL,
   `booking_id` int(255) UNSIGNED NOT NULL,
   `cancellation_reason` varchar(255) NOT NULL,
-  `no_show` tinyint(1) NOT NULL DEFAULT 0,
+  `no_show` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -155,6 +186,13 @@ CREATE TABLE `tables` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `tables`
+--
+
+INSERT INTO `tables` (`id`, `table_number`, `capacity`, `description`, `created_at`, `updated_at`) VALUES
+(1, 1, 5, 'This is a table that can seat 5 people.', '2023-06-07 10:25:02', '2023-06-07 10:25:02');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -168,7 +206,10 @@ ALTER TABLE `admins`
 -- Indexes for table `bookings`
 --
 ALTER TABLE `bookings`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer_id` (`customer_id`),
+  ADD KEY `restaurant_id` (`restaurant_id`),
+  ADD KEY `table_id` (`table_id`);
 
 --
 -- Indexes for table `customers`
@@ -180,7 +221,9 @@ ALTER TABLE `customers`
 -- Indexes for table `notifications`
 --
 ALTER TABLE `notifications`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `recipient_id` (`recipient_id`),
+  ADD KEY `sender_id` (`sender_id`);
 
 --
 -- Indexes for table `restaurants`
@@ -192,13 +235,15 @@ ALTER TABLE `restaurants`
 -- Indexes for table `restaurateurs`
 --
 ALTER TABLE `restaurateurs`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `restaurant_id` (`restaurant_id`);
 
 --
 -- Indexes for table `status`
 --
 ALTER TABLE `status`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `booking_id` (`booking_id`);
 
 --
 -- Indexes for table `tables`
@@ -214,7 +259,7 @@ ALTER TABLE `tables`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` tinyint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` tinyint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `bookings`
@@ -226,7 +271,7 @@ ALTER TABLE `bookings`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -238,13 +283,13 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `restaurants`
 --
 ALTER TABLE `restaurants`
-  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `restaurateurs`
 --
 ALTER TABLE `restaurateurs`
-  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `status`
@@ -256,7 +301,38 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT for table `tables`
 --
 ALTER TABLE `tables`
-  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `bookings`
+--
+ALTER TABLE `bookings`
+  ADD CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
+  ADD CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`table_id`) REFERENCES `tables` (`id`),
+  ADD CONSTRAINT `bookings_ibfk_3` FOREIGN KEY (`restaurant_id`) REFERENCES `restaurants` (`id`);
+
+--
+-- Constraints for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`recipient_id`) REFERENCES `customers` (`id`),
+  ADD CONSTRAINT `notifications_ibfk_2` FOREIGN KEY (`sender_id`) REFERENCES `restaurateurs` (`id`);
+
+--
+-- Constraints for table `restaurateurs`
+--
+ALTER TABLE `restaurateurs`
+  ADD CONSTRAINT `restaurateurs_ibfk_1` FOREIGN KEY (`restaurant_id`) REFERENCES `restaurants` (`id`);
+
+--
+-- Constraints for table `status`
+--
+ALTER TABLE `status`
+  ADD CONSTRAINT `status_ibfk_1` FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
