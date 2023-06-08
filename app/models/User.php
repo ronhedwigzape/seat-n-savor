@@ -139,6 +139,7 @@ class User extends App
             session_destroy();
     }
 
+
     /***************************************************************************
      * Set name
      *
@@ -149,6 +150,7 @@ class User extends App
     {
         $this->name = $name;
     }
+
 
     /***************************************************************************
      * Set username
@@ -195,6 +197,7 @@ class User extends App
         return $this->name;
     }
 
+
     /***************************************************************************
      * Get username
      *
@@ -214,6 +217,104 @@ class User extends App
     public function getPassword(): string
     {
         return $this->password;
+    }
+
+
+    /***************************************************************************
+     * Get avatar
+     *
+     * @return mixed
+     */
+    public function getAvatar(): mixed
+    {
+        return $this->avatar;
+    }
+
+
+    /***************************************************************************
+     * Get email
+     *
+     * @return mixed
+     */
+    public function getEmail(): mixed
+    {
+        return $this->email;
+    }
+
+
+    /***************************************************************************
+     * Get phone number
+     *
+     * @return mixed
+     */
+    public function getPhone(): mixed
+    {
+        return $this->phone;
+    }
+
+
+    /***************************************************************************
+     * Get userType
+     *
+     * @return string
+     */
+    public function getUserType(): string
+    {
+        return $this->userType;
+    }
+
+
+    /***************************************************************************
+     * Get table
+     *
+     * @return string
+     */
+    public function getTable(): string
+    {
+        return $this->table;
+    }
+
+
+    /***************************************************************************
+     * Set id
+     *
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /***************************************************************************
+     * Set avatar
+     *
+     * @param mixed $avatar
+     */
+    public function setAvatar(mixed $avatar): void
+    {
+        $this->avatar = $avatar;
+    }
+
+
+    /***************************************************************************
+     * Set phone number
+     *
+     * @param mixed $phone
+     */
+    public function setPhone(mixed $phone): void
+    {
+        $this->phone = $phone;
+    }
+
+
+    /***************************************************************************
+     * Set email
+     *
+     * @param mixed $email
+     */
+    public function setEmail(mixed $email): void
+    {
+        $this->email = $email;
     }
 
 }

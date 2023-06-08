@@ -5,6 +5,7 @@ require_once 'User.php';
 class Restaurateur extends User
 {
 
+    protected string $table_notifications = 'notifications';
 
     /***************************************************************************
      * Restaurateur constructor
@@ -203,6 +204,45 @@ class Restaurateur extends User
         $stmt = $this->conn->prepare("DELETE FROM $this->table WHERE id = ?");
         $stmt->bind_param("i", $this->id);
         $stmt->execute();
+    }
+
+    /***************************************************************************
+     * Notify the customer that the booking has been confirmed
+     *
+     * @param Customer $recipient
+     * @param string $message
+     * @return void
+     */
+    public function notifyCustomer(Customer $recipient, string $message): void
+    {
+
+        // check sender id
+        if(!self::exists($this->id))
+            App::returnError('HTTP/1.1 404', 'Error: restaurateur [id = ' . $this->id . '] does not exist.');
+
+        // check recipient id
+        $recipient_id = $recipient->getId();
+        if (!$recipient_id)
+            App::returnError('HTTP/1.1 404', 'Error: recipient [id = ' . $recipient . '] does not exist.');
+
+        // check message
+        if (!$message)
+            App::returnError('HTTP/1.1 404', 'Error: message does not exist.');
+
+        $stmt = $this->conn->prepare("INSERT INTO $this->table_notifications(sender_id, recipient_id, message) VALUES(?, ?, ?)");
+        $stmt->bind_param("iis", $this->id,  $recipient, $message);
+        $stmt->execute();
+    }
+
+    public function updateBookingStatus($booking, $customer, $status) {
+        require_once 'Booking.php';
+
+
+
+    }
+
+    public function setCustomerVisibility($is_shown) {
+
     }
 
 }

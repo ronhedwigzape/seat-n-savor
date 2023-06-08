@@ -1,7 +1,5 @@
 <?php
 
-use JetBrains\PhpStorm\NoReturn;
-
 date_default_timezone_set('Asia/Manila');
 
 class App
@@ -28,7 +26,7 @@ class App
      * @param $error
      * @return void
      */
-    #[NoReturn] public static function returnError($header, $error): void
+    public static function returnError($header, $error): void
     {
         header($header);
         die(json_encode([
@@ -36,22 +34,4 @@ class App
         ]));
     }
 
-
-    /***************************************************************************
-     * Generate slug
-     *
-     * @param $title
-     * @return string
-     */
-    public static function generateSlug($title): string
-    {
-        // convert the title to lowercase
-        $slug = strtolower($title);
-
-        // replace any non-alphanumeric characters with hyphens
-        $slug = preg_replace('/[^a-zA-Z0-9]+/', '-', $slug);
-
-        // remove any leading or trailing hyphens
-        return trim($slug, '-');
-    }
 }

@@ -2,7 +2,7 @@
     <div class="position-relative">
         <v-carousel
             cycle
-            interval="3000"
+            interval="6000"
             hide-delimiters
             class="carousel-min-height"
             height="600"

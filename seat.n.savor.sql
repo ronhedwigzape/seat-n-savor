@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2023 at 10:46 AM
+-- Generation Time: Jun 09, 2023 at 06:06 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -62,6 +62,8 @@ CREATE TABLE `bookings` (
   `time` time NOT NULL,
   `party_size` smallint(100) UNSIGNED NOT NULL,
   `status` varchar(255) NOT NULL,
+  `cancellation_reason` varchar(255) DEFAULT NULL,
+  `is_shown` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -171,21 +173,6 @@ INSERT INTO `restaurateurs` (`id`, `username`, `password`, `avatar`, `name`, `em
 -- --------------------------------------------------------
 
 --
--- Table structure for table `status`
---
-
-CREATE TABLE `status` (
-  `id` int(255) UNSIGNED NOT NULL,
-  `booking_id` int(255) UNSIGNED NOT NULL,
-  `cancellation_reason` varchar(255) NOT NULL,
-  `no_show` tinyint(1) NOT NULL DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tables`
 --
 
@@ -260,13 +247,6 @@ ALTER TABLE `restaurateurs`
   ADD KEY `restaurant_id` (`restaurant_id`);
 
 --
--- Indexes for table `status`
---
-ALTER TABLE `status`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `booking_id` (`booking_id`);
-
---
 -- Indexes for table `tables`
 --
 ALTER TABLE `tables`
@@ -313,12 +293,6 @@ ALTER TABLE `restaurateurs`
   MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `status`
---
-ALTER TABLE `status`
-  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `tables`
 --
 ALTER TABLE `tables`
@@ -348,12 +322,6 @@ ALTER TABLE `notifications`
 --
 ALTER TABLE `restaurateurs`
   ADD CONSTRAINT `restaurateurs_ibfk_1` FOREIGN KEY (`restaurant_id`) REFERENCES `restaurants` (`id`);
-
---
--- Constraints for table `status`
---
-ALTER TABLE `status`
-  ADD CONSTRAINT `status_ibfk_1` FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

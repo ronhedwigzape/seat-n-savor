@@ -193,14 +193,5 @@ class Customer extends User
         $stmt->execute();
     }
 
-    /***************************************************************************
-     * Get table
-     *
-     * @return string
-     */
-    public function getTable(): string
-    {
-        return $this->table;
-    }
 
 }
