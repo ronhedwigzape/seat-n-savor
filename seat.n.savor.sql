@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2023 at 09:05 PM
+-- Generation Time: Jun 08, 2023 at 10:46 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -119,6 +119,7 @@ CREATE TABLE `restaurants` (
   `id` int(255) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -128,20 +129,17 @@ CREATE TABLE `restaurants` (
 -- Dumping data for table `restaurants`
 --
 
-INSERT INTO `restaurants` (`id`, `name`, `address`, `phone`, `created_at`, `updated_at`) VALUES
-(1, 'Chowking - Iriga', 'New, Public Market, City of Iriga, 4431 Camarines Sur', '0917 628 2476', '2023-06-07 07:20:20', '2023-06-07 18:46:40'),
-(2, 'Desny Grill Bar Resto & Cafe', 'Lourdes Hospital Rd, City of Iriga, 4431 Camarines Sur', '(054) 456 1512', '2023-06-07 18:22:37', '2023-06-07 18:37:43'),
-(3, 'Yanyan Frappe Restaurant', 'Buhi, Camarines Sur', '0917 555 4867', '2023-06-07 18:22:37', '2023-06-07 18:44:24'),
-(4, 'Pomodoro - Iriga', 'Nabua - Iriga Rd, City of Iriga, Camarines Sur', '09214452234', '2023-06-07 18:25:06', '2023-06-07 18:37:52'),
-(5, 'Above Sea Level - Iriga', 'City of Iriga, 4431 Camarines Sur', '0917 107 3738', '2023-06-07 18:25:58', '2023-06-07 18:37:57'),
-(6, 'Bigg\'s Diner - Iriga', 'Highway 1, Trinidad Bldg, San Roque, City of Iriga, 4431 Camarines Sur', '(054) 299 1111', '2023-06-07 18:27:20', '2023-06-07 18:46:47'),
-(7, 'Eatlog - Iriga', 'Zone 1, High-way 1, AF Building, San Jose, City of Iriga, 4431', '0921 864 6351', '2023-06-07 18:27:20', '2023-06-07 18:46:58'),
-(8, 'MCM Restaurant', 'Ortega Street, City of Iriga, Camarines Sur', '(054) 299 2303', '2023-06-07 18:30:15', '2023-06-07 18:38:53'),
-(9, 'Highway Grill', 'Zone 7 Nabua - Iriga Rd, Nabua, 4434 Camarines Sur', '(054) 871 5811', '2023-06-07 18:30:15', '2023-06-07 18:30:15'),
-(10, 'Mang Inasal', 'G/F Angena Bldg San Francisco, Nabua', '(02) 8724 1111', '2023-06-07 18:30:56', '2023-06-07 18:30:56'),
-(11, 'Lolo Ding\'s', 'Baao, Camarines Sur', '0999 807 0930', '2023-06-07 18:35:59', '2023-06-07 18:35:59'),
-(12, 'Chef Romeo\'s Kitchen', 'Iriga - Baao Rd, Baao, Camarines Sur', '0915 200 1161', '2023-06-07 18:35:59', '2023-06-07 18:38:04'),
-(13, 'Graziela\'s Resto & Events Hall', 'Baao, Camarines Sur', '0927 464 6206', '2023-06-07 18:37:01', '2023-06-07 18:38:11');
+INSERT INTO `restaurants` (`id`, `name`, `address`, `image`, `phone`, `created_at`, `updated_at`) VALUES
+(1, 'Chowking - Iriga', 'New, Public Market, City of Iriga, 4431 Camarines Sur', 'chowking.jpg', '0917 628 2476', '2023-06-07 07:20:20', '2023-06-08 08:18:59'),
+(2, 'Desny Grill Bar Resto & Cafe', 'Lourdes Hospital Rd, City of Iriga, 4431 Camarines Sur', 'desny.jpg', '(054) 456 1512', '2023-06-07 18:22:37', '2023-06-08 08:19:05'),
+(3, 'Yhanyhan Frappe Restaurant', 'Buhi, Camarines Sur', 'yhanyhan.jpg', '0917 555 4867', '2023-06-07 18:22:37', '2023-06-08 08:19:30'),
+(4, 'Pomodoro - Iriga', 'Nabua - Iriga Rd, City of Iriga, Camarines Sur', 'pomodoro.jpg', '09214452234', '2023-06-07 18:25:06', '2023-06-08 08:21:58'),
+(5, 'Above Sea Level - Iriga', 'City of Iriga, 4431 Camarines Sur', 'above-sea-level.jpg', '0917 107 3738', '2023-06-07 18:25:58', '2023-06-08 08:35:03'),
+(6, 'Bigg\'s Diner - Iriga', 'Highway 1, Trinidad Bldg, San Roque, City of Iriga, 4431 Camarines Sur', 'biggs.jpg', '(054) 299 1111', '2023-06-07 18:27:20', '2023-06-08 08:35:08'),
+(7, 'MCM Restaurant', 'Ortega Street, City of Iriga, Camarines Sur', 'mcm.jpg', '(054) 299 2303', '2023-06-07 18:30:15', '2023-06-08 08:35:16'),
+(8, 'Highway Grill', 'Zone 7 Nabua - Iriga Rd, Nabua, 4434 Camarines Sur', 'highway-grill.jpg', '(054) 871 5811', '2023-06-07 18:30:15', '2023-06-08 08:41:38'),
+(9, 'Chef Romeo\'s Kitchen', 'Iriga - Baao Rd, Baao, Camarines Sur', 'chef-romeos.jpg', '0915 200 1161', '2023-06-07 18:35:59', '2023-06-08 08:41:46'),
+(10, 'Graziela\'s Resto & Events Hall', 'Baao, Camarines Sur', 'graziela\'s.jpg', '0927 464 6206', '2023-06-07 18:37:01', '2023-06-08 08:44:49');
 
 -- --------------------------------------------------------
 
@@ -193,7 +191,8 @@ CREATE TABLE `status` (
 
 CREATE TABLE `tables` (
   `id` int(255) UNSIGNED NOT NULL,
-  `table_number` int(255) NOT NULL,
+  `number` int(255) NOT NULL,
+  `image` varchar(255) NOT NULL,
   `capacity` int(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -204,8 +203,15 @@ CREATE TABLE `tables` (
 -- Dumping data for table `tables`
 --
 
-INSERT INTO `tables` (`id`, `table_number`, `capacity`, `description`, `created_at`, `updated_at`) VALUES
-(1, 1, 5, 'This is a table that can seat 5 people.', '2023-06-07 10:25:02', '2023-06-07 10:25:02');
+INSERT INTO `tables` (`id`, `number`, `image`, `capacity`, `description`, `created_at`, `updated_at`) VALUES
+(1, 1, 'table01.jpg', 5, 'This table can seat 5 people/s.', '2023-06-07 10:25:02', '2023-06-08 08:06:02'),
+(2, 2, 'table02.jpg', 6, 'This table can seat 6 people/s.', '2023-06-08 08:02:12', '2023-06-08 08:06:14'),
+(3, 3, 'table03.jpg', 7, 'This table can seat 7 people/s.', '2023-06-08 08:02:12', '2023-06-08 08:06:20'),
+(4, 4, 'table04.jpg', 8, 'This table can seat 8 people/s.', '2023-06-08 08:04:09', '2023-06-08 08:06:27'),
+(5, 5, 'table05.jpg', 1, 'This table can seat 1 people/s.', '2023-06-08 08:04:09', '2023-06-08 08:06:32'),
+(6, 6, 'table06.jpg', 9, 'This table can seat 9 people/s.', '2023-06-08 08:13:00', '2023-06-08 08:13:00'),
+(7, 7, 'table07.jpg', 2, 'This table can seat 2 people/s.', '2023-06-08 08:13:38', '2023-06-08 08:13:38'),
+(8, 8, 'table08.jpg', 4, 'This table can seat 4 people/s.', '2023-06-08 08:14:27', '2023-06-08 08:14:27');
 
 --
 -- Indexes for dumped tables
@@ -298,7 +304,7 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `restaurants`
 --
 ALTER TABLE `restaurants`
-  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `restaurateurs`
@@ -316,7 +322,7 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT for table `tables`
 --
 ALTER TABLE `tables`
-  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables

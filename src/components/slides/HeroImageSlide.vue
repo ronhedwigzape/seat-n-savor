@@ -1,8 +1,20 @@
 <template>
     <div class="position-relative">
-        <v-carousel cycle interval="3000" hide-delimiters>
-            <v-carousel-item v-for="(image, index) in images" :key="index">
-                <v-img :src="`/img/${image.file}`" aspect-ratio="1" cover></v-img>
+        <v-carousel
+            cycle
+            interval="3000"
+            hide-delimiters
+            class="carousel-min-height"
+            height="600"
+        >
+            <v-carousel-item
+                v-for="(image, index) in images"
+                :key="index">
+                <v-img
+                    :src="`/img/${image.file}`"
+                    aspect-ratio="16/9"
+                    cover
+                />
             </v-carousel-item>
         </v-carousel>
         <v-row class="heading heading-top">
@@ -90,6 +102,11 @@ const onClick = () => {
 .appName {
     text-shadow: black 6px 6px 7px;
 }
+
+.carousel-min-height {
+    min-height: 300px;
+}
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
     .appName-size {

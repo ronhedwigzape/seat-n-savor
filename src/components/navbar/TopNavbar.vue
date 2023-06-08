@@ -42,6 +42,10 @@
                 v-model="darkMode"
                 @change="toggleDarkMode"
             >
+            <v-tooltip
+                activator="parent"
+                location="bottom"
+            >{{ darkMode ? 'Dark Mode' : 'Light Mode' }}</v-tooltip>
             <span class="slider"></span>
         </label>
         <v-chip
@@ -52,6 +56,10 @@
                 <v-img :src="`/img/avatars/${authStore.getUser.avatar}`"></v-img>
             </v-avatar>
             {{ authStore.getUser.name }}
+            <v-tooltip
+                activator="parent"
+                location="bottom"
+            >Profile</v-tooltip>
         </v-chip>
 
         <template v-if="authStore.isAuthenticated">
