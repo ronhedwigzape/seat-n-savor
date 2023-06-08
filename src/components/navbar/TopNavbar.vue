@@ -127,6 +127,8 @@ import SignIn from "@/components/dialogs/SignInDialog.vue";
 import {useAuthStore} from "@/stores/store-auth";
 import {useRouter} from "vue-router";
 import {useTheme} from "vuetify";
+import $ from 'jquery';
+
 
 // data
 const dialog = ref(false);

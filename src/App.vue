@@ -17,6 +17,8 @@ import {onMounted, ref} from "vue";
 import {useStore} from "@/stores";
 import {useAuthStore} from "@/stores/store-auth";
 import {useRouter} from "vue-router";
+import $ from 'jquery';
+
 
 const store = useStore();
 const authStore = useAuthStore();

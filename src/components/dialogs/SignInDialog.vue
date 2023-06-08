@@ -16,7 +16,7 @@
         <v-card class="pa-1">
             <v-card-title >
                 <v-btn
-                    color="black"
+                    color="grey-darken-4"
                     variant="text"
                     class="mt-2 float-end rounded"
                     @click="dialog = false"
@@ -81,6 +81,7 @@ import {reactive, ref} from "vue";
 import {useStore} from "@/stores";
 import {useAuthStore} from "@/stores/store-auth";
 import {useRouter} from "vue-router";
+import $ from 'jquery';
 
 // data
 const dialog = ref(false);

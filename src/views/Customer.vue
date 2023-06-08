@@ -1,6 +1,7 @@
 <template>
     <TopNavbar/>
     <HeroImageSlide/>
+
     <v-row class="mt-10" justify="center" v-if="authStore.isAuthenticated">
         <v-dialog
             v-model="dialog"
@@ -25,10 +26,10 @@
                     <v-btn icon @click="dialog = false">
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
-                    <v-toolbar-title>
-                        My Booking Form
+                    <v-toolbar-title class="pally">
+                        {{ store.app.title }} Booking Form
                     </v-toolbar-title>
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
                     <v-toolbar-items>
                         <v-btn variant="text" @click="dialog = false">
                             Save
@@ -37,9 +38,13 @@
                 </v-toolbar>
                <v-container>
                    <v-form>
+                       <v-list>
+                           <v-list-item class="text-h3 pb-2">Bookings</v-list-item>
+                           <v-list-item prepend-icon="mdi-map-marker" class="text-h6">Setting</v-list-item>
+                       </v-list>
                        <v-row>
                            <v-col>
-
+                               e
                            </v-col>
                        </v-row>
                    </v-form>
@@ -53,13 +58,20 @@
 <script setup>
 import TopNavbar from "@/components/navbar/TopNavbar.vue";
 import HeroImageSlide from "@/components/slides/HeroImageSlide.vue";
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 import {useAuthStore} from "@/stores/store-auth";
 import Footer from "@/components/footer/Footer.vue";
+import {useStore} from "@/stores";
 
 const authStore = useAuthStore();
+const store = useStore();
 
 const dialog = ref(false);
+const images = reactive([
+    'https://picsum.photos/1920/1080?random=1',
+    'https://picsum.photos/1920/1080?random=2',
+    'https://picsum.photos/1920/1080?random=3',
+]);
 
 </script>
 
