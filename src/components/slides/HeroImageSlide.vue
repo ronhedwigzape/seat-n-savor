@@ -19,8 +19,8 @@
         </v-carousel>
         <v-row class="heading heading-top">
             <v-col>
-                <h2 class="text-h1 pally text-shades-white appName appName-size">{{ store.app.title }}</h2>
-                <p align="center" class="appName">The fastest restaurant booking in Rinconada</p>
+                <h2 class="text-h1 pally text-shades-white appName appName-header">{{ store.app.title }}</h2>
+                <p align="center" class="appName-subheader">The fastest restaurant booking in Rinconada</p>
                 <v-card
                     class="mx-auto searchBar searchBar-top "
                     color="grey-lighten-3"
@@ -103,13 +103,17 @@ const onClick = () => {
     text-shadow: black 6px 6px 7px;
 }
 
+.appName-subheader {
+    text-shadow: black 2px 2px 2px;
+}
+
 .carousel-min-height {
     min-height: 300px;
 }
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-    .appName-size {
+    .appName-header {
         font-size: 4rem !important;
     }
     .heading-top {
@@ -126,7 +130,7 @@ const onClick = () => {
 
 /* Small devices (portrait tablets and large phones, between 600px and 768px) */
 @media only screen and (min-width: 600px) and (max-width: 768px) {
-    .appName-size {
+    .appName-header {
         font-size: 5rem !important;
     }
     .heading-top {

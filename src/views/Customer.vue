@@ -22,7 +22,7 @@
                 </v-btn>
             </template>
             <v-card>
-                <v-toolbar color="primary">
+                <v-toolbar color="orange-accent-2">
                     <v-btn icon @click="dialog = false">
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
@@ -38,13 +38,15 @@
                 </v-toolbar>
                <v-container>
                    <v-form>
-                       <v-list>
-                           <v-list-item class="text-h3 pb-2">Bookings</v-list-item>
-                           <v-list-item prepend-icon="mdi-map-marker" class="text-h6">Setting</v-list-item>
-                       </v-list>
                        <v-row>
+                           <v-col cols="12">
+                               <v-list>
+                                   <v-list-item class="text-h3 pb-2">Bookings</v-list-item>
+                                   <v-list-item prepend-icon="mdi-map-marker" class="text-h6">Setting</v-list-item>
+                               </v-list>
+                           </v-col>
                            <v-col>
-                               e
+
                            </v-col>
                        </v-row>
                    </v-form>

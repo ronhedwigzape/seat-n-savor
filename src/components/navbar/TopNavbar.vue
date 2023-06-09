@@ -50,6 +50,7 @@
         </label>
         <v-chip
             v-if="authStore.isAuthenticated"
+            class="me-3"
             pill
         >
             <v-avatar start>
@@ -61,6 +62,44 @@
                 location="bottom"
             >Profile</v-tooltip>
         </v-chip>
+
+        <template v-if="authStore.isAuthenticated">
+            <v-btn
+                v-if="authStore.getUser.userType === 'customer'"
+                class="text-none"
+                stacked
+            >
+                <v-icon>mdi-bell-outline</v-icon>
+                <v-tooltip
+                    activator="parent"
+                    location="bottom"
+                >Notification</v-tooltip>
+                <v-menu
+                    activator="parent"
+                    :close-on-content-click="false"
+                >
+                    <v-list width="300" height="300">
+                        <v-list-item-title
+                            class="text-h5 px-4 py-4 position-sticky"
+                        >
+                            Notifications
+                        </v-list-item-title>
+                        <v-list-item class="bg-grey-darken-3" v-if="status === 'pending'">
+                            <v-list-item-title>~ From: {{ restaurant }} ~</v-list-item-title>
+                            <v-icon color="orange">mdi-book-clock</v-icon> {{ items }}
+                        </v-list-item>
+                        <v-list-item class="bg-grey-darken-3" v-else-if="status === 'confirmed'">
+                            <v-list-item-title>~ From: {{ restaurant }} ~</v-list-item-title>
+                            <v-icon color="success">mdi-book-check</v-icon> {{ items }}
+                        </v-list-item>
+                        <v-list-item class="bg-grey-darken-3" v-else>
+                            <v-list-item-title>~ From: {{ restaurant }} ~</v-list-item-title>
+                            <v-icon color="error">mdi-book-cancel</v-icon> {{ items }}
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+            </v-btn>
+        </template>
 
         <template v-if="authStore.isAuthenticated">
             <!--	Sign out	-->
@@ -128,7 +167,7 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import SignUp from "@/components/dialogs/SignUpDialog.vue";
 import {useStore} from "@/stores";
 import SignIn from "@/components/dialogs/SignInDialog.vue";
@@ -144,11 +183,16 @@ const signingOut = ref(false);
 const signedOut = ref(false);
 const theme = useTheme();
 const darkMode = ref(true);
+const image = ref('dine.jpg');
+const status = ref('cancelled');
+const items = ref('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad delectus dolore dolorem dolores doloribus ea explicabo hic illo impedit in, laborum officiis perspiciatis provident quasi quisquam quod recusandae rerum soluta.');
+const restaurant = ref('MCM Restaurant')
 
 const store = useStore();
 const router = useRouter();
 const authStore = useAuthStore();
-const image = ref('dine.jpg');
+
+
 
 const signOut = async () => {
     signingOut.value = true;
