@@ -223,26 +223,89 @@ class Restaurateur extends User
         // check recipient id
         $recipient_id = $recipient->getId();
         if (!$recipient_id)
-            App::returnError('HTTP/1.1 404', 'Error: recipient [id = ' . $recipient . '] does not exist.');
+            App::returnError('HTTP/1.1 404', 'Error: recipient [id = ' . $recipient_id . '] does not exist.');
 
         // check message
         if (!$message)
             App::returnError('HTTP/1.1 404', 'Error: message does not exist.');
 
         $stmt = $this->conn->prepare("INSERT INTO $this->table_notifications(sender_id, recipient_id, message) VALUES(?, ?, ?)");
-        $stmt->bind_param("iis", $this->id,  $recipient, $message);
+        $stmt->bind_param("iis", $this->id,  $recipient_id, $message);
         $stmt->execute();
     }
 
-    public function updateBookingStatus($booking, $customer, $status) {
+    /***************************************************************************
+     * Update booking status if pending || cancelled || confirmed
+     *
+     * @param Booking $booking
+     * @param string $status
+     * @return void
+     */
+    public function updateBookingStatus(Booking $booking, string $status): void
+    {
         require_once 'Booking.php';
 
+        $restaurant_id = $booking->getRestaurantId();
+        $customer_id = $booking->getCustomerId();
+        $table_id = $booking->getTableId();
 
-
+        if (Booking::stored($customer_id, $restaurant_id, $table_id)) {
+            $booking->setStatus($status);
+            $booking->update();
+        }
     }
 
-    public function setCustomerVisibility($is_shown) {
+    /***************************************************************************
+     * Sets the customer's visibility for a booking.
+     *
+     * @param Booking $booking
+     * @param Customer $customer
+     * @param string $date
+     * @param string $time
+     * @return int
+     */
+    public function setCustomerVisibility(Booking $booking, Customer $customer, string $date, string $time): int
+    {
+        require_once 'Booking.php';
+        require_once 'Customer.php';
 
+        $restaurant_id = $booking->getRestaurantId();
+        $customer_id = $booking->getCustomerId();
+        $table_id = $booking->getTableId();
+
+        if ($booking->getDate() !== $date && $booking->getTime() !== $time)
+            App::returnError('HTTP/1.1 404', 'Update Error: Invalid date and time .');
+
+        if (Booking::stored($customer_id, $restaurant_id, $table_id)) {
+            $booking->setCustomerId($customer->getId());
+            $booking->update(true);
+        }
+        return 0;
+    }
+
+    /***************************************************************************
+     * Get restaurant id when available
+     *
+     * @return mixed|null
+     */
+    public function getRestaurantId(): mixed
+    {
+        $restaurateur = new Restaurateur($this->username, $this->password);
+        $restaurateur_id = $restaurateur->getId();
+
+        if (!$restaurateur_id)
+            App::returnError('HTTP/1.1 404', 'Error: restaurateur [id = ' . $this->id . '] does not exist.');
+
+        $stmt = $restaurateur->conn->prepare("SELECT restaurant_id FROM $restaurateur->table WHERE id = ?");
+        $stmt->bind_param("i", $restaurateur_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $restaurant_id = null;
+        if($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $restaurant_id =  $row['restaurant_id'];
+        }
+        return $restaurant_id;
     }
 
 }

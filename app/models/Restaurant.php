@@ -105,4 +105,113 @@ class Restaurant extends App
     }
 
 
+    /***************************************************************************
+     * Get restaurant id
+     *
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+
+    /***************************************************************************
+     * Get restaurant name
+     *
+     * @return mixed
+     */
+    public function getName(): mixed
+    {
+        return $this->name;
+    }
+
+
+    /***************************************************************************
+     * Get restaurant phone
+     *
+     * @return mixed
+     */
+    public function getPhone(): mixed
+    {
+        return $this->phone;
+    }
+
+
+    /***************************************************************************
+     * Get restaurant address
+     *
+     * @return mixed
+     */
+    public function getAddress(): mixed
+    {
+        return $this->address;
+    }
+
+
+    /***************************************************************************
+     * Get restaurant image
+     *
+     * @return mixed
+     */
+    public function getImage(): mixed
+    {
+        return $this->image;
+    }
+
+
+    /***************************************************************************
+     * Set restaurant id
+     *
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+
+    /***************************************************************************
+     * Set restaurant name
+     *
+     * @param mixed $name
+     */
+    public function setName(mixed $name): void
+    {
+        $this->name = $name;
+    }
+
+
+    /***************************************************************************
+     * Set restaurant image
+     *
+     * @param mixed $image
+     */
+    public function setImage(mixed $image): void
+    {
+        $this->image = $image;
+    }
+
+
+    /***************************************************************************
+     * Set restaurant phone
+     *
+     * @param mixed $phone
+     */
+    public function setPhone(mixed $phone): void
+    {
+        $this->phone = $phone;
+    }
+
+
+    /***************************************************************************
+     * Set restaurant address
+     *
+     * @param mixed $address
+     */
+    public function setAddress(mixed $address): void
+    {
+        $this->address = $address;
+    }
+
 }
