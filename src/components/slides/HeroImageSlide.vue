@@ -105,6 +105,7 @@ const onClick = () => {
 
 .appName-subheader {
     text-shadow: black 2px 2px 2px;
+    color: white !important;
 }
 
 .carousel-min-height {

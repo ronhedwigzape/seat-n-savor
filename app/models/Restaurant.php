@@ -91,6 +91,43 @@ class Restaurant extends App
 
 
     /***************************************************************************
+     * Get all restaurants as array of objects
+     *
+     * @return array
+     */
+    public static function all(): array
+    {
+        $restaurant = new Restaurant();
+
+        $sql = "SELECT * FROM $restaurant->table ";
+        $stmt = $restaurant->conn->prepare($sql);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $arr = [];
+        while($row = $result->fetch_assoc()) {
+            $arr[] = new Restaurant($row['id']);
+        }
+        return $arr;
+    }
+
+
+    /***************************************************************************
+     * Get all restaurants as array of arrays
+     *
+     * @return array
+     */
+    public static function rows(): array
+    {
+        $restaurants = [];
+        foreach(self::all() as $restaurant) {
+            $restaurants[] = $restaurant->toArray();
+        }
+        return $restaurants;
+    }
+
+
+    /***************************************************************************
      * Check if restaurant id exists
      *
      * @param int $id

@@ -90,6 +90,43 @@ class Table extends App
 
 
     /***************************************************************************
+     * Get all tables as array of objects
+     *
+     * @return array
+     */
+    public static function all(): array
+    {
+        $table = new Table();
+
+        $sql = "SELECT * FROM $table->table ";
+        $stmt = $table->conn->prepare($sql);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $arr = [];
+        while($row = $result->fetch_assoc()) {
+            $arr[] = new Table($row['id']);
+        }
+        return $arr;
+    }
+
+
+    /***************************************************************************
+     * Get all tables as array of arrays
+     *
+     * @return array
+     */
+    public static function rows(): array
+    {
+        $tables = [];
+        foreach(self::all() as $table) {
+            $tables[] = $table->toArray();
+        }
+        return $tables;
+    }
+
+
+    /***************************************************************************
      * Check if table id exists
      *
      * @param int $id
