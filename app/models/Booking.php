@@ -196,8 +196,8 @@ class Booking extends App
         if(!self::stored($this->customer_id, $this->restaurant_id, $this->table_id)) {
 
             // proceed with insert
-            $stmt = $this->conn->prepare("INSERT INTO $this->table(customer_id, restaurant_id, table_id, code, date, time, party_size, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("iiisssis", $this->customer_id, $this->restaurant_id, $this->table_id, $this->code,$this->date, $this->time, $this->party_size, $this->status);
+            $stmt = $this->conn->prepare("INSERT INTO $this->table(customer_id, restaurant_id, table_id, code, date, time, party_size, status, cancellation_reason) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("iiisssiss", $this->customer_id, $this->restaurant_id, $this->table_id, $this->code,$this->date, $this->time, $this->party_size, $this->status, $this->cancellation_reason);
             $stmt->execute();
             $this->id = $this->conn->insert_id;
         }
@@ -249,6 +249,17 @@ class Booking extends App
         $stmt = $this->conn->prepare("DELETE FROM $this->table WHERE id = ?");
         $stmt->bind_param("i", $this->id);
         $stmt->execute();
+    }
+
+
+    /***************************************************************************
+     * Set booking id
+     *
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
 

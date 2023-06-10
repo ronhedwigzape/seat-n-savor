@@ -194,4 +194,37 @@ class Customer extends User
     }
 
 
+    /***************************************************************************
+     * Make customer booking
+     *
+     * @param int $customer_id
+     * @param int $restaurant_id
+     * @param int $table_id
+     * @param string $code
+     * @param string $date
+     * @param string $time
+     * @param int $party_size
+     * @param string $status
+     * @return void
+     */
+    public function makeBooking(int $customer_id, int $restaurant_id, int $table_id, string $code, string $date, string $time, int $party_size, string $status = 'pending'): void
+    {
+        require_once 'Booking.php';
+        $booking = new Booking();
+
+        if (!Booking::stored($booking->getCustomerId(), $booking->getRestaurantId(), $booking->getTableId()))
+            App::returnError('HTTP/1.1 404', ' Error: Booking does not exist.');
+
+        $booking->setCustomerId($customer_id);
+        $booking->setRestaurantId($restaurant_id);
+        $booking->setTableId($table_id);
+        $booking->setCode($code);
+        $booking->setDate($date);
+        $booking->setTime($time);
+        $booking->setPartySize($party_size);
+        $booking->setStatus($status);
+        $booking->insert();
+    }
+
+
 }
