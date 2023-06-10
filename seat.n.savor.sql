@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2023 at 06:06 AM
+-- Generation Time: Jun 10, 2023 at 03:29 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -133,7 +133,7 @@ CREATE TABLE `restaurants` (
 
 INSERT INTO `restaurants` (`id`, `name`, `address`, `image`, `phone`, `created_at`, `updated_at`) VALUES
 (1, 'Chowking - Iriga', 'New, Public Market, City of Iriga, 4431 Camarines Sur', 'chowking.jpg', '0917 628 2476', '2023-06-07 07:20:20', '2023-06-08 08:18:59'),
-(2, 'Desny Grill Bar Resto & Cafe', 'Lourdes Hospital Rd, City of Iriga, 4431 Camarines Sur', 'desny.jpg', '(054) 456 1512', '2023-06-07 18:22:37', '2023-06-08 08:19:05'),
+(2, 'Desny Grill Bar Resto & Cafe', 'Lourdes Hospital Rd, City of Iriga, 4431 Camarines Sur', 'desny.jpg', '(054) 456 1512', '2023-06-07 18:22:37', '2023-06-10 12:48:57'),
 (3, 'Yhanyhan Frappe Restaurant', 'Buhi, Camarines Sur', 'yhanyhan.jpg', '0917 555 4867', '2023-06-07 18:22:37', '2023-06-08 08:19:30'),
 (4, 'Pomodoro - Iriga', 'Nabua - Iriga Rd, City of Iriga, Camarines Sur', 'pomodoro.jpg', '09214452234', '2023-06-07 18:25:06', '2023-06-08 08:21:58'),
 (5, 'Above Sea Level - Iriga', 'City of Iriga, 4431 Camarines Sur', 'above-sea-level.jpg', '0917 107 3738', '2023-06-07 18:25:58', '2023-06-08 08:35:03'),
@@ -151,6 +151,7 @@ INSERT INTO `restaurants` (`id`, `name`, `address`, `image`, `phone`, `created_a
 
 CREATE TABLE `restaurateurs` (
   `id` int(255) UNSIGNED NOT NULL,
+  `restaurant_id` int(255) UNSIGNED NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `avatar` varchar(255) NOT NULL,
@@ -158,7 +159,6 @@ CREATE TABLE `restaurateurs` (
   `email` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
-  `restaurant_id` int(255) UNSIGNED NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -167,8 +167,17 @@ CREATE TABLE `restaurateurs` (
 -- Dumping data for table `restaurateurs`
 --
 
-INSERT INTO `restaurateurs` (`id`, `username`, `password`, `avatar`, `name`, `email`, `phone`, `address`, `restaurant_id`, `created_at`, `updated_at`) VALUES
-(1, 'chowkingAdmin', 'chowkingAdmin', 'avatar.png', 'ROBERT KUAN', 'robertkuan@chowking.com', '092345678765', 'Makati, Philippines', 1, '2023-06-07 10:22:41', '2023-06-07 11:24:01');
+INSERT INTO `restaurateurs` (`id`, `restaurant_id`, `username`, `password`, `avatar`, `name`, `email`, `phone`, `address`, `created_at`, `updated_at`) VALUES
+(1, 1, 'chowkingAdmin', 'chowkingAdmin', 'avatar.png', 'Chowking Admin', 'chowkingadmin@chowking.com', '092345678765', 'Iriga City, Camarines Sur', '2023-06-07 10:22:41', '2023-06-10 12:18:32'),
+(2, 2, 'desnyAdmin', 'desnyAdmin', 'avatar.png', 'Desny Admin', 'desnyadmin@desny.com', '0943 332 4212', 'Iriga City, Camarines Sur', '2023-06-10 12:47:23', '2023-06-10 12:47:23'),
+(3, 3, 'yhanyhanAdmin', 'yhanyhanAdmin', 'avatar.png', 'YhanYhan Admin', 'yhanyhanadmin@yhan.com', '0957 383 1927', 'Buhi, Camarines Sur', '2023-06-10 12:47:23', '2023-06-10 12:52:33'),
+(4, 4, 'pomodoroAdmin', 'pomodoroAdmin', 'avatar.png', 'Pomodoro Admin', 'pomodoroadmin@pomodoro.com', '0943 521 5367', 'Iriga, Camarines Sur', '2023-06-10 12:52:18', '2023-06-10 12:52:40'),
+(5, 5, 'aboveSeaLevelAdmin', 'aboveSeaLevelAdmin', 'avatar.png', 'Above Sea Level Admin', 'abovesealeveladmin@asl.com', '09579288372', 'Iriga, Camarines Sur ', '2023-06-10 12:56:06', '2023-06-10 12:56:06'),
+(6, 6, 'biggsAdmin', 'biggsAdmin', 'avatar.png', 'Bigg\'s Admin', 'biggsadmin@biggs.com', '0943 456 4930', 'Iriga, Camarines Sur', '2023-06-10 13:14:40', '2023-06-10 13:14:40'),
+(7, 7, 'mcmAdmin', 'mcmAdmin', 'avatar.png', 'MCM Admin', 'mcmadmin@mcm.com', '0937 282 6281', 'Iriga, Camarines Sur', '2023-06-10 13:14:40', '2023-06-10 13:14:40'),
+(8, 8, 'highwayGrillAdmin', 'highwayGrillAdmin', 'avatar.png', 'Highway Grill Admin', 'highwaygrilladmin@hg.com', '0928 287 3839', 'Nabua, Camarines Sur', '2023-06-10 13:21:47', '2023-06-10 13:21:47'),
+(9, 9, 'chefRomeosAdmin', 'chefRomeosAdmin', 'avatar.png', 'Chef Romeo\'s Admin', 'chefromeosadmin@cr.com', '0943 938 3839', 'Baao, Camarines Sur', '2023-06-10 13:21:47', '2023-06-10 13:21:47'),
+(10, 10, 'grazielasAdmin', 'grazielasAdmin', 'avatar.png', 'Graziela\'s Admin', 'grazielasadmin@grazielas.com', '0947 827 6448', 'Baao, Camarines Sur', '2023-06-10 13:28:40', '2023-06-10 13:28:40');
 
 -- --------------------------------------------------------
 
@@ -290,7 +299,7 @@ ALTER TABLE `restaurants`
 -- AUTO_INCREMENT for table `restaurateurs`
 --
 ALTER TABLE `restaurateurs`
-  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tables`
