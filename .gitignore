@@ -18,7 +18,7 @@ public
 app/_test.php
 app/_env.php
 app/config/database.php
-!assets/img/avatars/avatar.png
+!assets/avatar.png
 /cypress/videos/
 /cypress/screenshots/
 
