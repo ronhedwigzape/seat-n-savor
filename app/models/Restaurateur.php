@@ -5,7 +5,7 @@ require_once 'User.php';
 class Restaurateur extends User
 {
 
-    protected string $table_notifications = 'notifications';
+    protected $table_notifications = 'notifications';
 
     /***************************************************************************
      * Restaurateur constructor
@@ -13,7 +13,7 @@ class Restaurateur extends User
      * @param string $username
      * @param string $password
      */
-    public function __construct(string $username = '', string $password = '')
+    public function __construct($username = '', $password = '')
     {
         parent::__construct($username, $password, 'restaurateur');
     }
@@ -25,7 +25,7 @@ class Restaurateur extends User
      * @param $stmt
      * @return Restaurateur|false
      */
-    private static function executeFind($stmt): Restaurateur|false
+    private static function executeFind($stmt)
     {
         $stmt->execute();
         $result = $stmt->get_result();
@@ -42,7 +42,7 @@ class Restaurateur extends User
      * @param int $id
      * @return Restaurateur|boolean
      */
-    public static function findById(int $id): Restaurateur|bool
+    public static function findById($id)
     {
         $restaurateur = new Restaurateur();
         $stmt = $restaurateur->conn->prepare("SELECT username, password FROM $restaurateur->table WHERE id = ?");
@@ -57,7 +57,7 @@ class Restaurateur extends User
      * @param array $append
      * @return array
      */
-    public function toArray(array $append = []): array
+    public function toArray($append = [])
     {
         return parent::toArray($append);
     }
@@ -68,7 +68,7 @@ class Restaurateur extends User
      *
      * @return Restaurateur[]
      */
-    public static function all(): array
+    public static function all()
     {
         $restaurateur = new Restaurateur();
         $sql = "SELECT username, password FROM $restaurateur->table ORDER BY number";
@@ -89,7 +89,7 @@ class Restaurateur extends User
      *
      * @return array
      */
-    public static function rows(): array
+    public static function rows()
     {
         $restaurateurs = [];
         foreach(self::all() as $restaurateur) {
@@ -105,7 +105,7 @@ class Restaurateur extends User
      * @param int $id
      * @return bool
      */
-    public static function exists(int $id): bool
+    public static function exists($id)
     {
         if(!$id)
             return false;
@@ -121,7 +121,7 @@ class Restaurateur extends User
      * @param int $id
      * @return bool
      */
-    public static function usernameExists(string $username, int $id = 0): bool
+    public static function usernameExists($username, $id = 0)
     {
         $restaurateur = new Restaurateur();
         $stmt = $restaurateur->conn->prepare("SELECT id FROM $restaurateur->table WHERE username = ? AND id != ?");
@@ -137,7 +137,7 @@ class Restaurateur extends User
      *
      * @return void
      */
-    public function insert(): void
+    public function insert()
     {
         // check id
         if(self::exists($this->id))
@@ -166,7 +166,7 @@ class Restaurateur extends User
      *
      * @return void
      */
-    public function update(): void
+    public function update()
     {
         // check id
         if(!self::exists($this->id))
@@ -194,7 +194,7 @@ class Restaurateur extends User
      *
      * @return void
      */
-    public function delete(): void
+    public function delete()
     {
         // check id
         if(!self::exists($this->id))
@@ -213,7 +213,7 @@ class Restaurateur extends User
      * @param string $message
      * @return void
      */
-    public function notifyCustomer(Customer $recipient, string $message): void
+    public function notifyCustomer($recipient, $message)
     {
 
         // check sender id
@@ -241,7 +241,7 @@ class Restaurateur extends User
      * @param string $status
      * @return void
      */
-    public function updateBookingStatus(Booking $booking, string $status): void
+    public function updateBookingStatus($booking, $status)
     {
         require_once 'Booking.php';
 
@@ -264,7 +264,7 @@ class Restaurateur extends User
      *
      * @return mixed|null
      */
-    public function getRestaurantId(): mixed
+    public function getRestaurantId()
     {
         $restaurateur = new Restaurateur($this->username, $this->password);
         $restaurateur_id = $restaurateur->getId();

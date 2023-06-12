@@ -11,7 +11,7 @@
                 v-for="(image, index) in images"
                 :key="index">
                 <v-img
-                    :src="`/img/${image.file}`"
+                    :src="image.file"
                     aspect-ratio="16/9"
                     cover
                 />
@@ -55,11 +55,11 @@ const loading = ref(false);
 
 const images = reactive([
     {
-        name: 'Brick Wall Restaurant',
+        name: 'Brick Wall Restaurants',
         file: 'restaurant1.jpg'
     },
     {
-        name: 'Cocktails Restaurant',
+        name: 'Cocktails Restaurants',
         file: 'restaurant2.jpg'
     },
     {
@@ -67,7 +67,7 @@ const images = reactive([
         file: 'coffee-shop.jpg'
     },
     {
-        name: 'Couple in a Restaurant',
+        name: 'Couple in a Restaurants',
         file: 'couple.jpg'
     }
 ]);

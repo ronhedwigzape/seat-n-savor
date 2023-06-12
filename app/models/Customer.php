@@ -11,7 +11,7 @@ class Customer extends User
      * @param string $username
      * @param string $password
      */
-    public function __construct(string $username = '', string $password = '')
+    public function __construct($username = '', $password = '')
     {
         parent::__construct($username, $password, 'customer');
     }
@@ -23,7 +23,7 @@ class Customer extends User
      * @param $stmt
      * @return Customer|false
      */
-    private static function executeFind($stmt): Customer|false
+    private static function executeFind($stmt)
     {
         $stmt->execute();
         $result = $stmt->get_result();
@@ -40,7 +40,7 @@ class Customer extends User
      * @param int $id
      * @return Customer|boolean
      */
-    public static function findById(int $id): Customer|bool
+    public static function findById($id)
     {
         $customer = new Customer();
         $stmt = $customer->conn->prepare("SELECT username, password FROM $customer->table WHERE id = ?");
@@ -54,7 +54,7 @@ class Customer extends User
      *
      * @return Customer[]
      */
-    public static function all(): array
+    public static function all()
     {
         $customer = new Customer();
         $sql = "SELECT username, password FROM $customer->table ORDER BY number";
@@ -75,7 +75,7 @@ class Customer extends User
      *
      * @return array
      */
-    public static function rows(): array
+    public static function rows()
     {
         $customers = [];
         foreach(self::all() as $customer) {
@@ -91,7 +91,7 @@ class Customer extends User
      * @param int $id
      * @return bool
      */
-    public static function exists(int $id): bool
+    public static function exists($id)
     {
         if(!$id)
             return false;
@@ -107,7 +107,7 @@ class Customer extends User
      * @param int $id
      * @return bool
      */
-    public static function usernameExists(string $username, int $id = 0): bool
+    public static function usernameExists($username, $id = 0)
     {
         $customer = new Customer();
         $stmt = $customer->conn->prepare("SELECT id FROM $customer->table WHERE username = ? AND id != ?");
@@ -123,7 +123,7 @@ class Customer extends User
      *
      * @return void
      */
-    public function insert(): void
+    public function insert()
     {
         // check id
         if(self::exists($this->id))
@@ -151,7 +151,7 @@ class Customer extends User
      *
      * @return void
      */
-    public function update(): void
+    public function update()
     {
         // check id
         if(!self::exists($this->id))
@@ -179,7 +179,7 @@ class Customer extends User
      *
      * @return void
      */
-    public function delete(): void
+    public function delete()
     {
         // check id
         if(!self::exists($this->id))
@@ -195,15 +195,15 @@ class Customer extends User
     /***************************************************************************
      * Make customer new booking
      *
-     * @param Restaurant $restaurant
-     * @param Table $table
+     * @param Restaurants $restaurant
+     * @param Tables $table
      * @param string $code
      * @param string $date
      * @param string $time
      * @param int $party_size
      * @return void
      */
-    public function makeBooking(Restaurant $restaurant, Table $table,  string $code, string $date, string $time, int $party_size): void
+    public function makeBooking($restaurant, $table, $code, $date, $time, $party_size)
     {
         require_once 'Booking.php';
         $status = 'pending';
@@ -236,7 +236,7 @@ class Customer extends User
      *
      * @return string
      */
-    public function generateQrCode(): string
+    public function generateQrCode()
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $code = '';

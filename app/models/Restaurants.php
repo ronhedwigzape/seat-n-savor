@@ -2,24 +2,24 @@
 
 require_once 'App.php';
 
-class Restaurant extends App
+class Restaurants extends App
 {
 
-    protected string $table = 'restaurants';
+    protected $table = 'restaurants';
 
-    protected int $id;
-    protected mixed $name;
-    protected mixed $address;
-    protected mixed $image;
-    protected mixed $phone;
+    protected $id;
+    protected $name;
+    protected $address;
+    protected $image;
+    protected $phone;
 
 
     /***************************************************************************
-     * Restaurant constructor
+     * Restaurants constructor
      *
      * @param int $id
      */
-    public function __construct(int $id = 0)
+    public function __construct($id = 0)
     {
         parent::__construct();
 
@@ -45,14 +45,14 @@ class Restaurant extends App
      * Execute find
      *
      * @param $stmt
-     * @return Restaurant|false
+     * @return Restaurants|false
      */
-    private static function executeFind($stmt): Restaurant|bool
+    private static function executeFind($stmt)
     {
         $stmt->execute();
         $result = $stmt->get_result();
         if($row = $result->fetch_assoc())
-            return new Restaurant($row['id']);
+            return new Restaurants($row['id']);
         else
             return false;
     }
@@ -62,11 +62,11 @@ class Restaurant extends App
      * Find restaurant by id
      *
      * @param int $id
-     * @return Restaurant|boolean
+     * @return Restaurants|boolean
      */
-    public static function findById(int $id): Restaurant|bool
+    public static function findById($id)
     {
-        $restaurant = new Restaurant();
+        $restaurant = new Restaurants();
         $stmt = $restaurant->conn->prepare("SELECT id FROM $restaurant->table WHERE id = ?");
         $stmt->bind_param("i", $id);
         return self::executeFind($stmt);
@@ -78,7 +78,7 @@ class Restaurant extends App
      *
      * @return array
      */
-    public function toArray(): array
+    public function toArray()
     {
         return [
             'id'       => $this->id,
@@ -95,9 +95,9 @@ class Restaurant extends App
      *
      * @return array
      */
-    public static function all(): array
+    public static function all()
     {
-        $restaurant = new Restaurant();
+        $restaurant = new Restaurants();
 
         $sql = "SELECT * FROM $restaurant->table ";
         $stmt = $restaurant->conn->prepare($sql);
@@ -106,7 +106,7 @@ class Restaurant extends App
         $result = $stmt->get_result();
         $arr = [];
         while($row = $result->fetch_assoc()) {
-            $arr[] = new Restaurant($row['id']);
+            $arr[] = new Restaurants($row['id']);
         }
         return $arr;
     }
@@ -117,7 +117,7 @@ class Restaurant extends App
      *
      * @return array
      */
-    public static function rows(): array
+    public static function rows()
     {
         $restaurants = [];
         foreach(self::all() as $restaurant) {
@@ -133,7 +133,7 @@ class Restaurant extends App
      * @param int $id
      * @return bool
      */
-    public static function exists(int $id): bool
+    public static function exists($id)
     {
         if(!$id)
             return false;
@@ -147,7 +147,7 @@ class Restaurant extends App
      *
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -158,7 +158,7 @@ class Restaurant extends App
      *
      * @return mixed
      */
-    public function getName(): mixed
+    public function getName()
     {
         return $this->name;
     }
@@ -169,7 +169,7 @@ class Restaurant extends App
      *
      * @return mixed
      */
-    public function getPhone(): mixed
+    public function getPhone()
     {
         return $this->phone;
     }
@@ -180,7 +180,7 @@ class Restaurant extends App
      *
      * @return mixed
      */
-    public function getAddress(): mixed
+    public function getAddress()
     {
         return $this->address;
     }
@@ -191,7 +191,7 @@ class Restaurant extends App
      *
      * @return mixed
      */
-    public function getImage(): mixed
+    public function getImage()
     {
         return $this->image;
     }
@@ -202,7 +202,7 @@ class Restaurant extends App
      *
      * @param int $id
      */
-    public function setId(int $id): void
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -213,7 +213,7 @@ class Restaurant extends App
      *
      * @param mixed $name
      */
-    public function setName(mixed $name): void
+    public function setName($name)
     {
         $this->name = $name;
     }
@@ -224,7 +224,7 @@ class Restaurant extends App
      *
      * @param mixed $image
      */
-    public function setImage(mixed $image): void
+    public function setImage($image)
     {
         $this->image = $image;
     }
@@ -235,7 +235,7 @@ class Restaurant extends App
      *
      * @param mixed $phone
      */
-    public function setPhone(mixed $phone): void
+    public function setPhone($phone)
     {
         $this->phone = $phone;
     }
@@ -246,7 +246,7 @@ class Restaurant extends App
      *
      * @param mixed $address
      */
-    public function setAddress(mixed $address): void
+    public function setAddress($address)
     {
         $this->address = $address;
     }

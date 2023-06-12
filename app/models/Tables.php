@@ -2,23 +2,23 @@
 
 require_once 'App.php';
 
-class Table extends App
+class Tables extends App
 {
-    protected string $table = 'tables';
+    protected $table = 'tables';
 
-    protected int $id;
-    protected int $number;
-    protected mixed $image;
-    protected int $capacity;
-    protected mixed $description;
+    protected $id;
+    protected $number;
+    protected $image;
+    protected $capacity;
+    protected $description;
 
 
     /***************************************************************************
-     * Restaurant constructor
+     * Restaurants constructor
      *
      * @param int $id
      */
-    public function __construct(int $id = 0)
+    public function __construct($id = 0)
     {
         parent::__construct();
 
@@ -44,14 +44,14 @@ class Table extends App
      * Execute find
      *
      * @param $stmt
-     * @return Table|false
+     * @return Tables|false
      */
-    private static function executeFind($stmt): Table|bool
+    private static function executeFind($stmt)
     {
         $stmt->execute();
         $result = $stmt->get_result();
         if($row = $result->fetch_assoc())
-            return new Table($row['id']);
+            return new Tables($row['id']);
         else
             return false;
     }
@@ -61,11 +61,11 @@ class Table extends App
      * Find table by id
      *
      * @param int $id
-     * @return Table|boolean
+     * @return Tables|boolean
      */
-    public static function findById(int $id): Table|bool
+    public static function findById($id)
     {
-        $table = new Table();
+        $table = new Tables();
         $stmt = $table->conn->prepare("SELECT id FROM $table->table WHERE id = ?");
         $stmt->bind_param("i", $id);
         return self::executeFind($stmt);
@@ -77,7 +77,7 @@ class Table extends App
      *
      * @return array
      */
-    public function toArray(): array
+    public function toArray()
     {
         return [
             'id'       => $this->id,
@@ -94,9 +94,9 @@ class Table extends App
      *
      * @return array
      */
-    public static function all(): array
+    public static function all()
     {
-        $table = new Table();
+        $table = new Tables();
 
         $sql = "SELECT * FROM $table->table ";
         $stmt = $table->conn->prepare($sql);
@@ -105,7 +105,7 @@ class Table extends App
         $result = $stmt->get_result();
         $arr = [];
         while($row = $result->fetch_assoc()) {
-            $arr[] = new Table($row['id']);
+            $arr[] = new Tables($row['id']);
         }
         return $arr;
     }
@@ -116,7 +116,7 @@ class Table extends App
      *
      * @return array
      */
-    public static function rows(): array
+    public static function rows()
     {
         $tables = [];
         foreach(self::all() as $table) {
@@ -132,7 +132,7 @@ class Table extends App
      * @param int $id
      * @return bool
      */
-    public static function exists(int $id): bool
+    public static function exists($id)
     {
         if(!$id)
             return false;
@@ -146,7 +146,7 @@ class Table extends App
      *
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -157,7 +157,7 @@ class Table extends App
      *
      * @return int
      */
-    public function getCapacity(): int
+    public function getCapacity()
     {
         return $this->capacity;
     }
@@ -168,7 +168,7 @@ class Table extends App
      *
      * @return mixed
      */
-    public function getDescription(): mixed
+    public function getDescription()
     {
         return $this->description;
     }
@@ -179,7 +179,7 @@ class Table extends App
      *
      * @return int
      */
-    public function getNumber(): int
+    public function getNumber()
     {
         return $this->number;
     }
@@ -190,7 +190,7 @@ class Table extends App
      *
      * @return mixed
      */
-    public function getImage(): mixed
+    public function getImage()
     {
         return $this->image;
     }
@@ -201,7 +201,7 @@ class Table extends App
      *
      * @param int $id
      */
-    public function setId(int $id): void
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -212,7 +212,7 @@ class Table extends App
      *
      * @param int $capacity
      */
-    public function setCapacity(int $capacity): void
+    public function setCapacity($capacity)
     {
         $this->capacity = $capacity;
     }
@@ -223,7 +223,7 @@ class Table extends App
      *
      * @param int $number
      */
-    public function setNumber(int $number): void
+    public function setNumber($number)
     {
         $this->number = $number;
     }
@@ -234,7 +234,7 @@ class Table extends App
      *
      * @param mixed $description
      */
-    public function setDescription(mixed $description): void
+    public function setDescription($description)
     {
         $this->description = $description;
     }
@@ -245,7 +245,7 @@ class Table extends App
      *
      * @param mixed $image
      */
-    public function setImage(mixed $image): void
+    public function setImage($image)
     {
         $this->image = $image;
     }

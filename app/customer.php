@@ -21,33 +21,33 @@ else {
 
         // fetch restaurants
         if (isset($_GET['getRestaurants'])) {
-            require_once 'models/Restaurant.php';
+            require_once 'models/Restaurants.php';
 
             echo json_encode([
-                'restaurants' => Restaurant::rows(),
+                'restaurants' => Restaurants::rows(),
             ]);
         }
 
         // fetch tables
         else if (isset($_GET['getTables'])) {
-            require_once 'models/Table.php';
+            require_once 'models/Tables.php';
 
             echo json_encode([
-                'tables' => Table::rows()
+                'tables' => Tables::rows()
             ]);
         }
 
         // make booking
         else if (isset($_POST['booking'])) {
-            require_once 'models/Restaurant.php';
+            require_once 'models/Restaurants.php';
             require_once 'models/Booking.php';
-            require_once 'models/Table.php';
+            require_once 'models/Tables.php';
 
             $booking = $_POST['booking'];
 
             $customer->makeBooking(
-                Restaurant::findById($booking['restaurant_id']),
-                Table::findById($booking['table_id']),
+                Restaurants::findById($booking['restaurant_id']),
+                Tables::findById($booking['table_id']),
                 $customer->generateQrCode(),
                 $booking['date'],
                 $booking['time'],

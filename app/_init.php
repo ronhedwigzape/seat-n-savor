@@ -8,13 +8,13 @@ session_start();
 
 require_once 'config/database.php';
 
-function denyAccess(): void
+function denyAccess()
 {
     require_once 'models/App.php';
     App::returnError('HTTP/1.1 401', 'Access Denied!');
 }
 
-function getUser(): ?array
+function getUser()
 {
     require_once 'models/User.php';
     return User::getUser();

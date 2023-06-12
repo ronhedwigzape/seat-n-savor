@@ -14,106 +14,199 @@
             </v-btn>
         </template>
         <v-row class="d-flex justify-center align-center">
-        <v-card>
-            <v-card-title >
-                <v-btn
-                    color="black"
-                    variant="text"
-                    class="mt-2 float-end rounded"
-                    @click="dialog = false"
-                >
-                    <v-icon>mdi-close</v-icon>
-                </v-btn>
-                <v-col class="d-flex justify-center align-center">
-                    <p class="text-lg-h2 text-md-h3 text-h4 pally">Create Your Account</p>
-                </v-col>
-            </v-card-title>
-            <v-card-text>
-                <v-container>
-                    <v-row>
-                        <v-col
-                            cols="12"
-                            sm="6"
-                            md="6"
-                        >
-                            <v-text-field
-                                label="Fullname*"
-                                variant="outlined"
-                                required
-                            ></v-text-field>
-                        </v-col>
-                        <v-col
-                            cols="12"
-                            sm="6"
-                            md="6"
-                        >
-                            <v-text-field
-                                label="Username*"
-                                variant="outlined"
-                                hint="This will be used for login."
-                                required
-                            ></v-text-field>
-                        </v-col>
-                        <v-col cols="6">
-                            <v-text-field
-                                label="Email*"
-                                variant="outlined"
-                                required
-                            ></v-text-field>
-                        </v-col>
-                        <v-col cols="6">
-                            <v-text-field
-                                label="Phone Number*"
-                                variant="outlined"
-                                required
-                            ></v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                            <v-text-field
-                                label="Password*"
-                                variant="outlined"
-                                type="password"
-                                required
-                            ></v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                            <v-text-field
-                                label="Confirm Password*"
-                                variant="outlined"
-                                type="password"
-                                required
-                            ></v-text-field>
-                        </v-col>
-                    </v-row>
+            <v-card width="1500">
+                <v-card-title>
                     <v-btn
-                        color="blue-darken-1"
                         variant="text"
+                        class="mt-2 float-end rounded"
                         @click="dialog = false"
-                        block
                     >
-                        Create Account
+                        <v-icon>mdi-close</v-icon>
                     </v-btn>
-                </v-container>
-            </v-card-text>
-<!--                <v-card-text>-->
-<!--                    <v-col class="d-flex justify-center align-center" cols="12">-->
-<!--                        <p>Already have an account? Sign in Now!</p>-->
-<!--                    </v-col>-->
-<!--                </v-card-text>-->
-        </v-card>
+                    <v-col class="d-flex justify-center align-center">
+                        <p class="text-lg-h2 text-md-h3 text-h4 pally">Create Your Account</p>
+                    </v-col>
+                </v-card-title>
+                <v-card-text>
+                    <v-container>
+                        <v-form @submit.prevent="createAccount">
+                            <v-row>
+                                <v-col cols="12" sm="6" md="6">
+                                    <v-text-field
+                                        v-model="name"
+                                        label="Fullname*"
+                                        variant="outlined"
+                                        hint="This will be your account name."
+                                        prepend-inner-icon="mdi-account"
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="6" md="6">
+                                    <v-text-field
+                                        v-model="username"
+                                        label="Username*"
+                                        variant="outlined"
+                                        hint="This will be used for your login credentials."
+                                        prepend-inner-icon="mdi-account-circle"
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="6">
+                                    <v-text-field
+                                        v-model="email"
+                                        label="Email*"
+                                        variant="outlined"
+                                        prepend-inner-icon="mdi-email"
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="6">
+                                    <v-text-field
+                                        v-model="phone"
+                                        label="Phone Number*"
+                                        variant="outlined"
+                                        prepend-inner-icon="mdi-phone"
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-text-field
+                                        v-model="address"
+                                        label="Address*"
+                                        variant="outlined"
+                                        prepend-inner-icon="mdi-map-marker"
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-text-field
+                                        v-model="password"
+                                        label="Password*"
+                                        variant="outlined"
+                                        hint="This will be used for your login credentials."
+                                        prepend-inner-icon="mdi-lock"
+                                        :append-inner-icon="isPasswordShown1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                        :type="isPasswordShown1 ? 'text' : 'password'"
+                                        @click:append-inner="isPasswordShown1 = !isPasswordShown1"
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-text-field
+                                        v-model="confirmPassword"
+                                        label="Confirm Password*"
+                                        variant="outlined"
+                                        prepend-inner-icon="mdi-lock"
+                                        :append-inner-icon="isPasswordShown2 ? 'mdi-eye' : 'mdi-eye-off'"
+                                        :type="isPasswordShown2 ? 'text' : 'password'"
+                                        @click:append-inner="isPasswordShown2 = !isPasswordShown2"
+                                    ></v-text-field>
+                                </v-col>
+                                <transition name="fade">
+                                    <v-col cols="12" v-if="passwordMismatch" class="bg-red-accent-1">Passwords do not
+                                        match
+                                    </v-col>
+                                </transition>
+                            </v-row>
+                            <v-btn
+                                color="blue-darken-1"
+                                variant="text"
+                                type="submit"
+                                block
+                                :disabled="!isFormValid"
+                            >
+                                Create Account
+                            </v-btn>
+
+                        </v-form>
+                    </v-container>
+                </v-card-text>
+                <!--                <v-card-text>-->
+                <!--                    <v-col class="d-flex justify-center align-center" cols="12">-->
+                <!--                        <p>Already have an account? Sign in Now!</p>-->
+                <!--                    </v-col>-->
+                <!--                </v-card-text>-->
+            </v-card>
         </v-row>
     </v-dialog>
 </template>
 
 <script setup>
+import {computed, ref} from 'vue';
+import $ from 'jquery';
+import {useStore} from '@/stores';
 
-import {ref} from "vue";
 
+const store = useStore();
 const dialog = ref(false);
+const loading = ref(false);
+const isPasswordShown1 = ref(false);
+const isPasswordShown2 = ref(false);
+const name = ref('');
+const username = ref('');
+const password = ref('');
+const email = ref('');
+const phone = ref('');
+const address = ref('');
+const confirmPassword = ref('');
+const passwordMismatch = computed(
+    () => password.value !== '' && password.value !== confirmPassword.value
+);
 
+const isFormValid = computed(() => {
+    return (
+        name.value !== '' &&
+        username.value !== '' &&
+        email.value !== '' &&
+        phone.value !== '' &&
+        address.value !== '' &&
+        password.value !== '' &&
+        confirmPassword.value !== '' &&
+        !passwordMismatch.value
+    );
+});
+
+// todo: Make sure account will be created
+// Known HTTP error: 401 Unauthorized
+const createAccount = () => {
+    loading.value = true;
+     $.ajax({
+        url: `${store.appURL}/index.php`,
+        type: 'POST',
+        xhrFields: {
+            withCredentials: true
+        },
+        data: {
+            name: name.value,
+            userName: username.value,
+            passWord: password.value,
+            email: email.value,
+            phone: phone.value,
+            address: address.value
+        },
+        success: () => {
+            if (loading.value) {
+                setTimeout(() => {
+                    loading.value = false;
+                    dialog.value = false;
+                }, 1000);
+            }
+        },
+        error: (error) => {
+            if (loading.value) {
+                setTimeout(() => {
+                    loading.value = false;
+                    alert(`ERROR ${error.status}: ${error.statusText}`);
+                }, 500);
+            }
+        },
+    });
+}
 </script>
 
-
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
 
 </style>

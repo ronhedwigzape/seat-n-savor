@@ -13,64 +13,63 @@
             </v-btn>
         </template>
         <v-row class="d-flex justify-center align-center">
-        <v-card class="pa-1">
-            <v-card-title >
-                <v-btn
-                    color="grey-darken-4"
-                    variant="text"
-                    class="mt-2 float-end rounded"
-                    @click="dialog = false"
-                >
-                    <v-icon>mdi-close</v-icon>
-                </v-btn>
-                <v-col class="d-flex justify-center align-center">
-                    <p class="text-lg-h2 text-md-h3 text-h4 pally">Sign In</p>
-                </v-col>
-            </v-card-title>
-            <v-card-text>
-                <v-container>
-                    <v-form
-                        @submit.prevent="handleSubmit"
+            <v-card class="pa-1" width="500">
+                <v-card-title>
+                    <v-btn
+                        variant="text"
+                        class="mt-2 float-end rounded"
+                        @click="dialog = false"
                     >
-                        <v-row>
-                            <v-col cols="12">
-                                <v-text-field
-                                    label="Username"
-                                    variant="outlined"
-                                    v-model="username"
-                                    prepend-inner-icon="mdi-account"
-                                    :rules="[rules.required]"
-                                    required
-                                ></v-text-field>
-                            </v-col>
-                            <v-col cols="12">
-                                <v-text-field
-                                    label="Password"
-                                    variant="outlined"
-                                    v-model="password"
-                                    prepend-inner-icon="mdi-lock"
-                                    :append-inner-icon="isPasswordShown ? 'mdi-eye' : 'mdi-eye-off'"
-                                    :type="isPasswordShown ? 'text' : 'password'"
-                                    :rules="[rules.required]"
-                                    @click:append-inner="isPasswordShown = !isPasswordShown"
-                                    required
-                                ></v-text-field>
-                            </v-col>
-                        </v-row>
-                        <v-btn
-                            color="blue-darken-1"
-                            variant="tonal"
-                            type="submit"
-                            :loading="loading"
-                            :disabled="loading"
-                            block
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                    <v-col class="d-flex justify-center align-center">
+                        <p class="text-lg-h2 text-md-h3 text-h4 pally">Sign In</p>
+                    </v-col>
+                </v-card-title>
+                <v-card-text>
+                    <v-container>
+                        <v-form
+                            @submit.prevent="handleSubmit"
                         >
-                            Login
-                        </v-btn>
-                    </v-form>
-                </v-container>
-            </v-card-text>
-        </v-card>
+                            <v-row>
+                                <v-col cols="12">
+                                    <v-text-field
+                                        label="Username"
+                                        variant="outlined"
+                                        v-model="username"
+                                        prepend-inner-icon="mdi-account-circle"
+                                        :rules="[rules.required]"
+                                        required
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-text-field
+                                        label="Password"
+                                        variant="outlined"
+                                        v-model="password"
+                                        prepend-inner-icon="mdi-lock"
+                                        :append-inner-icon="isPasswordShown ? 'mdi-eye' : 'mdi-eye-off'"
+                                        :type="isPasswordShown ? 'text' : 'password'"
+                                        :rules="[rules.required]"
+                                        @click:append-inner="isPasswordShown = !isPasswordShown"
+                                        required
+                                    ></v-text-field>
+                                </v-col>
+                            </v-row>
+                            <v-btn
+                                color="blue-darken-1 mt-4"
+                                variant="tonal"
+                                type="submit"
+                                :loading="loading"
+                                :disabled="loading"
+                                block
+                            >
+                                Login
+                            </v-btn>
+                        </v-form>
+                    </v-container>
+                </v-card-text>
+            </v-card>
         </v-row>
     </v-dialog>
 </template>
@@ -98,7 +97,7 @@ const authStore = useAuthStore();
 const router = useRouter();
 
 const rules = reactive({
-   required: value => !!value || 'Required.',
+    required: value => !!value || 'Login credential is required.',
 });
 
 const handleSubmit = async () => {
@@ -114,7 +113,7 @@ const handleSubmit = async () => {
             password: password.value,
         },
         success: (data) => {
-            if(loading.value) {
+            if (loading.value) {
                 setTimeout(() => {
                     loading.value = false;
                 }, 1000);
@@ -124,7 +123,7 @@ const handleSubmit = async () => {
             router.replace({name: data.user.userType});
         },
         error: (error) => {
-            if(loading.value) {
+            if (loading.value) {
                 setTimeout(() => {
                     loading.value = false;
                     alert(`ERROR ${error.status}: ${error.statusText}`);

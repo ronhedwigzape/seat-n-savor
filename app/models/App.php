@@ -4,7 +4,7 @@ date_default_timezone_set('Asia/Manila');
 
 class App
 {
-    protected mixed $conn;
+    protected $conn;
 
 
     /***************************************************************************
@@ -26,7 +26,7 @@ class App
      * @param $error
      * @return void
      */
-    public static function returnError($header, $error): void
+    public static function returnError($header, $error)
     {
         header($header);
         die(json_encode([
@@ -41,7 +41,7 @@ class App
      * @param $phoneNumber
      * @return string
      */
-    public function cleanPhoneNumber($phoneNumber): string
+    public function cleanPhoneNumber($phoneNumber)
     {
         // Remove whitespaces, punctuation, symbols, and dashes
         $phoneNumber = preg_replace('/[\s\p{P}\p{S}-]+/', '', $phoneNumber);

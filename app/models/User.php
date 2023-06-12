@@ -5,18 +5,18 @@ require_once 'App.php';
 class User extends App
 {
     // table
-    protected string $table;
+    protected $table;
 
     // properties
-    protected int|null $id = null;
-    protected mixed $username;
-    protected mixed $password;
-    protected mixed $name;
-    protected mixed $email;
-    protected mixed $phone;
-    protected mixed $address;
-    protected mixed $avatar;
-    protected string $userType;
+    protected $id = null;
+    protected $username;
+    protected $password;
+    protected $name;
+    protected $email;
+    protected $phone;
+    protected $address;
+    protected $avatar;
+    protected $userType;
 
     /***************************************************************************
      * User constructor
@@ -58,7 +58,7 @@ class User extends App
      * @param array $append
      * @return array
      */
-    public function toArray(array $append = []): array
+    public function toArray($append = [])
     {
         $arr = [
             'id'       => $this->id,
@@ -85,7 +85,7 @@ class User extends App
      *
      * @return array|null
      */
-    public static function getUser(): ?array
+    public static function getUser()
     {
         $user_info = null;
         if(isset($_SESSION['user']) && isset($_SESSION['pass'])) {
@@ -109,7 +109,7 @@ class User extends App
      *
      * @return bool
      */
-    public function authenticated(): bool
+    public function authenticated()
     {
         return (bool)$this->id;
     }
@@ -120,7 +120,7 @@ class User extends App
      *
      * @return $this|false
      */
-    public function signIn(): false|static
+    public function signIn()
     {
         if($this->authenticated()) {
             $_SESSION['user'] = $this->toArray();
@@ -136,7 +136,7 @@ class User extends App
      *
      * @return void
      */
-    public function signOut(): void
+    public function signOut()
     {
         if(isset($_SESSION['user']))
             session_destroy();
@@ -149,7 +149,7 @@ class User extends App
      * @param string $name
      * @return void
      */
-    public function setName(string $name): void
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -161,7 +161,7 @@ class User extends App
      * @param string $username
      * @return void
      */
-    public function setUsername(string $username): void
+    public function setUsername(string $username)
     {
         $this->username = $username;
     }
@@ -173,7 +173,7 @@ class User extends App
      * @param string $password
      * @return void
      */
-    public function setPassword(string $password): void
+    public function setPassword(string $password)
     {
         $this->password = $password;
     }
@@ -184,7 +184,7 @@ class User extends App
      *
      * @return int|null
      */
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
@@ -195,7 +195,7 @@ class User extends App
      *
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }

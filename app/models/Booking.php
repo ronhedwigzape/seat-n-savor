@@ -4,19 +4,19 @@ require_once 'App.php';
 
 class Booking extends App
 {
-    protected string $table = 'bookings';
+    protected $table = 'bookings';
 
-    protected ?int $id = 0;
-    protected int $customer_id;
-    protected int $restaurant_id;
-    protected int $table_id;
-    protected mixed $code;
-    protected mixed $date;
-    protected mixed $time;
-    protected int $party_size;
-    protected mixed $status;
-    protected mixed $cancellation_reason;
-    protected bool $is_shown;
+    protected $id;
+    protected $customer_id;
+    protected $restaurant_id;
+    protected $table_id;
+    protected $code;
+    protected $date;
+    protected $time;
+    protected $party_size;
+    protected $status;
+    protected $cancellation_reason;
+    protected $is_shown;
 
 
     /***************************************************************************
@@ -24,7 +24,7 @@ class Booking extends App
      *
      * @param int $id
      */
-    public function __construct(int $id = 0)
+    public function __construct($id = 0)
     {
         parent::__construct();
 
@@ -58,7 +58,7 @@ class Booking extends App
      * @param $stmt
      * @return Booking|boolean
      */
-    private static function executeFind($stmt): Booking|bool
+    private static function executeFind($stmt)
     {
         $stmt->execute();
         $result = $stmt->get_result();
@@ -77,7 +77,7 @@ class Booking extends App
      * @param int $table_id
      * @return Booking|boolean
      */
-    public static function find(int $customer_id, int $restaurant_id, int $table_id): Booking|bool
+    public static function find($customer_id, $restaurant_id, $table_id)
     {
         $booking = new Booking();
         $stmt = $booking->conn->prepare("SELECT id FROM $booking->table WHERE customer_id = ? AND restaurant_id = ? AND table_id = ?");
@@ -92,7 +92,7 @@ class Booking extends App
      * @param int $id
      * @return Booking|boolean
      */
-    public static function findById(int $id): Booking|bool
+    public static function findById($id)
     {
         $rating = new Booking();
         $stmt = $rating->conn->prepare("SELECT id FROM $rating->table WHERE id = ?");
@@ -106,7 +106,7 @@ class Booking extends App
      *
      * @return array
      */
-    public function toArray(): array
+    public function toArray()
     {
         return [
             'id'                    => $this->id,
@@ -130,7 +130,7 @@ class Booking extends App
      * @param int $id
      * @return bool
      */
-    public static function exists(int $id): bool
+    public static function exists($id)
     {
         if(!$id)
             return false;
@@ -146,7 +146,7 @@ class Booking extends App
      * @param $table_id
      * @return bool
      */
-    public static function stored($customer_id, $restaurant_id, $table_id): bool
+    public static function stored($customer_id, $restaurant_id, $table_id)
     {
         if(!$customer_id || !$restaurant_id || !$table_id)
             return false;
@@ -160,20 +160,20 @@ class Booking extends App
      *
      * @return void
      */
-    public function checkId(): void
+    public function checkId()
     {
         require_once 'Customer.php';
         if (!Customer::exists($this->customer_id))
             App::returnError('HTTP/1.1 404', 'Insert Error: customer [id = ' . $this->customer_id . '] does not exist.');
 
         // check restaurant_id
-        require_once 'Restaurant.php';
-        if (!Restaurant::exists($this->restaurant_id))
+        require_once 'Restaurants.php';
+        if (!Restaurants::exists($this->restaurant_id))
             App::returnError('HTTP/1.1 404', 'Insert Error: restaurant [id = ' . $this->restaurant_id . '] does not exist.');
 
         // check table_id
-        require_once 'Table.php';
-        if (!Table::exists($this->table_id))
+        require_once 'Tables.php';
+        if (!Tables::exists($this->table_id))
             App::returnError('HTTP/1.1 404', 'Insert Error: table [id = ' . $this->table_id . '] does not exist.');
     }
 
@@ -183,7 +183,7 @@ class Booking extends App
      *
      * @return void
      */
-    public function insert(): void
+    public function insert()
     {
         // check id
         if(self::exists($this->id))
@@ -210,7 +210,7 @@ class Booking extends App
      * @param bool $toggle_shown
      * @return void
      */
-    public function update(bool $toggle_shown = false): void
+    public function update($toggle_shown = false)
     {
         // check id
         if(!self::exists($this->id))
@@ -239,7 +239,7 @@ class Booking extends App
      *
      * @return void
      */
-    public function delete(): void
+    public function delete()
     {
         // check id
         if(!self::exists($this->id))
@@ -257,7 +257,7 @@ class Booking extends App
      *
      * @param int $id
      */
-    public function setId(int $id): void
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -268,7 +268,7 @@ class Booking extends App
      *
      * @param int $customer_id
      */
-    public function setCustomerId(int $customer_id): void
+    public function setCustomerId($customer_id)
     {
         $this->customer_id = $customer_id;
     }
@@ -279,7 +279,7 @@ class Booking extends App
      *
      * @param int $restaurant_id
      */
-    public function setRestaurantId(int $restaurant_id): void
+    public function setRestaurantId($restaurant_id)
     {
         $this->restaurant_id = $restaurant_id;
     }
@@ -290,7 +290,7 @@ class Booking extends App
      *
      * @param int $table_id
      */
-    public function setTableId(int $table_id): void
+    public function setTableId($table_id)
     {
         $this->table_id = $table_id;
     }
@@ -301,7 +301,7 @@ class Booking extends App
      *
      * @param mixed $cancellation_reason
      */
-    public function setCancellationReason(mixed $cancellation_reason): void
+    public function setCancellationReason($cancellation_reason)
     {
         $this->cancellation_reason = $cancellation_reason;
     }
@@ -312,7 +312,7 @@ class Booking extends App
      *
      * @param mixed $code
      */
-    public function setCode(mixed $code): void
+    public function setCode($code)
     {
         $this->code = $code;
     }
@@ -323,7 +323,7 @@ class Booking extends App
      *
      * @param mixed $date
      */
-    public function setDate(mixed $date): void
+    public function setDate($date)
     {
         $this->date = $date;
     }
@@ -334,7 +334,7 @@ class Booking extends App
      *
      * @param mixed $time
      */
-    public function setTime(mixed $time): void
+    public function setTime($time)
     {
         $this->time = $time;
     }
@@ -345,7 +345,7 @@ class Booking extends App
      *
      * @param int $party_size
      */
-    public function setPartySize(int $party_size): void
+    public function setPartySize($party_size)
     {
         $this->party_size = $party_size;
     }
@@ -356,7 +356,7 @@ class Booking extends App
      *
      * @param bool $is_shown
      */
-    public function setIsShown(bool $is_shown): void
+    public function setIsShown($is_shown)
     {
         $this->is_shown = $is_shown;
     }
@@ -367,7 +367,7 @@ class Booking extends App
      *
      * @param mixed $status
      */
-    public function setStatus(mixed $status): void
+    public function setStatus($status)
     {
         $this->status = $status;
     }
@@ -378,7 +378,7 @@ class Booking extends App
      *
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -389,7 +389,7 @@ class Booking extends App
      *
      * @return int
      */
-    public function getCustomerId(): int
+    public function getCustomerId()
     {
         return $this->customer_id;
     }
@@ -400,7 +400,7 @@ class Booking extends App
      *
      * @return int
      */
-    public function getRestaurantId(): int
+    public function getRestaurantId()
     {
         return $this->restaurant_id;
     }
@@ -411,7 +411,7 @@ class Booking extends App
      *
      * @return int
      */
-    public function getTableId(): int
+    public function getTableId()
     {
         return $this->table_id;
     }
@@ -422,7 +422,7 @@ class Booking extends App
      *
      * @return mixed
      */
-    public function getCode(): mixed
+    public function getCode()
     {
         return $this->code;
     }
@@ -433,7 +433,7 @@ class Booking extends App
      *
      * @return mixed
      */
-    public function getDate(): mixed
+    public function getDate()
     {
         return $this->date;
     }
@@ -443,7 +443,7 @@ class Booking extends App
      *
      * @return mixed
      */
-    public function getTime(): mixed
+    public function getTime()
     {
         return $this->time;
     }
@@ -454,7 +454,7 @@ class Booking extends App
      *
      * @return int
      */
-    public function getPartySize(): int
+    public function getPartySize()
     {
         return $this->party_size;
     }
@@ -465,7 +465,7 @@ class Booking extends App
      *
      * @return mixed
      */
-    public function getCancellationReason(): mixed
+    public function getCancellationReason()
     {
         return $this->cancellation_reason;
     }
@@ -476,7 +476,7 @@ class Booking extends App
      *
      * @return mixed
      */
-    public function getStatus(): mixed
+    public function getStatus()
     {
         return $this->status;
     }
@@ -486,7 +486,7 @@ class Booking extends App
      *
      * @return bool
      */
-    public function getIsShown(): bool
+    public function getIsShown()
     {
         return $this->is_shown;
     }
@@ -496,7 +496,7 @@ class Booking extends App
      *
      * @return Customer
      */
-    public function getCustomer(): Customer
+    public function getCustomer()
     {
         require_once 'Customer.php';
         return Customer::findById($this->customer_id);
@@ -506,23 +506,23 @@ class Booking extends App
     /***************************************************************************
      * Get restaurant
      *
-     * @return Restaurant
+     * @return Restaurants
      */
-    public function getRestaurant(): Restaurant
+    public function getRestaurant()
     {
-        require_once 'Restaurant.php';
-        return new Restaurant($this->restaurant_id);
+        require_once 'Restaurants.php';
+        return new Restaurants($this->restaurant_id);
     }
 
 
     /***************************************************************************
      * Get table
      *
-     * @return Table
+     * @return Tables
      */
-    public function getTable(): Table
+    public function getTable()
     {
-        require_once 'Table.php';
-        return new Table($this->table_id);
+        require_once 'Tables.php';
+        return new Tables($this->table_id);
     }
 }

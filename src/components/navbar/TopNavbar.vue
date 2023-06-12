@@ -45,7 +45,8 @@
             <v-tooltip
                 activator="parent"
                 location="bottom"
-            >{{ darkMode ? 'Dark Mode' : 'Light Mode' }}</v-tooltip>
+            >{{ darkMode ? 'Dark Mode' : 'Light Mode' }}
+            </v-tooltip>
             <span class="slider"></span>
         </label>
         <v-chip
@@ -54,13 +55,14 @@
             pill
         >
             <v-avatar start>
-                <v-img :src="`/img/avatars/${authStore.getUser.avatar}`"></v-img>
+                <v-img :src="authStore.getUser.avatar"></v-img>
             </v-avatar>
             {{ authStore.getUser.name }}
             <v-tooltip
                 activator="parent"
                 location="bottom"
-            >Profile</v-tooltip>
+            >Profile
+            </v-tooltip>
         </v-chip>
 
         <template v-if="authStore.isAuthenticated">
@@ -73,7 +75,8 @@
                 <v-tooltip
                     activator="parent"
                     location="bottom"
-                >Notification</v-tooltip>
+                >Notification
+                </v-tooltip>
                 <v-menu
                     activator="parent"
                     :close-on-content-click="false"
@@ -86,137 +89,50 @@
                         </v-list-item-title>
                         <v-list-item class="bg-grey-darken-3" v-if="status === 'pending'">
                             <v-list-item-title>~ From: {{ restaurant }} ~</v-list-item-title>
-                            <v-icon color="orange">mdi-book-clock</v-icon> {{ items }}
+                            <v-icon color="orange">mdi-book-clock</v-icon>
+                            {{ items }}
                         </v-list-item>
                         <v-list-item class="bg-grey-darken-3" v-else-if="status === 'confirmed'">
                             <v-list-item-title>~ From: {{ restaurant }} ~</v-list-item-title>
-                            <v-icon color="success">mdi-book-check</v-icon> {{ items }}
+                            <v-icon color="success">mdi-book-check</v-icon>
+                            {{ items }}
                         </v-list-item>
                         <v-list-item class="bg-grey-darken-3" v-else>
                             <v-list-item-title>~ From: {{ restaurant }} ~</v-list-item-title>
-                            <v-icon color="error">mdi-book-cancel</v-icon> {{ items }}
+                            <v-icon color="error">mdi-book-cancel</v-icon>
+                            {{ items }}
                         </v-list-item>
                     </v-list>
                 </v-menu>
             </v-btn>
-        </template>
-
-        <template v-if="authStore.isAuthenticated">
-            <!--	Sign out	-->
-            <v-dialog
-                v-model="dialog"
-                max-width="400"
-            >
-                <template v-slot:activator="{ props }">
-                    <v-menu>
-                        <template
-                            v-slot:activator="{ props }"
-                        >
-                            <v-btn
-                                :class="$vuetify.display.mdAndDown ? 'ma-1' : 'ma-3'"
-                                icon="mdi-dots-vertical"
-                                v-bind="props"/>
-                        </template>
-                        <v-list>
-                            <v-list-item
-                                v-bind="props"
-                                class="text-red-darken-3 text-uppercase"
-                                style="font-size: 1rem;"
-                                variant="text"
-                            >
-                                <v-icon icon="mdi-logout"/>
-                                Sign Out
-                            </v-list-item>
-                        </v-list>
-                    </v-menu>
-                </template>
-                <v-card>
-                    <v-card-title class="bg-orange-accent-2">
-                        <v-icon id="remind">mdi-alert-circle</v-icon>
-                        Confirm Sign Out
-                    </v-card-title>
-                    <v-card-text>Are you sure you want to sign out?</v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn
-                            color="green-darken-1"
-                            variant="text"
-                            @click="dialog = false"
-                            :disabled="signingOut"
-                        >
-                            Go Back
-                        </v-btn>
-                        <v-btn
-                            color="red-darken-1"
-                            variant="text"
-                            @click="signOut"
-                            :loading="signingOut"
-                        >
-                            Sign Out
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
+           <SignOut/>
         </template>
         <template v-else>
             <SignIn/>
             <SignUp/>
         </template>
-
     </v-app-bar>
 </template>
 
 <script setup>
-import {onMounted, reactive, ref} from "vue";
+import {onMounted, ref} from "vue";
 import SignUp from "@/components/dialogs/SignUpDialog.vue";
-import {useStore} from "@/stores";
 import SignIn from "@/components/dialogs/SignInDialog.vue";
-import {useAuthStore} from "@/stores/store-auth";
-import {useRouter} from "vue-router";
 import {useTheme} from "vuetify";
-import $ from 'jquery';
-
+import SignOut from "@/components/dialogs/SignOutDialog.vue";
+import {useAuthStore} from "@/stores/store-auth";
+import {useStore} from "@/stores";
 
 // data
 const dialog = ref(false);
-const signingOut = ref(false);
-const signedOut = ref(false);
 const theme = useTheme();
 const darkMode = ref(true);
 const image = ref('dine.jpg');
 const status = ref('cancelled');
 const items = ref('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad delectus dolore dolorem dolores doloribus ea explicabo hic illo impedit in, laborum officiis perspiciatis provident quasi quisquam quod recusandae rerum soluta.');
-const restaurant = ref('MCM Restaurant')
-
-const store = useStore();
-const router = useRouter();
+const restaurant = ref('MCM Restaurants')
 const authStore = useAuthStore();
-
-
-
-const signOut = async () => {
-    signingOut.value = true;
-    await $.ajax({
-        url: `${store.appURL}/index.php`,
-        type: 'POST',
-        xhrFields: {
-            withCredentials: true
-        },
-        data: {
-            signOut: signedOut.value
-        },
-        success: (data) => {
-            data = JSON.parse(data);
-            authStore.setUser(data.user = null);
-            router.push('/')
-            signingOut.value = false;
-        },
-        error: (error) => {
-            alert(`ERROR ${error.status}: ${error.statusText}`);
-            signingOut.value = false;
-        },
-    });
-};
+const store = useStore();
 
 const toggleDarkMode = () => {
     theme.global.name.value = darkMode.value ? "dark" : "light";

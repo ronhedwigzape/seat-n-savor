@@ -10,7 +10,7 @@ class Admin extends User
      * @param string $username
      * @param string $password
      */
-    public function __construct(string $username = '', string $password = '')
+    public function __construct($username = '', $password = '')
     {
         parent::__construct($username, $password, 'admin');
     }
@@ -22,7 +22,7 @@ class Admin extends User
      * @param $stmt
      * @return Admin|false
      */
-    private static function executeFind($stmt): false|Admin
+    private static function executeFind($stmt)
     {
         $stmt->execute();
         $result = $stmt->get_result();
@@ -39,7 +39,7 @@ class Admin extends User
      * @param int $id
      * @return Admin|boolean
      */
-    public static function findById(int $id): bool|Admin
+    public static function findById($id)
     {
         $admin = new Admin();
         $stmt = $admin->conn->prepare("SELECT username, password FROM $admin->table WHERE id = ?");
@@ -54,7 +54,7 @@ class Admin extends User
      * @param array $append
      * @return array
      */
-    public function toArray(array $append = []): array
+    public function toArray($append = [])
     {
         return parent::toArray($append);
     }
@@ -65,7 +65,7 @@ class Admin extends User
      *
      * @return Admin[]
      */
-    public static function all(): array
+    public static function all()
     {
         $admin = new Admin();
         $sql = "SELECT username, password FROM $admin->table ORDER BY number";
@@ -86,7 +86,7 @@ class Admin extends User
      *
      * @return array
      */
-    public static function rows(): array
+    public static function rows()
     {
         $admins = [];
         foreach(self::all() as $admin) {
