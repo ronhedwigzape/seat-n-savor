@@ -9,10 +9,6 @@
             />
         </template>
 
-        <template v-if="authStore.isAuthenticated" v-slot:prepend>
-            <v-app-bar-nav-icon/>
-        </template>
-
         <v-app-bar-title class="pally">{{ store.app.brand }}</v-app-bar-title>
 
         <v-spacer/>

@@ -53,12 +53,14 @@ else {
                 $booking['time'],
                 $booking['party_size']
             );
-
         }
 
-
-
-
+        // get all customer bookings
+        else if (isset($_GET['getBookings'])) {
+            echo json_encode([
+                'bookings' => $customer->getAllCustomerBookings()
+            ]);
+        }
 
 
         else

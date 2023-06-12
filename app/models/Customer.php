@@ -251,8 +251,40 @@ class Customer extends User
     }
 
 
+    /***************************************************************************
+     * Get all customer bookings in array
+     *
+     * @return array
+     */
     public function getAllCustomerBookings() {
+        $bookings_table = 'bookings';
 
+        $stmt = $this->conn->prepare("SELECT * FROM $bookings_table WHERE customer_id = ?");
+        $stmt->bind_param("i", $this->id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $bookings = [];
+
+        if($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $booking = [
+                    'booking_id' => $row['id'],
+                    'restaurant_id' => $row['restaurant_id'],
+                    'table_id' => $row['table_id'],
+                    'code' => $row['code'],
+                    'date' => $row['date'],
+                    'time' => $row['time'],
+                    'party_size' => $row['party_size'],
+                    'status' => $row['status'],
+                    'cancellation_reason' => $row['cancellation_reason'],
+                    'is_shown' => $row['is_shown']
+                ];
+                $bookings[] = $booking;
+            }
+        }
+
+        return $bookings;
     }
 
 

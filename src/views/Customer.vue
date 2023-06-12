@@ -46,7 +46,7 @@
                         <v-row>
                             <v-col cols="12">
                                 <v-list>
-                                    <v-list-item class="text-h3 pt-4">Bookings</v-list-item>
+                                    <v-list-item class="text-h3 pt-4">Create your Booking</v-list-item>
                                     <v-list-item prepend-icon="mdi-map-marker" class="text-h5 pt-6">Setting
                                     </v-list-item>
                                 </v-list>
@@ -257,6 +257,39 @@
                 </v-btn>
             </template>
         </v-snackbar>
+        <v-divider class="my-10"/>
+        <v-col>
+            <h1 align="center" class="text-h3 pb-7"><v-icon>mdi-silverware-fork-knife</v-icon> My Current Bookings</h1>
+            <v-table
+                class="mx-5"
+            >
+                <thead>
+                    <tr>
+                        <th class="text-center"><v-icon>mdi-calendar-month</v-icon> Date</th>
+                        <th class="text-center"><v-icon>mdi-clock-time-nine</v-icon> Time</th>
+                        <th class="text-center"><v-icon>mdi-qrcode</v-icon> Code</th>
+                        <th class="text-center"><v-icon>mdi-account-group</v-icon> Party Size</th>
+                        <th class="text-center"><v-icon>mdi-silverware</v-icon> Restaurant</th>
+                        <th class="text-center"><v-icon>mdi-table-chair</v-icon> Table</th>
+                        <th class="text-center"><v-icon>mdi-list-status</v-icon> Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(booking, bookingKey, bookingIndex) in bookings" :key="booking.id">
+                        <td align="center"> {{ booking.date }} </td>
+                        <td align="center"> {{ booking.time }} </td>
+                        <td align="center"> {{ booking.code }} </td>
+                        <td align="center"> {{ booking.party_size }} </td>
+                        <td align="center"> {{ getRestaurantNameById(booking.restaurant_id) }}  </td>
+                        <td align="center"> #{{ getTableNumberById(booking.table_id) }} </td>
+                        <td align="center" class="text-uppercase"> {{ booking.status }} </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </v-table>
+        </v-col>
     </v-row>
     <Footer/>
 </template>
@@ -292,6 +325,7 @@ const dateOption = ref({
 })
 
 const restaurants = reactive([]);
+const bookings = reactive([]);
 const tables = reactive([]);
 const booking = ref({
     'restaurant_id': null,
@@ -355,6 +389,17 @@ const handleCloseBook = () => {
         dialog.value = false
     ), 100);
 }
+
+const getRestaurantNameById = (restaurantId) => {
+    const restaurant = restaurants.find((r) => r.id === restaurantId);
+    return restaurant ? restaurant.name : '';
+};
+
+const getTableNumberById = (tableId) => {
+    const table = tables.find((t) => t.id === tableId);
+    return table ? table.number : '';
+};
+
 
 // computed
 const selectedDate = computed(() => {
@@ -456,11 +501,32 @@ const saveBooking = () => {
     });
 }
 
+const fetchCustomerBookings = () => {
+    $.ajax({
+        url: `${store.appURL}/customer.php`,
+        type: 'GET',
+        xhrFields: {
+            withCredentials: true
+        },
+        data: {
+            getBookings: '',
+        },
+        success: (data) => {
+            data = JSON.parse(data);
+            Object.assign(bookings, data.bookings);
+        },
+        error: (error) => {
+            alert(`ERROR ${error.status}: ${error.statusText}`);
+        }
+    });
+}
+
 
 // mounted
 onMounted(() => {
     fetchTables();
     fetchRestaurants();
+    fetchCustomerBookings();
 })
 </script>
 
