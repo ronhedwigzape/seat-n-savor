@@ -125,6 +125,43 @@ class Booking extends App
 
 
     /***************************************************************************
+     * Get all bookings as array of objects
+     *
+     * @return array
+     */
+    public static function all()
+    {
+        $booking = new Booking();
+
+        $sql = "SELECT * FROM $booking->table ";
+        $stmt = $booking->conn->prepare($sql);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $arr = [];
+        while($row = $result->fetch_assoc()) {
+            $arr[] = new Booking($row['id']);
+        }
+        return $arr;
+    }
+
+
+    /***************************************************************************
+     * Get all bookings as array of arrays
+     *
+     * @return array
+     */
+    public static function rows()
+    {
+        $bookings = [];
+        foreach(self::all() as $booking) {
+            $bookings[] = $booking->toArray();
+        }
+        return $bookings;
+    }
+
+
+    /***************************************************************************
      * Check if booking id exists
      *
      * @param int $id
