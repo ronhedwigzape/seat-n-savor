@@ -95,10 +95,40 @@ class Admin extends User
         return $admins;
     }
 
-//    public function getAllBookings() {
-//
-//
-//    }
+    /***************************************************************************
+     * Get all restaurant bookings in array
+     *
+     * @return array
+     */
+    public function getAllBookings() {
+        $bookings_table = 'bookings';
+
+        $stmt = $this->conn->prepare("SELECT * FROM $bookings_table ");
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $bookings = [];
+
+        if($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $booking = [
+                    'booking_id' => $row['id'],
+                    'restaurant_id' => $row['restaurant_id'],
+                    'customer_id' => $row['customer_id'],
+                    'table_id' => $row['table_id'],
+                    'code' => $row['code'],
+                    'date' => $row['date'],
+                    'time' => $row['time'],
+                    'party_size' => $row['party_size'],
+                    'status' => $row['status'],
+                    'cancellation_reason' => $row['cancellation_reason'],
+                    'is_shown' => $row['is_shown']
+                ];
+                $bookings[] = $booking;
+            }
+        }
+        return $bookings;
+    }
 
 
 

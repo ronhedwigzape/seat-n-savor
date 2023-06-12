@@ -234,30 +234,7 @@ class Restaurateur extends User
         $stmt->execute();
     }
 
-    /***************************************************************************
-     * Update booking status if pending || cancelled || confirmed
-     *
-     * @param Booking $booking
-     * @param string $status
-     * @return void
-     */
-    public function updateBookingStatus($booking, $status)
-    {
-        require_once 'Booking.php';
 
-        $restaurant_id = $booking->getRestaurantId();
-        $customer_id = $booking->getCustomerId();
-        $table_id = $booking->getTableId();
-
-        if (Booking::stored($customer_id, $restaurant_id, $table_id)) {
-            $booking->setStatus($status);
-            $booking->update();
-        }
-    }
-
-    public function scanQrCode($code) {
-
-    }
 
     /***************************************************************************
      * Get restaurant id when available
@@ -284,7 +261,41 @@ class Restaurateur extends User
         return $restaurant_id;
     }
 
-//    public function getAllRestaurantBookings() {
-//
-//    }
+    /***************************************************************************
+     * Get all restaurant bookings in array
+     *
+     * @return array
+     */
+    public function getAllRestaurantBookings() {
+        $bookings_table = 'bookings';
+
+        $restaurant_id = $this->getRestaurantId();
+
+        $stmt = $this->conn->prepare("SELECT * FROM $bookings_table WHERE restaurant_id = ?");
+        $stmt->bind_param("i", $restaurant_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $bookings = [];
+
+        if($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $booking = [
+                    'booking_id' => $row['id'],
+                    'customer_id' => $row['customer_id'],
+                    'table_id' => $row['table_id'],
+                    'code' => $row['code'],
+                    'date' => $row['date'],
+                    'time' => $row['time'],
+                    'party_size' => $row['party_size'],
+                    'status' => $row['status'],
+                    'cancellation_reason' => $row['cancellation_reason'],
+                    'is_shown' => $row['is_shown']
+                ];
+                $bookings[] = $booking;
+            }
+        }
+        return $bookings;
+    }
+
 }
