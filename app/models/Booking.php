@@ -6,7 +6,7 @@ class Booking extends App
 {
     protected string $table = 'bookings';
 
-    protected int $id;
+    protected ?int $id = 0;
     protected int $customer_id;
     protected int $restaurant_id;
     protected int $table_id;
@@ -207,17 +207,17 @@ class Booking extends App
     /***************************************************************************
      * Update booking
      *
-     * @param bool $toggle_lock
+     * @param bool $toggle_shown
      * @return void
      */
-    public function update(bool $toggle_lock = false): void
+    public function update(bool $toggle_shown = false): void
     {
         // check id
         if(!self::exists($this->id))
             App::returnError('HTTP/1.1 404', 'Update Error: booking [id = ' . $this->id . '] does not exist.');
 
         // check is_locked
-        if(!$toggle_lock) {
+        if(!$toggle_shown) {
             $stored_rating = self::findById($this->id);
             if($stored_rating->is_shown)
                 App::returnError('HTTP/1.1 409', 'Update Error: booking [id = ' . $this->id . '] is already locked.');

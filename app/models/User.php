@@ -14,6 +14,7 @@ class User extends App
     protected mixed $name;
     protected mixed $email;
     protected mixed $phone;
+    protected mixed $address;
     protected mixed $avatar;
     protected string $userType;
 
@@ -45,6 +46,7 @@ class User extends App
                 $this->email = $row['email'];
                 $this->phone = $row['phone'];
                 $this->avatar = $row['avatar'];
+                $this->address = $row['address'];
             }
         }
     }
@@ -64,6 +66,7 @@ class User extends App
             'username' => $this->username,
             'email'    => $this->email,
             'phone'    => $this->phone,
+            'address'  => $this->address,
             'avatar'   => $this->avatar,
             'userType' => $this->userType
         ];
@@ -254,6 +257,17 @@ class User extends App
 
 
     /***************************************************************************
+     * Get address
+     *
+     * @return mixed
+     */
+    public function getAddress(): mixed
+    {
+        return $this->address;
+    }
+
+
+    /***************************************************************************
      * Get userType
      *
      * @return string
@@ -304,6 +318,17 @@ class User extends App
     public function setPhone(mixed $phone): void
     {
         $this->phone = $phone;
+    }
+
+
+    /***************************************************************************
+     * Set address
+     *
+     * @param mixed $address
+     */
+    public function setAddress(mixed $address): void
+    {
+        $this->address = $address;
     }
 
 

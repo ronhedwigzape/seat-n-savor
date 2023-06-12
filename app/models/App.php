@@ -34,4 +34,20 @@ class App
         ]));
     }
 
+
+    /***************************************************************************
+     * Removes any special characters inside a phone number
+     *
+     * @param $phoneNumber
+     * @return string
+     */
+    public function cleanPhoneNumber($phoneNumber): string
+    {
+        // Remove whitespaces, punctuation, symbols, and dashes
+        $phoneNumber = preg_replace('/[\s\p{P}\p{S}-]+/', '', $phoneNumber);
+
+        // Remove any words
+        return preg_replace('/\p{L}+/u', '', $phoneNumber);
+    }
+
 }

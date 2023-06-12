@@ -10,6 +10,32 @@ if(isset($_GET['getUser'])) {
     exit;
 }
 
+// Create customer's account
+else if (isset($_POST['name']) && isset($_POST['phone'])) {
+    require_once 'Customer.php';
+
+    $name = $_POST['name'];
+    $username = $_POST['userName'];
+    $password = $_POST['passWord'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $address = $_POST['address'];
+    $avatar = 'avatar.png';
+
+    $customer = new Customer();
+
+    $customer->setUsername($username);
+    $customer->setPassword($password);
+    $customer->setAvatar($avatar);
+    $customer->setName($name);
+    $customer->setEmail($email);
+    $customer->setPhone($phone);
+    $customer->setAddress($address);
+    $customer->insert();
+
+    exit;
+}
+
 // user sign-in
 else if(isset($_POST['username']) && isset($_POST['password'])) {
     require_once 'models/Admin.php';
@@ -38,7 +64,6 @@ else if(isset($_POST['username']) && isset($_POST['password'])) {
 
     exit;
 }
-
 
 // user sign out
 else if(isset($_POST['signOut'])) {

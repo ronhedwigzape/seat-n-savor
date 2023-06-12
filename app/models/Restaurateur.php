@@ -154,8 +154,8 @@ class Restaurateur extends User
             App::returnError('HTTP/1.1 422', 'Insert Error: restaurateur password is required.');
 
         // proceed with insert
-        $stmt = $this->conn->prepare("INSERT INTO $this->table(name, username, password) VALUES(?, ?, ?)");
-        $stmt->bind_param("sss", $this->name,  $this->username, $this->password);
+        $stmt = $this->conn->prepare("INSERT INTO $this->table(name, username, password, avatar, email, phone, address) VALUES(?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssss", $this->name, $this->username, $this->password, $this->avatar, $this->email, $this->phone, $this->address);
         $stmt->execute();
         $this->id = $this->conn->insert_id;
     }
@@ -255,32 +255,8 @@ class Restaurateur extends User
         }
     }
 
-    /***************************************************************************
-     * Sets the customer's visibility for a booking.
-     *
-     * @param Booking $booking
-     * @param Customer $customer
-     * @param string $date
-     * @param string $time
-     * @return int
-     */
-    public function setCustomerVisibility(Booking $booking, Customer $customer, string $date, string $time): int
-    {
-        require_once 'Booking.php';
-        require_once 'Customer.php';
+    public function scanQrCode($code) {
 
-        $restaurant_id = $booking->getRestaurantId();
-        $customer_id = $booking->getCustomerId();
-        $table_id = $booking->getTableId();
-
-        if ($booking->getDate() !== $date && $booking->getTime() !== $time)
-            App::returnError('HTTP/1.1 404', 'Update Error: Invalid date and time .');
-
-        if (Booking::stored($customer_id, $restaurant_id, $table_id)) {
-            $booking->setCustomerId($customer->getId());
-            $booking->update(true);
-        }
-        return 0;
     }
 
     /***************************************************************************
@@ -308,4 +284,7 @@ class Restaurateur extends User
         return $restaurant_id;
     }
 
+//    public function getAllRestaurantBookings() {
+//
+//    }
 }

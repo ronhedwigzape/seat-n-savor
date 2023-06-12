@@ -95,6 +95,10 @@ class Admin extends User
         return $admins;
     }
 
+//    public function getAllBookings() {
+//
+//
+//    }
 
 
 

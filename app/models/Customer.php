@@ -5,7 +5,6 @@ require_once 'User.php';
 class Customer extends User
 {
 
-
     /***************************************************************************
      * Customer constructor
      *
@@ -141,10 +140,9 @@ class Customer extends User
             App::returnError('HTTP/1.1 422', 'Insert Error: customer password is required.');
 
         // proceed with insert
-        $stmt = $this->conn->prepare("INSERT INTO $this->table(name, username, password) VALUES(?, ?, ?)");
-        $stmt->bind_param("sss", $this->name, $this->username, $this->password);
+        $stmt = $this->conn->prepare("INSERT INTO $this->table(name, username, password, avatar, email, phone, address) VALUES(?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssss", $this->name, $this->username, $this->password, $this->avatar, $this->email, $this->phone, $this->address);
         $stmt->execute();
-        $this->id = $this->conn->insert_id;
     }
 
 
@@ -195,27 +193,29 @@ class Customer extends User
 
 
     /***************************************************************************
-     * Make customer booking
+     * Make customer new booking
      *
-     * @param int $customer_id
-     * @param int $restaurant_id
-     * @param int $table_id
+     * @param Restaurant $restaurant
+     * @param Table $table
      * @param string $code
      * @param string $date
      * @param string $time
      * @param int $party_size
-     * @param string $status
      * @return void
      */
-    public function makeBooking(int $customer_id, int $restaurant_id, int $table_id, string $code, string $date, string $time, int $party_size, string $status = 'pending'): void
+    public function makeBooking(Restaurant $restaurant, Table $table,  string $code, string $date, string $time, int $party_size): void
     {
         require_once 'Booking.php';
+        $status = 'pending';
+
+        $restaurant_id = $restaurant->getId();
+        $table_id = $table->getId();
+
         $booking = new Booking();
+        if (Booking::stored($this->id, $restaurant_id, $table_id))
+            $booking = Booking::find($this->id, $restaurant_id, $table_id);
 
-        if (!Booking::stored($booking->getCustomerId(), $booking->getRestaurantId(), $booking->getTableId()))
-            App::returnError('HTTP/1.1 404', ' Error: Booking does not exist.');
-
-        $booking->setCustomerId($customer_id);
+        $booking->setCustomerId($this->id);
         $booking->setRestaurantId($restaurant_id);
         $booking->setTableId($table_id);
         $booking->setCode($code);
@@ -223,8 +223,42 @@ class Customer extends User
         $booking->setTime($time);
         $booking->setPartySize($party_size);
         $booking->setStatus($status);
-        $booking->insert();
+
+        if (Booking::stored($this->id, $restaurant_id, $table_id))
+            $booking->update();
+        else
+            $booking->insert();
     }
+
+
+    /***************************************************************************
+     * Generates a random qr code value
+     *
+     * @return string
+     */
+    public function generateQrCode(): string
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $code = '';
+        $characterCount = strlen($characters);
+
+        for ($i = 0; $i < 15; $i++) {
+            $randomIndex = mt_rand(0, $characterCount - 1);
+            $code .= $characters[$randomIndex];
+        }
+
+        return $code;
+    }
+
+
+    public function getAllCustomerBookings() {
+
+    }
+
+
+//    public function makeBookingCancellation() {
+//
+//    }
 
 
 }
