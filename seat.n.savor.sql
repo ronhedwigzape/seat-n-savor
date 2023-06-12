@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2023 at 03:29 PM
+-- Generation Time: Jun 10, 2023 at 06:03 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -35,6 +35,7 @@ CREATE TABLE `admins` (
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -43,8 +44,8 @@ CREATE TABLE `admins` (
 -- Dumping data for table `admins`
 --
 
-INSERT INTO `admins` (`id`, `username`, `password`, `avatar`, `name`, `email`, `phone`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin', 'avatar.png', 'ADMIN', 'admin@email.com', '09123456789', '2023-06-07 07:13:52', '2023-06-07 11:23:50');
+INSERT INTO `admins` (`id`, `username`, `password`, `avatar`, `name`, `email`, `phone`, `address`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'admin', 'avatar.png', 'ADMIN', 'admin@email.com', '09123456789', 'Admin Street, Admin City', '2023-06-07 07:13:52', '2023-06-10 16:03:22');
 
 -- --------------------------------------------------------
 
