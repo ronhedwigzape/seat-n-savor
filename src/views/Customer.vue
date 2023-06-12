@@ -259,7 +259,7 @@
         </v-snackbar>
         <v-divider class="my-10"/>
         <v-col>
-            <h1 align="center" class="text-h3 pb-7"><v-icon>mdi-silverware-fork-knife</v-icon> My Current Bookings</h1>
+            <h1 align="center" class="text-h3 pb-7"><v-icon>mdi-book-account</v-icon> My Current Bookings</h1>
             <v-table
                 class="mx-5"
             >
@@ -278,11 +278,40 @@
                     <tr v-for="(booking, bookingKey, bookingIndex) in bookings" :key="booking.id">
                         <td align="center"> {{ booking.date }} </td>
                         <td align="center"> {{ booking.time }} </td>
-                        <td align="center"> {{ booking.code }} </td>
+                        <td align="center">
+                            <v-btn color="orange-accent-2">
+                                View QR Code
+                                <v-dialog
+                                    v-model="view"
+                                    activator="parent"
+                                    width="auto"
+                                >
+                                    <v-card>
+                                        <v-card-text>
+                                            <VueQrcode id="qr" class="pt-4" :value="booking.code" :options="{ width: 280 }"/>
+                                        </v-card-text>
+                                        <v-card-actions class="px-5 pb-4">
+                                            <v-btn color="orange-accent-4" @click="downloadQR">Download QR</v-btn>
+                                            <v-spacer/>
+                                            <v-btn color="orange-accent-2" @click="view = false">Close Dialog</v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
+                            </v-btn>
+                        </td>
                         <td align="center"> {{ booking.party_size }} </td>
                         <td align="center"> {{ getRestaurantNameById(booking.restaurant_id) }}  </td>
                         <td align="center"> #{{ getTableNumberById(booking.table_id) }} </td>
-                        <td align="center" class="text-uppercase"> {{ booking.status }} </td>
+                        <td align="center"
+                            class="text-uppercase "
+                            :class="{
+                                'text-orange-accent-3' : booking.status === 'pending',
+                                'text-red-lighten-1' : booking.status === 'cancelled',
+                                'text-green-accent-2' : booking.status === 'confirmed'
+                            }"
+                        >
+                            {{ booking.status }}
+                        </td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -302,6 +331,7 @@ import TopNavbar from "@/components/navbar/TopNavbar.vue";
 import HeroImageSlide from "@/components/slides/HeroImageSlide.vue";
 import Footer from "@/components/footer/Footer.vue";
 import VueDatePicker from '@vuepic/vue-datepicker';
+import VueQrcode from "@chenfengyuan/vue-qrcode";
 import '@vuepic/vue-datepicker/dist/main.css'
 import $ from "jquery";
 import dayjs from 'dayjs';
@@ -312,6 +342,7 @@ const store = useStore();
 
 // data
 const dialog = ref(false);
+const view = ref(false);
 const snackbar = ref(false);
 const loading = ref(false);
 const tableModel = ref(null);
@@ -398,6 +429,21 @@ const getRestaurantNameById = (restaurantId) => {
 const getTableNumberById = (tableId) => {
     const table = tables.find((t) => t.id === tableId);
     return table ? table.number : '';
+};
+
+const downloadQR = (e) => {
+    e.preventDefault();
+
+    const canvas = document.getElementById("qr");
+    const pngUrl = canvas
+        .toDataURL("image/png")
+        .replace("image/png", "image/octet-stream");
+    let downloadLink = document.createElement("a");
+    downloadLink.href = pngUrl;
+    downloadLink.download = `QR_CODE_${authStore.getUser.name}_${new Date(Date.now()).toLocaleDateString()}.png`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
 };
 
 
