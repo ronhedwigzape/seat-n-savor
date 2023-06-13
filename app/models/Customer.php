@@ -302,6 +302,39 @@ class Customer extends User
     }
 
 
+    /***************************************************************************
+     * Get all customer notifications
+     *
+     * @return array
+     */
+    public function getCustomerNotifications()
+    {
+        $notifications_table = 'notifications';
+
+        $stmt = $this->conn->prepare("SELECT * FROM $notifications_table WHERE recipient_id = ?");
+        $stmt->bind_param("i", $this->id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $notifications = [];
+
+        if($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $notification = [
+                    'notification_id' => $row['id'],
+                    'recipient_id' => $row['recipient_id'],
+                    'sender_id' => $row['sender_id'],
+                    'message' => $row['message'],
+                    'updated_at' => $row['updated_at']
+                ];
+                $notifications[] = $notification;
+            }
+        }
+
+        return $notifications;
+
+    }
+
 //    public function makeBookingCancellation() {
 //
 //    }

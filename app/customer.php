@@ -19,21 +19,16 @@ else {
 
     else {
 
-        // fetch restaurants
+        // fetch restaurants, tables, and restaurateurs
         if (isset($_GET['getRestaurants'])) {
             require_once 'models/Restaurants.php';
+            require_once 'models/Tables.php';
+            require_once 'models/Restaurateur.php';
 
             echo json_encode([
                 'restaurants' => Restaurants::rows(),
-            ]);
-        }
-
-        // fetch tables
-        else if (isset($_GET['getTables'])) {
-            require_once 'models/Tables.php';
-
-            echo json_encode([
-                'tables' => Tables::rows()
+                'tables' => Tables::rows(),
+                'restaurateurs' => Restaurateur::rows()
             ]);
         }
 
@@ -59,6 +54,14 @@ else {
         else if (isset($_GET['getBookings'])) {
             echo json_encode([
                 'bookings' => $customer->getAllCustomerBookings()
+
+            ]);
+        }
+
+        // get all customer notifications
+        else if (isset($_GET['getCustomerNotifications'])) {
+            echo json_encode([
+                'notifications' => $customer->getCustomerNotifications()
             ]);
         }
 

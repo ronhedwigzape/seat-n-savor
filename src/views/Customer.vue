@@ -382,6 +382,7 @@ const view = reactive({});
 const restaurants = reactive([]);
 const bookings = reactive([]);
 const tables = reactive([]);
+const restaurateurs = reactive([]);
 const booking = ref({
     'restaurant_id': null,
     'table_id': null,
@@ -484,31 +485,11 @@ const isBookingFormDone = computed(() => {
         selectedDateTime.value !== null &&
         partySize.value !== null &&
         partySize.value !== 0 &&
-            partySize.value <= selectedTable.value.capacity
+        partySize.value <= selectedTable.value.capacity
     );
 });
 
 // ajax
-const fetchTables = () => {
-    $.ajax({
-        url: `${store.appURL}/${authStore.getUser.userType}.php`,
-        type: 'GET',
-        xhrFields: {
-            withCredentials: true
-        },
-        data: {
-            getTables: '',
-        },
-        success: (data) => {
-            data = JSON.parse(data);
-            Object.assign(tables, data.tables);
-        },
-        error: (error) => {
-            alert(`ERROR ${error.status}: ${error.statusText}`);
-        }
-    });
-}
-
 const fetchRestaurants = () => {
     $.ajax({
         url: `${store.appURL}/${authStore.getUser.userType}.php`,
@@ -521,7 +502,9 @@ const fetchRestaurants = () => {
         },
         success: (data) => {
             data = JSON.parse(data);
+            Object.assign(tables, data.tables);
             Object.assign(restaurants, data.restaurants);
+            Object.assign(restaurateurs, data.restaurateurs);
         },
         error: (error) => {
             alert(`ERROR ${error.status}: ${error.statusText}`);
@@ -586,10 +569,8 @@ const fetchCustomerBookings = () => {
     }
 }
 
-
 // mounted
 onMounted(() => {
-    fetchTables();
     fetchRestaurants();
     fetchCustomerBookings();
 })

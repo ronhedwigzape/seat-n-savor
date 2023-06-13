@@ -111,13 +111,14 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import SignUp from "@/components/dialogs/SignUpDialog.vue";
 import SignIn from "@/components/dialogs/SignInDialog.vue";
 import {useTheme} from "vuetify";
 import SignOut from "@/components/dialogs/SignOutDialog.vue";
 import {useAuthStore} from "@/stores/store-auth";
 import {useStore} from "@/stores";
+import $ from "jquery";
 
 // data
 const dialog = ref(false);
@@ -127,22 +128,50 @@ const image = ref('dine.jpg');
 const status = ref('cancelled');
 const items = ref('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad delectus dolore dolorem dolores doloribus ea explicabo hic illo impedit in, laborum officiis perspiciatis provident quasi quisquam quod recusandae rerum soluta.');
 const restaurant = ref('MCM Restaurants')
+const notifications = reactive([]);
 const authStore = useAuthStore();
 const store = useStore();
 
+// methods
 const toggleDarkMode = () => {
     theme.global.name.value = darkMode.value ? "dark" : "light";
     localStorage.setItem("darkTheme", darkMode.value.toString());
 };
 
+const fetchCustomerNotifications = () => {
+    if (authStore.isAuthenticated) {
+        $.ajax({
+            url: `${store.appURL}/${authStore.getUser.userType}.php`,
+            type: 'GET',
+            xhrFields: {
+                withCredentials: true
+            },
+            data: {
+                getCustomerNotifications: '',
+            },
+            success: (data, textStatus, jqXHR) => {
+                data = JSON.parse(data);
+                if (JSON.stringify(notifications) !== JSON.stringify(data.notifications))
+                    Object.assign(notifications, data.notifications);
+                setTimeout(() => {
+                    fetchCustomerNotifications();
+                }, 6000);
+            },
+            error: (error) => {
+                alert(`ERROR ${error.status}: ${error.statusText}`);
+            }
+        });
+    }
+}
+
 onMounted(() => {
+    fetchCustomerNotifications();
     const storedTheme = localStorage.getItem("darkTheme");
     if (storedTheme) {
         darkMode.value = storedTheme === "true";
     }
     theme.global.name.value = darkMode.value ? "dark" : "light";
 });
-
 </script>
 
 <style scoped>
