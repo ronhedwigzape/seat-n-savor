@@ -196,7 +196,7 @@ import $ from "jquery";
 import {useStore} from "@/stores";
 import {useAuthStore} from "@/stores/store-auth";
 
-const isShown = ref(true);
+const isShown = ref(false);
 const dialog = ref(false);
 const dialog2 = ref(false);
 const snackbar = ref(false);
