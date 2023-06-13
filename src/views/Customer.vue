@@ -256,7 +256,7 @@
         </v-snackbar>
         <v-divider class="my-10"/>
         <v-col>
-            <h1 align="center" class="text-h3 pb-7"><v-icon>mdi-book-account</v-icon> My Current Bookings</h1>
+            <h1 align="center" class="text-h3 pb-7 pally"><v-icon>mdi-book-account</v-icon> My Current Bookings</h1>
             <v-table
                 class="mx-5"
             >
@@ -561,27 +561,29 @@ const saveBooking = () => {
 }
 
 const fetchCustomerBookings = () => {
-    $.ajax({
-        url: `${store.appURL}/${authStore.getUser.userType}.php`,
-        type: 'GET',
-        xhrFields: {
-            withCredentials: true
-        },
-        data: {
-            getBookings: '',
-        },
-        success: (data, textStatus, jqXHR) => {
-            data = JSON.parse(data);
-            if (JSON.stringify(bookings) !== JSON.stringify(data.bookings))
-                Object.assign(bookings, data.bookings);
-            setTimeout(() => {
-                fetchCustomerBookings();
-            }, 3000);
-        },
-        error: (error) => {
-            alert(`ERROR ${error.status}: ${error.statusText}`);
-        }
-    });
+    if (authStore.isAuthenticated) {
+        $.ajax({
+            url: `${store.appURL}/${authStore.getUser.userType}.php`,
+            type: 'GET',
+            xhrFields: {
+                withCredentials: true
+            },
+            data: {
+                getBookings: '',
+            },
+            success: (data, textStatus, jqXHR) => {
+                data = JSON.parse(data);
+                if (JSON.stringify(bookings) !== JSON.stringify(data.bookings))
+                    Object.assign(bookings, data.bookings);
+                setTimeout(() => {
+                    fetchCustomerBookings();
+                }, 3000);
+            },
+            error: (error) => {
+                alert(`ERROR ${error.status}: ${error.statusText}`);
+            }
+        });
+    }
 }
 
 

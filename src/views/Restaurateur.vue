@@ -352,27 +352,29 @@ const onDecode = (decodedText) => {
 
 
 const fetchRestaurantBookings = () => {
-    $.ajax({
-        url: `${store.appURL}/${authStore.getUser.userType}.php`,
-        type: 'GET',
-        xhrFields: {
-            withCredentials: true
-        },
-        data: {
-            getRestaurantBookings: '',
-        },
-        success: (data, textStatus, jqXHR) => {
-            data = JSON.parse(data);
-            if (JSON.stringify(bookings) !== JSON.stringify(data.restaurant_bookings))
-                Object.assign(bookings, data.restaurant_bookings);
-            setTimeout(() => {
-                fetchRestaurantBookings();
-            }, 3000);
-        },
-        error: (error) => {
-            alert(`ERROR ${error.status}: ${error.statusText}`);
-        }
-    });
+    if (authStore.isAuthenticated) {
+        $.ajax({
+            url: `${store.appURL}/${authStore.getUser.userType}.php`,
+            type: 'GET',
+            xhrFields: {
+                withCredentials: true
+            },
+            data: {
+                getRestaurantBookings: '',
+            },
+            success: (data, textStatus, jqXHR) => {
+                data = JSON.parse(data);
+                if (JSON.stringify(bookings) !== JSON.stringify(data.restaurant_bookings))
+                    Object.assign(bookings, data.restaurant_bookings);
+                setTimeout(() => {
+                    fetchRestaurantBookings();
+                }, 3000);
+            },
+            error: (error) => {
+                alert(`ERROR ${error.status}: ${error.statusText}`);
+            }
+        });
+    }
 };
 
 const fetchCustomerTablesAndRestaurant = () => {
