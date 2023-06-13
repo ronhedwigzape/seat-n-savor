@@ -17,6 +17,7 @@
                                 >
                                     <v-card width="600">
                                         <v-card-title class="text-h5 ps-6 pt-8 pb-3">Instructions</v-card-title>
+                                        <v-divider/>
                                         <v-card-text>
                                         <ol class="px-6">
                                             <li>Please notify the customer first whether the booking is canceled or confirmed.</li>
@@ -179,7 +180,7 @@
                 </v-table>
             </v-col>
             <v-col class="d-flex justify-center align-center flex-column mx-16">
-                <StreamBarcodeReader class="me-16" v-if="isShown" @decode="onDecode" @loaded="onLoaded"/>
+                <StreamBarcodeReader class="me-16" v-if="isShown" @decode="onDecode"/>
                 <v-btn class="mt-6 me-16" @click="isShown = !isShown">Toggle QR Scanner</v-btn>
             </v-col>
         </v-row>
@@ -215,9 +216,9 @@ const onDecode = (decodedText) => {
     console.log(decodedText)
 }
 
-const onLoaded = (loaded) => {
-    console.log(loaded)
-}
+// const onLoaded = (loaded) => {
+//     console.log(loaded)
+// }
 
 const getCustomerNameById = (customerId) => {
     const customer = customers.find((r) => r.id === customerId);

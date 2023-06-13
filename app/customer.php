@@ -48,7 +48,7 @@ else {
             $customer->makeBooking(
                 Restaurants::findById($booking['restaurant_id']),
                 Tables::findById($booking['table_id']),
-                $customer->generateQrCode(),
+                $customer->generateQrCode($booking['restaurant_id']),
                 $booking['date'],
                 $booking['time'],
                 $booking['party_size']

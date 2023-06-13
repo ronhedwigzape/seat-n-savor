@@ -232,22 +232,35 @@ class Customer extends User
 
 
     /***************************************************************************
-     * Generates a random qr code value
+     * Generates a random qr code value for booking a restaurant
      *
      * @return string
      */
-    public function generateQrCode()
+    public function generateQrCode($restaurant_id)
     {
+        require_once 'Restaurants.php';
+
+        $restaurant = Restaurants::findById($restaurant_id);
+        $restaurant_name = $restaurant->getName();
+
+        // remove whitespace and convert to uppercase
+        $restaurant_name = str_replace(' ', '', strtoupper($restaurant_name));
+
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $code = '';
         $characterCount = strlen($characters);
 
-        for ($i = 0; $i < 15; $i++) {
+        for ($i = 0; $i < 14; $i++) {
             $randomIndex = mt_rand(0, $characterCount - 1);
             $code .= $characters[$randomIndex];
         }
 
-        return $code;
+        // insert restaurant name with a dash after the first three characters
+        $code = substr_replace($code, $restaurant_name, 3, 0);
+        $code = substr($code, 0, 3) . '-' . substr($code, 3);
+
+        // capitalize every first three characters
+        return strtoupper(substr($code, 0, 3)) . substr($code, 3);
     }
 
 
