@@ -329,9 +329,9 @@
                         <td align="center"
                             class="text-uppercase "
                             :class="{
-                                'text-orange-accent-3' : booking.status === 'pending',
-                                'text-red-lighten-1' : booking.status === 'cancelled',
-                                'text-green-accent-2' : booking.status === 'confirmed'
+                                'text-orange-accent-4' : booking.status === 'pending',
+                                'text-red-accent-4' : booking.status === 'cancelled',
+                                'text-green-accent-4' : booking.status === 'confirmed'
                             }"
                         >
                             {{ booking.status }}
