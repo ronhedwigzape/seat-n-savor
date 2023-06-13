@@ -288,6 +288,32 @@ class Restaurateur extends User
 
 
     /***************************************************************************
+     * Mark booking status as pending
+     *
+     * @param $customer_id
+     * @param $table_id
+     * @param $code
+     * @return void
+     */
+    public function updateBookingStatusToPending($customer_id, $table_id, $code)
+    {
+        require_once 'Booking.php';
+        $bookings_table = 'bookings';
+
+        $status = 'pending';
+        $restaurant_id = $this->getRestaurantId();
+
+        if (!Booking::stored($customer_id, $restaurant_id, $table_id, $code))
+            App::returnError('HTTP/1.1 404', 'Update Error: Booking does not exist.');
+
+        $stmt = $this->conn->prepare("UPDATE $bookings_table SET status = ? WHERE customer_id = ? AND restaurant_id = ? AND table_id = ? AND code = ? ");
+        $stmt->bind_param("siiis", $status, $customer_id, $restaurant_id, $table_id, $code);
+        $stmt->execute();
+
+    }
+
+
+    /***************************************************************************
      * Set customer visibility upon arriving restaurant at right date & time
      *
      * @param $customer_id

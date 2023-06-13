@@ -69,6 +69,17 @@ else {
             $restaurateur->cancelBookingStatus($customer->getId(), $table_id, $code);
         }
 
+        // mark booking status as pending
+        else if (isset($_POST['pending'])) {
+            require_once 'models/Customer.php';
+
+            $customer = Customer::findById($_POST['customer_id']);
+            $table_id = $_POST['table_id'];
+            $code = $_POST['code'];
+
+            $restaurateur->updateBookingStatusToPending($customer->getId(), $table_id, $code);
+        }
+
         else
             denyAccess();
     }
