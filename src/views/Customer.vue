@@ -419,7 +419,6 @@ watch(partySize, () => {
     updateBooking();
 });
 
-
 // methods
 const updateBooking = () => {
     booking.value.restaurant_id = selectedRestaurant.value?.id;
@@ -430,18 +429,11 @@ const updateBooking = () => {
 };
 
 const handleOpenBook = () => {
-    loading.value = true
-    setTimeout(() => (
-        loading.value = false,
-            dialog.value = true
-    ), 100);
+    dialog.value = true
 }
 
 const handleCloseBook = () => {
-    loading.value = false
-    setTimeout(() => (
-        dialog.value = false
-    ), 100);
+    dialog.value = false
 }
 
 const getRestaurantNameById = (restaurantId) => {
@@ -499,7 +491,7 @@ const isBookingFormDone = computed(() => {
 // ajax
 const fetchTables = () => {
     $.ajax({
-        url: `${store.appURL}/customer.php`,
+        url: `${store.appURL}/${authStore.getUser.userType}.php`,
         type: 'GET',
         xhrFields: {
             withCredentials: true
@@ -519,7 +511,7 @@ const fetchTables = () => {
 
 const fetchRestaurants = () => {
     $.ajax({
-        url: `${store.appURL}/customer.php`,
+        url: `${store.appURL}/${authStore.getUser.userType}.php`,
         type: 'GET',
         xhrFields: {
             withCredentials: true
@@ -539,7 +531,7 @@ const fetchRestaurants = () => {
 
 const saveBooking = () => {
     $.ajax({
-        url: `${store.appURL}/customer.php`,
+        url: `${store.appURL}/${authStore.getUser.userType}.php`,
         type: 'POST',
         xhrFields: {
             withCredentials: true
@@ -570,7 +562,7 @@ const saveBooking = () => {
 
 const fetchCustomerBookings = () => {
     $.ajax({
-        url: `${store.appURL}/customer.php`,
+        url: `${store.appURL}/${authStore.getUser.userType}.php`,
         type: 'GET',
         xhrFields: {
             withCredentials: true
@@ -578,9 +570,13 @@ const fetchCustomerBookings = () => {
         data: {
             getBookings: '',
         },
-        success: (data) => {
+        success: (data, textStatus, jqXHR) => {
             data = JSON.parse(data);
-            Object.assign(bookings, data.bookings);
+            if (JSON.stringify(bookings) !== JSON.stringify(data.bookings))
+                Object.assign(bookings, data.bookings);
+            setTimeout(() => {
+                fetchCustomerBookings();
+            }, 3000);
         },
         error: (error) => {
             alert(`ERROR ${error.status}: ${error.statusText}`);
