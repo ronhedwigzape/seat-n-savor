@@ -16,11 +16,11 @@
                                     width="auto"
                                 >
                                     <v-card width="600">
-                                        <v-card-title class="text-h4 ps-6 pt-8 pb-3">Instructions</v-card-title>
+                                        <v-card-title class="text-h5 ps-6 pt-8 pb-3">Instructions</v-card-title>
                                         <v-card-text>
                                         <ol class="px-6">
-                                            <li>Notify customer first if booking is cancelled of confirmed .</li>
-                                            <li>Make sure if customer arrived at your restaurant, scan their qr code.</li>
+                                            <li>Please notify the customer first whether the booking is canceled or confirmed.</li>
+                                            <li>Ensure that if a customer arrives at your restaurant, their QR code is scanned.</li>
                                         </ol>
                                         </v-card-text>
                                         <v-card-actions class="px-6 pb-4">
@@ -99,14 +99,17 @@
                                 >
                                     <v-card width="600">
                                         <v-card-title class="text-h5 ps-6 pt-8 pb-3">
-                                            <v-icon size="x-small" class="pb-2">mdi-bell-badge</v-icon> Notify {{ getCustomerNameById(booking.customer_id) }}
-                                            <p class="text-subtitle-1 text-grey-lighten-1 pt-1">Code: {{ booking.code }}</p>
+                                            <v-btn class="float-end rounded" variant="text" @click="view[booking.booking_id] = false"><v-icon>mdi-close</v-icon></v-btn>
+                                            <v-col>
+                                                <v-icon size="x-small" class="pb-2">mdi-bell-badge</v-icon> Notify {{ getCustomerNameById(booking.customer_id) }}
+                                                <p class="text-subtitle-1 text-grey-lighten-1 pt-1">Code: {{ booking.code }}</p>
 
-                                            <p class="text-subtitle-1 text-grey-darken-1 pt-3">Example:</p>
-                                            <p class="text-subtitle-2 text-grey-darken-1">Hello {{ getCustomerNameById(booking.customer_id) }}! </p>
-                                            <p class="text-subtitle-2 text-grey-darken-1">You're booking: {{ booking.code }} has been approved.</p>
-                                            <p class="text-subtitle-2 text-grey-darken-1">You can now come at {{ restaurant.name }} on {{ booking.date }} @{{ booking.time }}.
-                                            </p>
+                                                <p class="text-subtitle-1 text-grey-darken-1 pt-3">Example:</p>
+                                                <p class="text-subtitle-2 text-grey-darken-1">Hello {{ getCustomerNameById(booking.customer_id) }}! </p>
+                                                <p class="text-subtitle-2 text-grey-darken-1">You're booking: {{ booking.code }} has been approved.</p>
+                                                <p class="text-subtitle-2 text-grey-darken-1">You can now come at {{ restaurant.name }} on {{ booking.date }} @{{ booking.time }}.
+                                                </p>
+                                            </v-col>
                                         </v-card-title>
                                         <v-card-text class="px-6">
                                            <v-text-field
@@ -115,22 +118,58 @@
                                                v-model="message"
                                            />
                                         </v-card-text>
-                                        <v-card-actions class="px-6 pb-4">
-                                            <v-btn color="orange-accent-2" @click="view[booking.booking_id] = false">Close</v-btn>
-                                            <v-spacer/>
+                                        <v-card-actions class="px-6 pb-4 d-flex justify-space-between">
+                                            <v-btn
+                                                color="orange-accent-4"
+                                                @click="markPending(booking.customer_id, booking.table_id, booking.code)"
+                                            >
+                                                Mark as Pending
+                                            </v-btn>
                                             <v-btn
                                                 color="red-accent-4"
-                                                @click="sendCancellation(booking.customer_id, booking.table_id, booking.code, booking.booking_id)"
+                                                @click="sendCancellation(booking.customer_id, booking.table_id, booking.code)"
                                             >
                                                 Send Cancellation
                                             </v-btn>
                                             <v-btn
                                                 color="green-accent-4"
-                                                @click="sendConfirmation(booking.customer_id, booking.table_id, booking.code, booking.booking_id)"
+                                                @click="sendConfirmation(booking.customer_id, booking.table_id, booking.code)"
                                             >
                                                 Send Confirmation
                                             </v-btn>
                                         </v-card-actions>
+                                        <v-snackbar
+                                            v-model="snackbar"
+                                            multi-line
+                                        >
+                                            <v-icon class="text-green">mdi-check-circle</v-icon>
+                                            Your notification message has been sent successfully.
+                                            <template v-slot:actions>
+                                                <v-btn
+                                                    color="red"
+                                                    variant="text"
+                                                    @click="dialog2 = false"
+                                                >
+                                                    Close
+                                                </v-btn>
+                                            </template>
+                                        </v-snackbar>
+                                        <v-snackbar
+                                            v-model="pendingSnackbar"
+                                            multi-line
+                                        >
+                                            <v-icon class="text-green">mdi-check-circle</v-icon>
+                                            Booking status has been set to pending.
+                                            <template v-slot:actions>
+                                                <v-btn
+                                                    color="red"
+                                                    variant="text"
+                                                    @click="dialog2 = false"
+                                                >
+                                                    Close
+                                                </v-btn>
+                                            </template>
+                                        </v-snackbar>
                                     </v-card>
                                 </v-dialog>
                             </v-btn>
@@ -158,6 +197,10 @@ import {useAuthStore} from "@/stores/store-auth";
 
 const isShown = ref(true);
 const dialog = ref(false);
+const dialog2 = ref(false);
+const snackbar = ref(false);
+const timer = ref(null);
+const pendingSnackbar = ref(false);
 const bookings = reactive([]);
 const customers = reactive([]);
 const tables = reactive([]);
@@ -186,9 +229,9 @@ const getTableNumberById = (tableId) => {
     return table ? table.number : '';
 };
 
-const sendConfirmation = (customerId, tableId, code, bookingId) => {
+const sendConfirmation = (customerId, tableId, code) => {
     $.ajax({
-        url: `${store.appURL}/restaurateur.php`,
+        url: `${store.appURL}/${authStore.getUser.userType}.php`,
         type: 'POST',
         xhrFields: {
             withCredentials: true
@@ -201,12 +244,12 @@ const sendConfirmation = (customerId, tableId, code, bookingId) => {
             message: message.value
         },
         success: (data, textStatus, jqXHR) => {
-            data = JSON.parse(data);
             if (jqXHR.status === 200) {
                 setTimeout(() => {
                     message.value = null
+                    snackbar.value = true
                 }, 1500);
-                view.value[bookingId] = false;
+                Object.assign(view, false);
             }
         },
         error: (error) => {
@@ -215,9 +258,9 @@ const sendConfirmation = (customerId, tableId, code, bookingId) => {
     });
 }
 
-const sendCancellation = (customerId, tableId, code, bookingId) => {
+const sendCancellation = (customerId, tableId, code) => {
     $.ajax({
-        url: `${store.appURL}/restaurateur.php`,
+        url: `${store.appURL}/${authStore.getUser.userType}.php`,
         type: 'POST',
         xhrFields: {
             withCredentials: true
@@ -229,13 +272,41 @@ const sendCancellation = (customerId, tableId, code, bookingId) => {
             code: code,
             message: message.value
         },
-        success: (data) => {
-            data = JSON.parse(data);
+        success: (data, textStatus, jqXHR) => {
             if (jqXHR.status === 200) {
                 setTimeout(() => {
+                    snackbar.value = true;
                     message.value = null
                 }, 1500);
-                view.value[bookingId] = false;
+                Object.assign(view, false);
+            }
+        },
+        error: (error) => {
+            alert(`ERROR ${error.status}: ${error.statusText}`);
+        }
+    });
+}
+
+const markPending = (customerId, tableId, code) => {
+    $.ajax({
+        url: `${store.appURL}/${authStore.getUser.userType}.php`,
+        type: 'POST',
+        xhrFields: {
+            withCredentials: true
+        },
+        data: {
+            pending: '',
+            customer_id: customerId,
+            table_id: tableId,
+            code: code
+        },
+        success: (data, textStatus, jqXHR) => {
+            if (jqXHR.status === 200) {
+                setTimeout(() => {
+                    pendingSnackbar.value = true;
+                    message.value = null
+                }, 1500);
+                Object.assign(view, false);
             }
         },
         error: (error) => {
@@ -246,7 +317,7 @@ const sendCancellation = (customerId, tableId, code, bookingId) => {
 
 const fetchRestaurantBookings = () => {
     $.ajax({
-        url: `${store.appURL}/restaurateur.php`,
+        url: `${store.appURL}/${authStore.getUser.userType}.php`,
         type: 'GET',
         xhrFields: {
             withCredentials: true
@@ -254,19 +325,23 @@ const fetchRestaurantBookings = () => {
         data: {
             getRestaurantBookings: '',
         },
-        success: (data) => {
+        success: (data, textStatus, jqXHR) => {
             data = JSON.parse(data);
-            Object.assign(bookings, data.restaurant_bookings);
+            if (JSON.stringify(bookings) !== JSON.stringify(data.restaurant_bookings))
+                Object.assign(bookings, data.restaurant_bookings);
+            setTimeout(() => {
+                fetchRestaurantBookings();
+            }, 3000);
         },
         error: (error) => {
             alert(`ERROR ${error.status}: ${error.statusText}`);
         }
     });
-}
+};
 
 const fetchCustomerTablesAndRestaurant = () => {
     $.ajax({
-        url: `${store.appURL}/restaurateur.php`,
+        url: `${store.appURL}/${authStore.getUser.userType}.php`,
         type: 'GET',
         xhrFields: {
             withCredentials: true
@@ -274,7 +349,7 @@ const fetchCustomerTablesAndRestaurant = () => {
         data: {
             getCustomerTablesAndRestaurant: '',
         },
-        success: (data) => {
+        success: (data, textStatus, jqXHR) => {
             data = JSON.parse(data);
             Object.assign(customers, data.customers);
             Object.assign(tables, data.tables);
