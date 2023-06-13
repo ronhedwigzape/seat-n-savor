@@ -231,7 +231,6 @@
                                 >
                                     Save your spot
                                 </v-btn>
-
                             </v-col>
                         </v-row>
                     </v-form>
@@ -304,17 +303,19 @@
                                     activator="parent"
                                     width="auto"
                                 >
-                                    <v-card>
-                                        <v-card-text>
+                                    <v-card width="600">
+                                        <v-card-text class="d-flex justify-center flex-column">
                                             <VueQrcode
                                                 :id="`qr${booking.booking_id}`"
-                                                class="pt-4"
+                                                class="pt-4 mt-3 mb-5 mx-auto"
                                                 :value="booking.code"
                                                 :options="{ width: 280 }"
                                             />
-                                            <p align="center">QR Code Value: {{ booking.code }}</p>
+                                            <p align="center">QR Code Value:</p>
+                                            <p align="center" class="text-subtitle-2 text-grey-lighten-1 font-weight-bold">{{ booking.code }}</p>
+                                            <p class="text-caption text-grey-darken-1" align="center">Please don't share this QR Code to anyone.</p>
                                         </v-card-text>
-                                        <v-card-actions class="px-5 pb-4">
+                                        <v-card-actions class="px-16 pb-6 pt-3">
                                             <v-btn color="orange-accent-4" @click="downloadQR(booking.booking_id)">Download QR</v-btn>
                                             <v-spacer/>
                                             <v-btn color="orange-accent-2" @click="view[booking.booking_id] = false">Close Dialog</v-btn>
