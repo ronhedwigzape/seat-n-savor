@@ -98,7 +98,7 @@
                                     activator="parent"
                                     width="auto"
                                 >
-                                    <v-card width="600">
+                                    <v-card width="750">
                                         <v-card-title class="text-h5 ps-6 pt-8 pb-3">
                                             <v-btn class="float-end rounded" variant="text" @click="view[booking.booking_id] = false"><v-icon>mdi-close</v-icon></v-btn>
                                             <v-col>
