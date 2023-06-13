@@ -71,7 +71,7 @@ class Restaurateur extends User
     public static function all()
     {
         $restaurateur = new Restaurateur();
-        $sql = "SELECT username, password FROM $restaurateur->table ORDER BY number";
+        $sql = "SELECT username, password FROM $restaurateur->table ORDER BY id";
         $stmt = $restaurateur->conn->prepare($sql);
         $stmt->execute();
 
@@ -235,6 +235,83 @@ class Restaurateur extends User
     }
 
 
+    /***************************************************************************
+     * Confirm booking status
+     *
+     * @param $customer_id
+     * @param $table_id
+     * @param $code
+     * @return void
+     */
+    public function confirmBookingStatus($customer_id, $table_id, $code)
+    {
+        require_once 'Booking.php';
+        $bookings_table = 'bookings';
+
+        $status = 'confirmed';
+        $restaurant_id = $this->getRestaurantId();
+
+        if (!Booking::stored($customer_id, $restaurant_id, $table_id, $code))
+            App::returnError('HTTP/1.1 404', 'Update Error: Booking does not exist.');
+
+        $stmt = $this->conn->prepare("UPDATE $bookings_table SET status = ? WHERE customer_id = ? AND restaurant_id = ? AND table_id = ? AND code = ? ");
+        $stmt->bind_param("siiis", $status, $customer_id, $restaurant_id, $table_id, $code);
+        $stmt->execute();
+
+    }
+
+
+    /***************************************************************************
+     * Cancel booking status
+     *
+     * @param $customer_id
+     * @param $table_id
+     * @param $code
+     * @return void
+     */
+    public function cancelBookingStatus($customer_id, $table_id, $code)
+    {
+        require_once 'Booking.php';
+        $bookings_table = 'bookings';
+
+        $status = 'cancelled';
+        $restaurant_id = $this->getRestaurantId();
+
+        if (!Booking::stored($customer_id, $restaurant_id, $table_id, $code))
+            App::returnError('HTTP/1.1 404', 'Update Error: Booking does not exist.');
+
+        $stmt = $this->conn->prepare("UPDATE $bookings_table SET status = ? WHERE customer_id = ? AND restaurant_id = ? AND table_id = ? AND code = ? ");
+        $stmt->bind_param("siiis", $status, $customer_id, $restaurant_id, $table_id, $code);
+        $stmt->execute();
+
+    }
+
+
+    /***************************************************************************
+     * Set customer visibility upon arriving restaurant at right date & time
+     *
+     * @param $customer_id
+     * @param $table_id
+     * @param $code
+     * @return void
+     */
+    public function setCustomerVisibility($customer_id, $table_id, $code)
+    {
+        require_once 'Booking.php';
+        $bookings_table = 'bookings';
+
+        $is_shown = 1;
+        $restaurant_id = $this->getRestaurantId();
+
+        if (!Booking::stored($customer_id, $restaurant_id, $table_id, $code))
+            App::returnError('HTTP/1.1 404', 'Update Error: Booking does not exist.');
+
+        $stmt = $this->conn->prepare("UPDATE $bookings_table SET is_shown = ? WHERE customer_id = ? AND restaurant_id = ? AND table_id = ? AND code = ? ");
+        $stmt->bind_param("iiiis", $is_shown, $customer_id, $restaurant_id, $table_id, $code);
+        $stmt->execute();
+
+    }
+
 
     /***************************************************************************
      * Get restaurant id when available
@@ -282,6 +359,7 @@ class Restaurateur extends User
             while($row = $result->fetch_assoc()) {
                 $booking = [
                     'booking_id' => $row['id'],
+                    'restaurant_id' => $row['restaurant_id'],
                     'customer_id' => $row['customer_id'],
                     'table_id' => $row['table_id'],
                     'code' => $row['code'],

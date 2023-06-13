@@ -57,7 +57,7 @@ class Customer extends User
     public static function all()
     {
         $customer = new Customer();
-        $sql = "SELECT username, password FROM $customer->table ORDER BY number";
+        $sql = "SELECT username, password FROM $customer->table ORDER BY id";
         $stmt = $customer->conn->prepare($sql);
         $stmt->execute();
 
@@ -270,6 +270,7 @@ class Customer extends User
             while($row = $result->fetch_assoc()) {
                 $booking = [
                     'booking_id' => $row['id'],
+                    'customer_id' => $row['customer_id'],
                     'restaurant_id' => $row['restaurant_id'],
                     'table_id' => $row['table_id'],
                     'code' => $row['code'],

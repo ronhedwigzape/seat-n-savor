@@ -68,7 +68,7 @@ class Admin extends User
     public static function all()
     {
         $admin = new Admin();
-        $sql = "SELECT username, password FROM $admin->table ORDER BY number";
+        $sql = "SELECT username, password FROM $admin->table ORDER BY id";
         $stmt = $admin->conn->prepare($sql);
         $stmt->execute();
 

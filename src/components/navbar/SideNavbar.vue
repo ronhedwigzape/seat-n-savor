@@ -10,14 +10,33 @@ const authStore = useAuthStore();
         v-if="authStore.isAuthenticated"
         image=""
         permanent
+        width="60"
     >
         <v-list nav v-if="authStore.getUser.userType === 'admin'">
-            <v-list-item  prepend-icon="mdi-book-account" title="Bookings" value="inbox"></v-list-item>
+            <v-list-item  prepend-icon="mdi-book-account" title="Bookings" value="inbox">
+                <v-tooltip
+                    activator="parent"
+                    location="right"
+                > Bookings
+                </v-tooltip>
+            </v-list-item>
         </v-list>
 
         <v-list nav v-else-if="authStore.getUser.userType === 'restaurateur'">
-            <v-list-item  prepend-icon="mdi-book-account" title="Bookings" value="inbox"></v-list-item>
-            <v-list-item  prepend-icon="mdi-qrcode-scan" title="QR Scan" value="qr"></v-list-item>
+            <v-list-item  prepend-icon="mdi-book-account" title="Bookings" value="inbox">
+                <v-tooltip
+                    activator="parent"
+                    location="right"
+                > Bookings
+                </v-tooltip>
+            </v-list-item>
+            <v-list-item  prepend-icon="mdi-qrcode-scan" title="QR Scan" value="qr">
+                <v-tooltip
+                    activator="parent"
+                    location="right"
+                > QR Scan
+                </v-tooltip>
+            </v-list-item>
         </v-list>
 
         <v-list nav v-else>
