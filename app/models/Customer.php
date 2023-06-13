@@ -212,8 +212,8 @@ class Customer extends User
         $table_id = $table->getId();
 
         $booking = new Booking();
-        if (Booking::stored($this->id, $restaurant_id, $table_id))
-            $booking = Booking::find($this->id, $restaurant_id, $table_id);
+        if (Booking::stored($this->id, $restaurant_id, $table_id, $code))
+            $booking = Booking::find($this->id, $restaurant_id, $table_id, $code);
 
         $booking->setCustomerId($this->id);
         $booking->setRestaurantId($restaurant_id);
@@ -224,7 +224,7 @@ class Customer extends User
         $booking->setPartySize($party_size);
         $booking->setStatus($status);
 
-        if (Booking::stored($this->id, $restaurant_id, $table_id))
+        if (Booking::stored($this->id, $restaurant_id, $table_id, $code))
             $booking->update();
         else
             $booking->insert();

@@ -77,11 +77,11 @@ class Booking extends App
      * @param int $table_id
      * @return Booking|boolean
      */
-    public static function find($customer_id, $restaurant_id, $table_id)
+    public static function find($customer_id, $restaurant_id, $table_id, $code)
     {
         $booking = new Booking();
-        $stmt = $booking->conn->prepare("SELECT id FROM $booking->table WHERE customer_id = ? AND restaurant_id = ? AND table_id = ?");
-        $stmt->bind_param("iii", $customer_id, $restaurant_id, $table_id);
+        $stmt = $booking->conn->prepare("SELECT id FROM $booking->table WHERE customer_id = ? AND restaurant_id = ? AND table_id = ? AND code = ?");
+        $stmt->bind_param("iiis", $customer_id, $restaurant_id, $table_id, $code);
         return self::executeFind($stmt);
     }
 
@@ -183,12 +183,12 @@ class Booking extends App
      * @param $table_id
      * @return bool
      */
-    public static function stored($customer_id, $restaurant_id, $table_id)
+    public static function stored($customer_id, $restaurant_id, $table_id, $code)
     {
-        if(!$customer_id || !$restaurant_id || !$table_id)
+        if(!$customer_id || !$restaurant_id || !$table_id || !$code)
             return false;
 
-        return (self::find($customer_id, $restaurant_id, $table_id) != false);
+        return (self::find($customer_id, $restaurant_id, $table_id, $code) != false);
     }
 
 
@@ -230,7 +230,7 @@ class Booking extends App
         $this->checkId();
 
         // proceed with insert if not yet stored
-        if(!self::stored($this->customer_id, $this->restaurant_id, $this->table_id)) {
+        if(!self::stored($this->customer_id, $this->restaurant_id, $this->table_id, $this->code)) {
 
             // proceed with insert
             $stmt = $this->conn->prepare("INSERT INTO $this->table(customer_id, restaurant_id, table_id, code, date, time, party_size, status, cancellation_reason) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");

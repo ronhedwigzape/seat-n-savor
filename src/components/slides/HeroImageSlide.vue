@@ -4,7 +4,6 @@
             cycle
             interval="6000"
             hide-delimiters
-            class="carousel-min-height"
             height="600"
         >
             <v-carousel-item
@@ -108,9 +107,6 @@ const onClick = () => {
     color: white !important;
 }
 
-.carousel-min-height {
-    min-height: 300px;
-}
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {

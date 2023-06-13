@@ -1,7 +1,7 @@
 <template>
     <TopNavbar/>
     <HeroImageSlide/>
-
+    <v-divider class="mt-10"/>
     <v-row class="mt-10" justify="center" v-if="authStore.isAuthenticated">
         <v-dialog
             v-model="dialog"
@@ -28,16 +28,13 @@
             </template>
             <v-card class="pb-16">
                 <v-toolbar color="orange-accent-2">
-                    <v-btn icon @click="handleCloseBook">
-                        <v-icon>mdi-close</v-icon>
-                    </v-btn>
                     <v-toolbar-title class="pally">
                         {{ store.app.title }} Booking Form
                     </v-toolbar-title>
                     <v-spacer/>
                     <v-toolbar-items>
-                        <v-btn variant="text">
-                            Save
+                        <v-btn icon @click="handleCloseBook">
+                            <v-icon>mdi-close</v-icon>
                         </v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
@@ -265,35 +262,62 @@
             >
                 <thead>
                     <tr>
-                        <th class="text-center"><v-icon>mdi-calendar-month</v-icon> Date</th>
-                        <th class="text-center"><v-icon>mdi-clock-time-nine</v-icon> Time</th>
-                        <th class="text-center"><v-icon>mdi-qrcode</v-icon> Code</th>
-                        <th class="text-center"><v-icon>mdi-account-group</v-icon> Party Size</th>
-                        <th class="text-center"><v-icon>mdi-silverware</v-icon> Restaurant</th>
-                        <th class="text-center"><v-icon>mdi-table-chair</v-icon> Table</th>
-                        <th class="text-center"><v-icon>mdi-list-status</v-icon> Status</th>
+                        <th class="text-center">
+                            <v-icon>mdi-calendar-month</v-icon>
+                            <p>Date</p>
+                        </th>
+                        <th class="text-center">
+                            <v-icon>mdi-clock-time-nine</v-icon>
+                            <p>Time</p>
+                        </th>
+                        <th class="text-center">
+                            <v-icon>mdi-qrcode</v-icon>
+                            <p>QR Code</p>
+                        </th>
+                        <th class="text-center">
+                            <v-icon>mdi-account-group</v-icon>
+                            <p>Party Size</p>
+                        </th>
+                        <th class="text-center">
+                            <v-icon>mdi-silverware</v-icon>
+                            <p>Restaurant</p>
+                        </th>
+                        <th class="text-center">
+                            <v-icon>mdi-table-chair</v-icon>
+                            <p>Table</p>
+                        </th>
+                        <th class="text-center">
+                            <v-icon>mdi-list-status</v-icon>
+                            <p>Status</p>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(booking, bookingKey, bookingIndex) in bookings" :key="booking.id">
+                    <tr v-for="(booking, bookingKey, bookingIndex) in bookings" :key="booking.booking_id">
                         <td align="center"> {{ booking.date }} </td>
                         <td align="center"> {{ booking.time }} </td>
                         <td align="center">
                             <v-btn color="orange-accent-2">
-                                View QR Code
+                                View
                                 <v-dialog
-                                    v-model="view"
+                                    v-model="view[booking.booking_id]"
                                     activator="parent"
                                     width="auto"
                                 >
                                     <v-card>
                                         <v-card-text>
-                                            <VueQrcode id="qr" class="pt-4" :value="booking.code" :options="{ width: 280 }"/>
+                                            <VueQrcode
+                                                :id="`qr${booking.booking_id}`"
+                                                class="pt-4"
+                                                :value="booking.code"
+                                                :options="{ width: 280 }"
+                                            />
+                                            <p align="center">QR Code Value: {{ booking.code }}</p>
                                         </v-card-text>
                                         <v-card-actions class="px-5 pb-4">
-                                            <v-btn color="orange-accent-4" @click="downloadQR">Download QR</v-btn>
+                                            <v-btn color="orange-accent-4" @click="downloadQR(booking.booking_id)">Download QR</v-btn>
                                             <v-spacer/>
-                                            <v-btn color="orange-accent-2" @click="view = false">Close Dialog</v-btn>
+                                            <v-btn color="orange-accent-2" @click="view[booking.booking_id] = false">Close Dialog</v-btn>
                                         </v-card-actions>
                                     </v-card>
                                 </v-dialog>
@@ -342,7 +366,6 @@ const store = useStore();
 
 // data
 const dialog = ref(false);
-const view = ref(false);
 const snackbar = ref(false);
 const loading = ref(false);
 const tableModel = ref(null);
@@ -355,6 +378,7 @@ const dateOption = ref({
     format: 'MM.dd.yyyy HH:mm'
 })
 
+const view = reactive({});
 const restaurants = reactive([]);
 const bookings = reactive([]);
 const tables = reactive([]);
@@ -365,7 +389,6 @@ const booking = ref({
     'time': null,
     'party_size': null,
 });
-
 
 // watch
 watch(tableModel, () => {
@@ -431,10 +454,8 @@ const getTableNumberById = (tableId) => {
     return table ? table.number : '';
 };
 
-const downloadQR = (e) => {
-    e.preventDefault();
-
-    const canvas = document.getElementById("qr");
+const downloadQR = (bookingId) => {
+    const canvas = document.getElementById(`qr${bookingId}`);
     const pngUrl = canvas
         .toDataURL("image/png")
         .replace("image/png", "image/octet-stream");
@@ -577,6 +598,15 @@ onMounted(() => {
 </script>
 
 <style scoped>
+td {
+    height: 5rem !important;
+}
+
+th {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.5s;
