@@ -183,6 +183,23 @@
                 <StreamBarcodeReader class="me-16" v-if="isShown" @decode="onDecode"/>
                 <v-btn class="mt-6 me-16" @click="isShown = !isShown">Toggle QR Scanner</v-btn>
             </v-col>
+            <v-snackbar
+                v-model="qrSnackbar"
+                multi-line
+            >
+                <v-icon class="text-green">mdi-check-circle</v-icon>
+                QR code scanned successfully.
+                <p>Decoded Value: {{ decodedQr }}</p>
+                <template v-slot:actions>
+                    <v-btn
+                        color="red"
+                        variant="text"
+                        @click="dialog3 = false"
+                    >
+                        Close
+                    </v-btn>
+                </template>
+            </v-snackbar>
         </v-row>
     </v-container>
 </template>
@@ -199,26 +216,21 @@ import {useAuthStore} from "@/stores/store-auth";
 const isShown = ref(false);
 const dialog = ref(false);
 const dialog2 = ref(false);
+const dialog3 = ref(false);
 const snackbar = ref(false);
-const timer = ref(null);
+const qrSnackbar = ref(false);
 const pendingSnackbar = ref(false);
+const timer = ref(null);
 const bookings = reactive([]);
 const customers = reactive([]);
 const tables = reactive([]);
 const view = reactive({});
 const restaurant = reactive({});
 const message = ref('');
+const decodedQr = ref('');
 
 const store = useStore();
 const authStore = useAuthStore();
-
-const onDecode = (decodedText) => {
-    console.log(decodedText)
-}
-
-// const onLoaded = (loaded) => {
-//     console.log(loaded)
-// }
 
 const getCustomerNameById = (customerId) => {
     const customer = customers.find((r) => r.id === customerId);
@@ -315,6 +327,29 @@ const markPending = (customerId, tableId, code) => {
         }
     });
 }
+
+const onDecode = (decodedText) => {
+    decodedQr.value = decodedText;
+    $.ajax({
+        url: `${store.appURL}/${authStore.getUser.userType}.php`,
+        type: 'POST',
+        xhrFields: {
+            withCredentials: true
+        },
+        data: {
+            decodedQr: decodedText
+        },
+        success: (data, textStatus, jqXHR) => {
+            if (jqXHR.status === 200) {
+                qrSnackbar.value = true;
+            }
+        },
+        error: (error) => {
+            alert(`ERROR ${error.status}: ${error.statusText}`);
+        }
+    });
+}
+
 
 const fetchRestaurantBookings = () => {
     $.ajax({

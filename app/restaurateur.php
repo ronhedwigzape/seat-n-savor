@@ -80,6 +80,11 @@ else {
             $restaurateur->updateBookingStatusToPending($customer->getId(), $table_id, $code);
         }
 
+        // scans qr and sets customer visibility
+        else if (isset($_POST['decodedQr'])) {
+            $restaurateur->setCustomerVisibility($_POST['decodedQr']);
+        }
+
         else
             denyAccess();
     }
