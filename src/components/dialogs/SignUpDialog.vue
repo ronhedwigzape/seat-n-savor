@@ -56,12 +56,14 @@
                                         label="Email*"
                                         variant="outlined"
                                         prepend-inner-icon="mdi-email"
+                                        :error-messages="emailError"
                                     ></v-text-field>
                                 </v-col>
                                 <v-col cols="6">
                                     <v-text-field
                                         v-model="phone"
                                         label="Phone Number*"
+                                        type="number"
                                         variant="outlined"
                                         prepend-inner-icon="mdi-phone"
                                     ></v-text-field>
@@ -116,34 +118,57 @@
                         </v-form>
                     </v-container>
                 </v-card-text>
-                <!--                <v-card-text>-->
-                <!--                    <v-col class="d-flex justify-center align-center" cols="12">-->
-                <!--                        <p>Already have an account? Sign in Now!</p>-->
-                <!--                    </v-col>-->
-                <!--                </v-card-text>-->
+                <v-card-text>
+                    <v-col class="d-flex justify-center align-center" cols="12">
+                        <p>Already have an account? Sign in Now!</p>
+                    </v-col>
+                </v-card-text>
             </v-card>
         </v-row>
     </v-dialog>
+    <v-snackbar
+        v-model="snackbar"
+        multi-line
+    >
+        <v-icon class="text-green">mdi-check-circle</v-icon>
+        Your account has been created successfully.
+        <template v-slot:actions>
+            <v-btn
+                color="red"
+                variant="text"
+                @click="dialog1 = false"
+            >
+                Close
+            </v-btn>
+        </template>
+    </v-snackbar>
 </template>
 
 <script setup>
-import {computed, ref} from 'vue';
+import {computed, ref, watch} from 'vue';
 import $ from 'jquery';
 import {useStore} from '@/stores';
 
-
+// store
 const store = useStore();
+
+// data
 const dialog = ref(false);
+const dialog1 = ref(false);
 const loading = ref(false);
 const isPasswordShown1 = ref(false);
 const isPasswordShown2 = ref(false);
+const snackbar = ref(false);
 const name = ref('');
 const username = ref('');
 const password = ref('');
 const email = ref('');
+const emailError = ref('');
 const phone = ref('');
 const address = ref('');
 const confirmPassword = ref('');
+
+// computed
 const passwordMismatch = computed(
     () => password.value !== '' && password.value !== confirmPassword.value
 );
@@ -157,12 +182,27 @@ const isFormValid = computed(() => {
         address.value !== '' &&
         password.value !== '' &&
         confirmPassword.value !== '' &&
-        !passwordMismatch.value
+        !passwordMismatch.value &&
+        emailError.value === 'Invalid email address.'
     );
 });
 
-// todo: Make sure account will be created
-// Known HTTP error: 401 Unauthorized
+// methods
+const validateEmail = () => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(email.value)) {
+        emailError.value = 'Invalid email address.';
+    } else {
+        emailError.value = '';
+    }
+};
+
+// watch
+watch(email, () => {
+    validateEmail();
+});
+
+// ajax
 const createAccount = () => {
     loading.value = true;
      $.ajax({
@@ -172,6 +212,7 @@ const createAccount = () => {
             withCredentials: true
         },
         data: {
+            createAccount: '',
             name: name.value,
             userName: username.value,
             passWord: password.value,
@@ -179,21 +220,25 @@ const createAccount = () => {
             phone: phone.value,
             address: address.value
         },
-        success: () => {
-            if (loading.value) {
+        success: (data, textStatus, jqXHR) => {
+            if (jqXHR.status === 200) {
                 setTimeout(() => {
-                    loading.value = false;
-                    dialog.value = false;
+                    snackbar.value = true;
+                    name.value = null;
+                    username.value = null;
+                    email.value = null;
+                    phone.value = null;
+                    address.value = null;
+                    password.value = null;
+                    confirmPassword.value = null;
                 }, 1000);
+                loading.value = false;
+                dialog.value = false;
             }
         },
         error: (error) => {
-            if (loading.value) {
-                setTimeout(() => {
-                    loading.value = false;
-                    alert(`ERROR ${error.status}: ${error.statusText}`);
-                }, 500);
-            }
+            loading.value = false;
+            alert(`ERROR ${error.status}: ${error.statusText}`);
         },
     });
 }

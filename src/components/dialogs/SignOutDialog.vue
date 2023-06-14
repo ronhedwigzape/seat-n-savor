@@ -36,7 +36,7 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
-                    color="green-darken-1"
+                    color="orange-accent-4"
                     variant="text"
                     @click="dialog = false"
                     :disabled="signingOut"
@@ -44,7 +44,7 @@
                     Go Back
                 </v-btn>
                 <v-btn
-                    color="red-darken-1"
+                    color="orange-accent-1"
                     variant="text"
                     @click="signOut"
                     :loading="signingOut"

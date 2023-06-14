@@ -1,6 +1,5 @@
 <template>
     <v-app-bar
-        class="position-fixed"
         :image="image"
     >
         <template v-slot:image>
@@ -13,7 +12,11 @@
 
         <v-spacer/>
 
-        <label class="switch me-3">
+        <v-btn
+            stacked
+            :ripple="false"
+        >
+            <label class="switch me-3">
             <span class="sun">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <g fill="#ffd43b">
@@ -25,26 +28,27 @@
                     </g>
                 </svg>
             </span>
-            <span class="moon">
+                <span class="moon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
                     <path
                         d="m223.5 32c-123.5 0-223.5 100.3-223.5 224s100 224 223.5 224c60.6 0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9 0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
                     </path>
                 </svg>
             </span>
-            <input
-                type="checkbox"
-                class="input"
-                v-model="darkMode"
-                @change="toggleDarkMode"
-            >
+                <input
+                    type="checkbox"
+                    class="input"
+                    v-model="darkMode"
+                    @change="toggleDarkMode"
+                >
+                <span class="slider"></span>
+            </label>
             <v-tooltip
                 activator="parent"
                 location="bottom"
             >{{ darkMode ? 'Dark Mode' : 'Light Mode' }}
             </v-tooltip>
-            <span class="slider"></span>
-        </label>
+        </v-btn>
         <v-btn
             v-if="authStore.isAuthenticated"
             stacked
@@ -71,11 +75,15 @@
                 stacked
             >
                 <v-badge
+                    v-if="notifications"
                     :color="notifications ? 'red-darken-3' : ''"
                     :content="notifications.length"
                 >
-                    <v-icon>mdi-bell-outline</v-icon>
+                    <v-icon>
+                        mdi-bell-outline
+                    </v-icon>
                 </v-badge>
+                <v-icon v-else-if="notifications === []">mdi-bell-outline</v-icon>
                 <v-tooltip
                     activator="parent"
                     location="bottom"
@@ -199,7 +207,7 @@ const notificationTimestamp = (updatedAt) => {
 
 
 const fetchCustomerNotifications = () => {
-    if (authStore.isAuthenticated) {
+    if (authStore.isAuthenticated && authStore.getUser.userType === 'customer') {
         $.ajax({
             url: `${store.appURL}/${authStore.getUser.userType}.php`,
             type: 'GET',
@@ -213,10 +221,10 @@ const fetchCustomerNotifications = () => {
                 data = JSON.parse(data);
                 if (JSON.stringify(notifications) !== JSON.stringify(data.notifications))
                     Object.assign(notifications, data.notifications);
-                Object.assign(restaurateurs, data.restaurateurs);
+                    Object.assign(restaurateurs, data.restaurateurs);
                 setTimeout(() => {
                     fetchCustomerNotifications();
-                }, 6000);
+                }, 6500);
             },
             error: (error) => {
                 alert(`ERROR ${error.status}: ${error.statusText}`);

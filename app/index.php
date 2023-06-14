@@ -1,4 +1,5 @@
 <?php
+global $conn;
 require_once '_init.php';
 
 // get requests
@@ -11,29 +12,26 @@ if(isset($_GET['getUser'])) {
 }
 
 // Create customer's account
-else if (isset($_POST['name']) && isset($_POST['phone'])) {
-    require_once 'Customer.php';
+else if (isset($_POST['createAccount'])) {
+    require_once 'models/App.php';
+    // todo: add a captcha at frontend if website is registered under a domain
 
-    $name = $_POST['name'];
     $username = $_POST['userName'];
     $password = $_POST['passWord'];
+    $name = $_POST['name'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $address = $_POST['address'];
+
     $avatar = 'avatar.png';
+    $customers_table = 'customers';
 
-    $customer = new Customer();
+    if (!$username || !$password || !$name || !$email || !$phone || !$address)
+        App::returnError('HTTP/1.1 404', 'Error: Account form is invalid.');
 
-    $customer->setUsername($username);
-    $customer->setPassword($password);
-    $customer->setAvatar($avatar);
-    $customer->setName($name);
-    $customer->setEmail($email);
-    $customer->setPhone($phone);
-    $customer->setAddress($address);
-    $customer->insert();
-
-    exit;
+    $stmt = $conn->prepare("INSERT INTO $customers_table (username, password, avatar, name, email, phone, address) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssss",  $username, $password, $avatar, $name, $email, $phone, $address);
+    $stmt->execute();
 }
 
 // user sign-in

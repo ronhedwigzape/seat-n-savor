@@ -3,241 +3,256 @@
     <HeroImageSlide/>
     <v-divider class="mt-10"/>
     <v-row class="mt-10" justify="center" v-if="authStore.isAuthenticated">
-        <v-dialog
-            v-model="dialog"
-            fullscreen
-            :scrim="false"
-            transition="dialog-bottom-transition"
+        <v-btn
             v-if="authStore.getUser.userType === 'customer'"
+            variant="elevated"
+            color="orange-accent-2"
+            height="50"
+            width="250"
+            @click="dialog"
         >
-            <template v-slot:activator="{ props }">
-                <v-btn
-                    variant="elevated"
-                    color="orange-accent-2"
-                    height="50"
-                    width="250"
-                    v-bind="props"
-                    :loading="loading"
-                    @click="handleOpenBook"
-                >
-                    Make a booking
-                    <template v-slot:loader>
-                        <v-progress-circular indeterminate></v-progress-circular>
-                    </template>
-                </v-btn>
-            </template>
-            <v-card class="pb-16">
-                <v-toolbar color="orange-accent-2">
-                    <v-toolbar-title class="pally">
-                        {{ store.app.title }} Booking Form
-                    </v-toolbar-title>
-                    <v-spacer/>
-                    <v-toolbar-items>
-                        <v-btn icon @click="handleCloseBook">
-                            <v-icon>mdi-close</v-icon>
-                        </v-btn>
-                    </v-toolbar-items>
-                </v-toolbar>
-                <v-container>
-                    <v-form>
-                        <v-row>
-                            <v-col cols="12">
-                                <v-list>
-                                    <v-list-item class="text-h3 pt-4 pally">Create your Booking</v-list-item>
-                                    <v-list-item prepend-icon="mdi-map-marker" class="text-h5 pt-6 supreme" style="letter-spacing: 3px !important;">
-                                        Setting
-                                    </v-list-item>
-                                </v-list>
-                            </v-col>
-                            <v-col cols="12">
-                                <v-list>
-                                    <v-list-item align="center" class="text-h5 supreme mb-4" style="letter-spacing: 3px !important;">
-                                        Select your preferred restaurant
-                                    </v-list-item>
-                                </v-list>
-                                <v-sheet
-                                    class="mx-auto"
-                                    elevation="8"
-                                    max-width="1200"
-                                >
-                                    <v-slide-group
-                                        v-model="restaurantModel"
-                                        class="pa-4"
-                                        show-arrows
+            {{ bookings ? 'Make a booking' : 'Make your first booking' }}
+            <v-dialog
+                v-model="dialog"
+                fullscreen
+                :scrim="false"
+                activator="parent"
+                transition="dialog-bottom-transition"
+            >
+                <v-card class="pb-16">
+                    <v-toolbar color="orange-accent-2">
+                        <v-toolbar-title class="pally">
+                            {{ store.app.title }} Booking Form
+                        </v-toolbar-title>
+                        <v-spacer/>
+                        <v-toolbar-items>
+                            <v-btn icon @click="dialog = false">
+                                <v-icon>mdi-close</v-icon>
+                            </v-btn>
+                        </v-toolbar-items>
+                    </v-toolbar>
+                    <v-container>
+                        <v-form>
+                            <v-row>
+                                <v-col cols="12">
+                                    <v-list>
+                                        <v-list-item class="text-h3 pt-4 pally">Create your Booking</v-list-item>
+                                        <v-list-item prepend-icon="mdi-map-marker" class="text-h5 pt-6 text-orange-lighten-4 supreme" style="letter-spacing: 3px !important;">
+                                            Setting
+                                        </v-list-item>
+                                    </v-list>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-list>
+                                        <v-list-item align="center" class="text-h5 supreme mb-4" style="letter-spacing: 3px !important;">
+                                            Select your preferred restaurant
+                                        </v-list-item>
+                                    </v-list>
+                                    <v-sheet
+                                        class="mx-auto"
+                                        elevation="8"
+                                        max-width="1200"
                                     >
-                                        <v-slide-group-item
-                                            v-for="(restaurant, restaurantKey, restaurantIndex) in restaurants"
-                                            :key="restaurant.id"
-                                            v-slot="{ isSelected, toggle, selectedClass }"
+                                        <v-slide-group
+                                            v-model="restaurantModel"
+                                            class="pa-4"
+                                            show-arrows
                                         >
-                                            <v-card
-                                                color="grey-lighten-1"
-                                                :class="['ma-4', selectedClass]"
-                                                height="300"
-                                                width="400"
-                                                @click="toggle"
+                                            <v-slide-group-item
+                                                v-for="(restaurant, restaurantKey, restaurantIndex) in restaurants"
+                                                :key="restaurant.id"
+                                                v-slot="{ isSelected, toggle, selectedClass }"
                                             >
-                                                <v-img
-                                                    :src="restaurant.image"
-                                                    :lazy-src="restaurant.image"
-                                                    aspect-ratio="1"
-                                                    cover
-                                                    class="bg-grey-lighten-2"
+                                                <v-card
+                                                    color="grey-lighten-1"
+                                                    :class="['ma-4', selectedClass]"
+                                                    height="300"
+                                                    width="400"
+                                                    @click="toggle"
                                                 >
-                                                    <template v-slot:placeholder>
-                                                        <v-row
-                                                            class="fill-height ma-0"
-                                                            align="center"
-                                                            justify="center"
-                                                        >
-                                                            <v-progress-circular
-                                                                indeterminate
-                                                                color="grey-lighten-5"
-                                                            ></v-progress-circular>
-                                                        </v-row>
-                                                    </template>
-                                                </v-img>
-                                            </v-card>
-                                        </v-slide-group-item>
-                                    </v-slide-group>
+                                                    <v-img
+                                                        :src="restaurant.image"
+                                                        :lazy-src="restaurant.image"
+                                                        aspect-ratio="1"
+                                                        cover
+                                                        class="bg-grey-lighten-2"
+                                                    >
+                                                        <template v-slot:placeholder>
+                                                            <v-row
+                                                                class="fill-height ma-0"
+                                                                align="center"
+                                                                justify="center"
+                                                            >
+                                                                <v-progress-circular
+                                                                    indeterminate
+                                                                    color="grey-lighten-5"
+                                                                ></v-progress-circular>
+                                                            </v-row>
+                                                        </template>
+                                                    </v-img>
+                                                </v-card>
+                                            </v-slide-group-item>
+                                        </v-slide-group>
 
-                                    <v-expand-transition>
-                                        <transition name="fade">
-                                            <v-sheet
-                                                v-if="restaurantModel != null"
-                                            >
-                                                <div class="d-flex flex-column align-center justify-center px-8 pb-10">
-                                                    <h1><v-icon class="text-green">mdi-check-circle</v-icon> {{ restaurants[restaurantModel].name }}</h1>
-                                                    <h4>{{ restaurants[restaurantModel].address }}</h4>
-                                                    <h4>Landline/Phone: {{ restaurants[restaurantModel].phone }}</h4>
-                                                </div>
-                                            </v-sheet>
-                                        </transition>
-                                    </v-expand-transition>
-                                </v-sheet>
-                            </v-col>
-                            <v-col cols="12">
-                                <v-list>
-                                    <v-list-item align="center" class="text-h5 supreme mb-4 " style="letter-spacing: 3px !important;">
-                                        Select your preferred table
-                                    </v-list-item>
-                                </v-list>
-                                <v-sheet
-                                    class="mx-auto"
-                                    elevation="8"
-                                    max-width="1200"
-                                >
-                                    <v-slide-group
-                                        v-model="tableModel"
-                                        class="pa-4"
-                                        show-arrows
-                                    >
-                                        <v-slide-group-item
-                                            v-for="(table, tableKey, tableIndex) in tables"
-                                            :key="table.id"
-                                            v-slot="{ isSelected, toggle, selectedClass }"
-                                        >
-                                            <v-card
-                                                color="grey-lighten-1"
-                                                :image="table.image"
-                                                :class="['ma-4', selectedClass]"
-                                                height="300"
-                                                width="400"
-                                                @click="toggle"
-                                            >
-                                                <v-img
-                                                    :src="table.image"
-                                                    :lazy-src="table.image"
-                                                    aspect-ratio="1"
-                                                    cover
-                                                    class="bg-grey-lighten-2"
+                                        <v-expand-transition>
+                                            <transition name="fade">
+                                                <v-sheet
+                                                    v-if="restaurantModel != null"
                                                 >
-                                                    <template v-slot:placeholder>
-                                                        <v-row
-                                                            class="fill-height ma-0"
-                                                            align="center"
-                                                            justify="center"
-                                                        >
-                                                            <v-progress-circular
-                                                                indeterminate
-                                                                color="grey-lighten-5"
-                                                            ></v-progress-circular>
-                                                        </v-row>
-                                                    </template>
-                                                </v-img>
-                                            </v-card>
-                                        </v-slide-group-item>
-                                    </v-slide-group>
-                                    <v-expand-transition>
-                                        <transition name="fade">
-                                            <v-sheet
-                                                v-if="tableModel != null"
+                                                    <div class="d-flex flex-column align-center justify-center px-8 pb-10">
+                                                        <h1><v-icon class="text-green">mdi-check-circle</v-icon> {{ restaurants[restaurantModel].name }}</h1>
+                                                        <h4>{{ restaurants[restaurantModel].address }}</h4>
+                                                        <h4>Landline/Phone: {{ restaurants[restaurantModel].phone }}</h4>
+                                                    </div>
+                                                </v-sheet>
+                                            </transition>
+                                        </v-expand-transition>
+                                    </v-sheet>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-list>
+                                        <v-list-item align="center" class="text-h5 supreme mb-4 " style="letter-spacing: 3px !important;">
+                                            Select your preferred table
+                                        </v-list-item>
+                                    </v-list>
+                                    <v-sheet
+                                        class="mx-auto"
+                                        elevation="8"
+                                        max-width="1200"
+                                    >
+                                        <v-slide-group
+                                            v-model="tableModel"
+                                            class="pa-4"
+                                            show-arrows
+                                        >
+                                            <v-slide-group-item
+                                                v-for="(table, tableKey, tableIndex) in tables"
+                                                :key="table.id"
+                                                v-slot="{ isSelected, toggle, selectedClass }"
                                             >
-                                                <div class="d-flex flex-column align-center justify-center px-8 pb-10">
-                                                    <h1><v-icon class="text-green">mdi-check-circle</v-icon> Table #{{ tables[tableModel].number }}</h1>
-                                                    <h4>{{ tables[tableModel].description }}</h4>
-                                                </div>
-                                            </v-sheet>
-                                        </transition>
-                                    </v-expand-transition>
-                                </v-sheet>
-                            </v-col>
-                            <v-col cols="12">
-                                <v-list>
-                                    <v-list-item prepend-icon="mdi-calendar-month" class="text-h5 pt-6 supreme" style="letter-spacing: 3px !important;">
-                                        Date and time
-                                    </v-list-item>
-                                    <v-list-item align="center" class="text-h5 mb-4 pt-10 supreme" style="letter-spacing: 3px !important;">
-                                        <transition name="fade">
-                                            <v-icon v-if="selectedDateTime" class="text-green">mdi-check-circle</v-icon>
-                                        </transition>
-                                        Select your preferred date and time
-                                    </v-list-item>
-                                </v-list>
-                                <VueDatePicker
-                                    v-model="selectedDateTime"
-                                    placeholder="Click here to select your preferred date and time ..."
-                                    text-input
-                                    ignore-time-validation
-                                    :text-input-options="dateOption"/>
-                            </v-col>
-                            <v-col cols="12">
-                                <v-list>
-                                    <v-list-item prepend-icon="mdi-account-group" class="text-h5 pt-6 supreme" style="letter-spacing: 3px !important;">
-                                        Party Size
-                                    </v-list-item>
-                                    <v-list-item align="center" class="text-h5 supreme mb-4" style="letter-spacing: 3px !important;">
-                                        <transition name="fade">
-                                            <v-icon class="text-green" v-if="partySize">mdi-check-circle</v-icon>
-                                        </transition>
-                                        How many are you in size?
-                                    </v-list-item>
-                                    <v-list-item align="center" class="text-h3" v-if="partySize">{{ partySize }}</v-list-item>
-                                </v-list>
-                                <v-slider
-                                    step="1"
-                                    show-ticks="always"
-                                    tick-size="4"
-                                    :min="0"
-                                    :max="9"
-                                    v-model="partySize"
-                                ></v-slider>
-                            </v-col>
-                            <v-col>
-                                <v-btn
-                                    variant="tonal"
-                                    @click="saveBooking"
-                                    :disabled="!isBookingFormDone"
-                                    block
-                                >
-                                    Save your spot
-                                </v-btn>
-                            </v-col>
-                        </v-row>
-                    </v-form>
-                </v-container>
-            </v-card>
-        </v-dialog>
+                                                <v-card
+                                                    color="grey-lighten-1"
+                                                    :image="table.image"
+                                                    :class="['ma-4', selectedClass]"
+                                                    height="300"
+                                                    width="400"
+                                                    @click="toggle"
+                                                >
+                                                    <v-img
+                                                        :src="table.image"
+                                                        :lazy-src="table.image"
+                                                        aspect-ratio="1"
+                                                        cover
+                                                        class="bg-grey-lighten-2"
+                                                    >
+                                                        <template v-slot:placeholder>
+                                                            <v-row
+                                                                class="fill-height ma-0"
+                                                                align="center"
+                                                                justify="center"
+                                                            >
+                                                                <v-progress-circular
+                                                                    indeterminate
+                                                                    color="grey-lighten-5"
+                                                                ></v-progress-circular>
+                                                            </v-row>
+                                                        </template>
+                                                    </v-img>
+                                                </v-card>
+                                            </v-slide-group-item>
+                                        </v-slide-group>
+                                        <v-expand-transition>
+                                            <transition name="fade">
+                                                <v-sheet
+                                                    v-if="tableModel != null"
+                                                >
+                                                    <div class="d-flex flex-column align-center justify-center px-8 pb-10">
+                                                        <h1><v-icon class="text-green">mdi-check-circle</v-icon> Table #{{ tables[tableModel].number }}</h1>
+                                                        <h4>{{ tables[tableModel].description }}</h4>
+                                                    </div>
+                                                </v-sheet>
+                                            </transition>
+                                        </v-expand-transition>
+                                    </v-sheet>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-list>
+                                        <v-list-item prepend-icon="mdi-calendar-month" class="text-h5 pt-6 supreme text-orange-lighten-4" style="letter-spacing: 3px !important;">
+                                            Date and time
+                                        </v-list-item>
+                                        <v-list-item align="center" class="text-h5 mb-4 pt-10 supreme" style="letter-spacing: 3px !important;">
+                                            <transition name="fade">
+                                                <v-icon v-if="selectedDateTime" class="text-green">mdi-check-circle</v-icon>
+                                            </transition>
+                                            Select your preferred date and time
+                                        </v-list-item>
+                                    </v-list>
+                                    <VueDatePicker
+                                        v-model="selectedDateTime"
+                                        placeholder="Click here to select your preferred date and time ..."
+                                        text-input
+                                        ignore-time-validation
+                                        :text-input-options="dateOption"/>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-list>
+                                        <v-list-item prepend-icon="mdi-account-group" class="text-h5 pt-6 supreme text-orange-lighten-4" style="letter-spacing: 3px !important;">
+                                            Party Size
+                                        </v-list-item>
+                                        <v-list-item align="center" class="text-h5 supreme mb-4" style="letter-spacing: 3px !important;">
+                                            <transition name="fade">
+                                                <v-icon class="text-green" v-if="partySize">mdi-check-circle</v-icon>
+                                            </transition>
+                                            How many are you in size?
+                                        </v-list-item>
+                                        <v-list-item align="center" class="text-h3" v-if="partySize">{{ partySize }}</v-list-item>
+                                    </v-list>
+                                    <v-slider
+                                        step="1"
+                                        show-ticks="always"
+                                        tick-size="4"
+                                        :min="0"
+                                        :max="9"
+                                        v-model="partySize"
+                                    ></v-slider>
+                                </v-col>
+                                <v-col>
+                                    <v-btn
+                                        variant="tonal"
+                                        :disabled="!isBookingFormDone"
+                                        block
+                                        style="letter-spacing: 6px !important;"
+                                    >
+                                        Save your spot
+                                        <v-dialog
+                                            v-model="dialog1"
+                                            activator="parent"
+                                            width="auto"
+                                        >
+                                            <v-card>
+                                                <v-card-title class="px-5 pt-5 text-orange-lighten-4">
+                                                    <v-icon class="pb-1 text-orange-accent-4">mdi-alert-circle</v-icon>
+                                                    Booking Confirmation
+                                                </v-card-title>
+                                                <v-divider/>
+                                                <v-card-text class="px-5">
+                                                    Are you certain about your booking? Once the booking is made, it cannot be undone.
+                                                </v-card-text>
+                                                <v-card-actions class="px-5">
+                                                    <v-spacer/>
+                                                    <v-btn color="orange-accent-1" @click="dialog1 = false">Close</v-btn>
+                                                    <v-btn color="orange-accent-4" @click="saveBooking">Confirm booking</v-btn>
+                                                </v-card-actions>
+                                            </v-card>
+                                        </v-dialog>
+                                    </v-btn>
+                                </v-col>
+                            </v-row>
+                        </v-form>
+                    </v-container>
+                </v-card>
+            </v-dialog>
+        </v-btn>
         <v-snackbar
             v-model="snackbar"
             multi-line
@@ -368,6 +383,7 @@ const store = useStore();
 
 // data
 const dialog = ref(false);
+const dialog1 = ref(false);
 const snackbar = ref(false);
 const loading = ref(false);
 const tableModel = ref(null);
@@ -391,76 +407,6 @@ const booking = ref({
     'time': null,
     'party_size': null,
 });
-
-// watch
-watch(tableModel, () => {
-    if (tableModel.value !== null) {
-        selectedTable.value = tables[tableModel.value];
-    } else {
-        selectedTable.value = null;
-    }
-});
-
-watch(restaurantModel, () => {
-    if (restaurantModel.value !== null) {
-        selectedRestaurant.value = restaurants[restaurantModel.value];
-    } else {
-        selectedRestaurant.value = null;
-    }
-});
-
-watch(selectedRestaurant, () => {
-    updateBooking();
-});
-
-watch(selectedTable, () => {
-    updateBooking();
-});
-
-watch(partySize, () => {
-    updateBooking();
-});
-
-// methods
-const updateBooking = () => {
-    booking.value.restaurant_id = selectedRestaurant.value?.id;
-    booking.value.table_id = selectedTable.value?.id;
-    booking.value.date = selectedDate.value;
-    booking.value.time = selectedTime.value;
-    booking.value.party_size = partySize.value;
-};
-
-const handleOpenBook = () => {
-    dialog.value = true
-}
-
-const handleCloseBook = () => {
-    dialog.value = false
-}
-
-const getRestaurantNameById = (restaurantId) => {
-    const restaurant = restaurants.find((r) => r.id === restaurantId);
-    return restaurant ? restaurant.name : '';
-};
-
-const getTableNumberById = (tableId) => {
-    const table = tables.find((t) => t.id === tableId);
-    return table ? table.number : '';
-};
-
-const downloadQR = (bookingId) => {
-    const canvas = document.getElementById(`qr${bookingId}`);
-    const pngUrl = canvas
-        .toDataURL("image/png")
-        .replace("image/png", "image/octet-stream");
-    let downloadLink = document.createElement("a");
-    downloadLink.href = pngUrl;
-    downloadLink.download = `QR_CODE_${authStore.getUser.name}_${new Date(Date.now()).toLocaleDateString()}.png`;
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-};
-
 
 // computed
 const selectedDate = computed(() => {
@@ -489,6 +435,75 @@ const isBookingFormDone = computed(() => {
         partySize.value <= selectedTable.value.capacity
     );
 });
+
+// watch
+watch(tableModel, () => {
+    if (tableModel.value !== null) {
+        selectedTable.value = tables[tableModel.value];
+    } else {
+        selectedTable.value = null;
+    }
+});
+
+watch(restaurantModel, () => {
+    if (restaurantModel.value !== null) {
+        selectedRestaurant.value = restaurants[restaurantModel.value];
+    } else {
+        selectedRestaurant.value = null;
+    }
+});
+
+watch(selectedRestaurant, () => {
+    updateBooking();
+});
+
+watch(selectedTable, () => {
+    updateBooking();
+});
+
+watch(selectedDate, () => {
+    updateBooking();
+});
+
+watch(selectedTime, () => {
+    updateBooking();
+});
+
+watch(partySize, () => {
+    updateBooking();
+});
+
+// methods
+const updateBooking = () => {
+    booking.value.restaurant_id = selectedRestaurant.value?.id;
+    booking.value.table_id = selectedTable.value?.id;
+    booking.value.date = selectedDate.value;
+    booking.value.time = selectedTime.value;
+    booking.value.party_size = partySize.value;
+};
+
+const getRestaurantNameById = (restaurantId) => {
+    const restaurant = restaurants.find((r) => r.id === restaurantId);
+    return restaurant ? restaurant.name : '';
+};
+
+const getTableNumberById = (tableId) => {
+    const table = tables.find((t) => t.id === tableId);
+    return table ? table.number : '';
+};
+
+const downloadQR = (bookingId) => {
+    const canvas = document.getElementById(`qr${bookingId}`);
+    const pngUrl = canvas
+        .toDataURL("image/png")
+        .replace("image/png", "image/octet-stream");
+    let downloadLink = document.createElement("a");
+    downloadLink.href = pngUrl;
+    downloadLink.download = `QR_CODE_${authStore.getUser.name}_${new Date(Date.now()).toLocaleDateString()}.png`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+};
 
 // ajax
 const fetchRestaurants = () => {
@@ -535,6 +550,7 @@ const saveBooking = () => {
                     partySize.value = 0;
                 }, 1500);
                 dialog.value = false;
+                dialog1.value = false;
             }
         },
         error: (error) => {
@@ -560,7 +576,7 @@ const fetchCustomerBookings = () => {
                     Object.assign(bookings, data.bookings);
                 setTimeout(() => {
                     fetchCustomerBookings();
-                }, 3000);
+                }, 3200);
             },
             error: (error) => {
                 alert(`ERROR ${error.status}: ${error.statusText}`);
