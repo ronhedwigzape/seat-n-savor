@@ -21,8 +21,6 @@ else {
 
         // fetch restaurant bookings
         if (isset($_GET['getRestaurantBookings'])) {
-            require_once 'models/Restaurateur.php';
-
             echo json_encode([
                 'restaurant_bookings' => $restaurateur->getAllRestaurantBookings()
             ]);

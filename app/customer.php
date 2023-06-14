@@ -60,8 +60,10 @@ else {
 
         // get all customer notifications
         else if (isset($_GET['getCustomerNotifications'])) {
+            require_once 'models/Restaurateur.php';
             echo json_encode([
-                'notifications' => $customer->getCustomerNotifications()
+                'notifications' => $customer->getCustomerNotifications(),
+                'restaurateurs' => Restaurateur::rows()
             ]);
         }
 

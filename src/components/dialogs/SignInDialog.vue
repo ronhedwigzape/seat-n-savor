@@ -8,6 +8,7 @@
             <v-btn
                 color="text-white"
                 v-bind="props"
+                stacked
             >
                 Sign In
             </v-btn>

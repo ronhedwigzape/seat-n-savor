@@ -45,33 +45,42 @@
             </v-tooltip>
             <span class="slider"></span>
         </label>
-        <v-chip
+        <v-btn
             v-if="authStore.isAuthenticated"
-            class="me-3"
-            pill
+            stacked
         >
+            <v-chip
+                class="me-3"
+                pill
+            >
             <v-avatar start>
                 <v-img :src="authStore.getUser.avatar"></v-img>
             </v-avatar>
             {{ authStore.getUser.name }}
+            </v-chip>
             <v-tooltip
                 activator="parent"
                 location="bottom"
             >Profile
             </v-tooltip>
-        </v-chip>
-
+        </v-btn>
         <template v-if="authStore.isAuthenticated">
             <v-btn
                 v-if="authStore.getUser.userType === 'customer'"
                 class="text-none"
                 stacked
             >
-                <v-icon>mdi-bell-outline</v-icon>
+                <v-badge
+                    :color="notifications ? 'red-darken-3' : ''"
+                    :content="notifications.length"
+                >
+                    <v-icon>mdi-bell-outline</v-icon>
+                </v-badge>
                 <v-tooltip
                     activator="parent"
                     location="bottom"
-                >Notification
+                >
+                    Notifications
                 </v-tooltip>
                 <v-menu
                     activator="parent"
@@ -79,29 +88,37 @@
                 >
                     <v-list width="300" height="300">
                         <v-list-item-title
-                            class="text-h5 px-4 py-4 position-sticky"
+                            class="text-h5 px-4 py-4 position-sticky pally"
                         >
                             Notifications
                         </v-list-item-title>
-                        <v-list-item class="bg-grey-darken-3" v-if="status === 'pending'">
-                            <v-list-item-title>~ From: {{ restaurant }} ~</v-list-item-title>
-                            <v-icon color="orange">mdi-book-clock</v-icon>
-                            {{ items }}
-                        </v-list-item>
-                        <v-list-item class="bg-grey-darken-3" v-else-if="status === 'confirmed'">
-                            <v-list-item-title>~ From: {{ restaurant }} ~</v-list-item-title>
-                            <v-icon color="success">mdi-book-check</v-icon>
-                            {{ items }}
-                        </v-list-item>
-                        <v-list-item class="bg-grey-darken-3" v-else>
-                            <v-list-item-title>~ From: {{ restaurant }} ~</v-list-item-title>
-                            <v-icon color="error">mdi-book-cancel</v-icon>
-                            {{ items }}
+                        <v-list-item v-for="notification in notifications" class="bg-grey-darken-3 pt-3">
+                            <div class="d-flex">
+                                <div class="me-1">
+                                    <v-avatar>
+                                        <v-img :src="getRestaurateurAvatarById(notification.sender_id)"/>
+                                    </v-avatar>
+                                </div>
+                                <div class="ms-3 text-start">
+                                    <v-list-item-title
+                                        class="m-0 text-body-1 font-weight-bold supreme"
+                                        style="line-height: 1.1;"
+                                    >
+                                        {{ getRestaurateurNameById(notification.sender_id) }}
+                                    </v-list-item-title>
+                                    <p class="text-subtitle-2 text-grey-lighten-1 pt-1 supreme">
+                                        {{notification.message }}
+                                    </p>
+                                    <p class="text-caption text-orange-accent-4 supreme">
+                                        {{ notificationTimestamp(notification.updated_at) }}
+                                    </p>
+                                </div>
+                            </div>
                         </v-list-item>
                     </v-list>
                 </v-menu>
             </v-btn>
-           <SignOut/>
+            <SignOut/>
         </template>
         <template v-else>
             <SignIn/>
@@ -127,7 +144,7 @@ const darkMode = ref(true);
 const image = ref('dine.jpg');
 const status = ref('cancelled');
 const items = ref('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad delectus dolore dolorem dolores doloribus ea explicabo hic illo impedit in, laborum officiis perspiciatis provident quasi quisquam quod recusandae rerum soluta.');
-const restaurant = ref('MCM Restaurants')
+const restaurateurs = reactive([]);
 const notifications = reactive([]);
 const authStore = useAuthStore();
 const store = useStore();
@@ -137,6 +154,49 @@ const toggleDarkMode = () => {
     theme.global.name.value = darkMode.value ? "dark" : "light";
     localStorage.setItem("darkTheme", darkMode.value.toString());
 };
+
+const getRestaurateurNameById = (senderId) => {
+    const restaurateur = restaurateurs.find((r) => r.id === senderId);
+    return restaurateur ? restaurateur.name : '';
+};
+
+const getRestaurateurAvatarById = (senderId) => {
+    const restaurateur = restaurateurs.find((r) => r.id === senderId);
+    return restaurateur ? restaurateur.avatar : '';
+};
+
+const notificationTimestamp = (updatedAt) => {
+    const timestamp = new Date(updatedAt).getTime();
+    const now = Date.now();
+    const timeDifference = now - timestamp;
+
+    if (timeDifference < 1000) {
+        return 'Just now';
+    }
+
+    // calculate the time differences in seconds, minutes, hours, days, weeks, and months
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const weeks = Math.floor(days / 7);
+    const months = Math.floor(days / 30);
+
+    if (seconds < 60) {
+        return `${seconds} second${seconds !== 1 ? 's' : ''} ago`;
+    } else if (minutes < 60) {
+        return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+    } else if (hours < 24) {
+        return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+    } else if (days < 7) {
+        return `${days} day${days !== 1 ? 's' : ''} ago`;
+    } else if (weeks < 4) {
+        return `${weeks} week${weeks !== 1 ? 's' : ''} ago`;
+    } else {
+        return `${months} month${months !== 1 ? 's' : ''} ago`;
+    }
+};
+
 
 const fetchCustomerNotifications = () => {
     if (authStore.isAuthenticated) {
@@ -153,6 +213,7 @@ const fetchCustomerNotifications = () => {
                 data = JSON.parse(data);
                 if (JSON.stringify(notifications) !== JSON.stringify(data.notifications))
                     Object.assign(notifications, data.notifications);
+                Object.assign(restaurateurs, data.restaurateurs);
                 setTimeout(() => {
                     fetchCustomerNotifications();
                 }, 6000);

@@ -9,6 +9,7 @@
             <v-btn
                 color="text-white"
                 v-bind="props"
+                stacked
             >
                 Sign Up
             </v-btn>

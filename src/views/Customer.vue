@@ -43,15 +43,16 @@
                         <v-row>
                             <v-col cols="12">
                                 <v-list>
-                                    <v-list-item class="text-h3 pt-4">Create your Booking</v-list-item>
-                                    <v-list-item prepend-icon="mdi-map-marker" class="text-h5 pt-6">Setting
+                                    <v-list-item class="text-h3 pt-4 pally">Create your Booking</v-list-item>
+                                    <v-list-item prepend-icon="mdi-map-marker" class="text-h5 pt-6 supreme" style="letter-spacing: 3px !important;">
+                                        Setting
                                     </v-list-item>
                                 </v-list>
                             </v-col>
                             <v-col cols="12">
                                 <v-list>
-                                    <v-list-item align="center" class="text-h5 text-decoration-underline mb-4">Select
-                                        your preferred restaurant
+                                    <v-list-item align="center" class="text-h5 supreme mb-4" style="letter-spacing: 3px !important;">
+                                        Select your preferred restaurant
                                     </v-list-item>
                                 </v-list>
                                 <v-sheet
@@ -117,8 +118,8 @@
                             </v-col>
                             <v-col cols="12">
                                 <v-list>
-                                    <v-list-item align="center" class="text-h5 text-decoration-underline mb-4">Select
-                                        your preferred table
+                                    <v-list-item align="center" class="text-h5 supreme mb-4 " style="letter-spacing: 3px !important;">
+                                        Select your preferred table
                                     </v-list-item>
                                 </v-list>
                                 <v-sheet
@@ -183,10 +184,10 @@
                             </v-col>
                             <v-col cols="12">
                                 <v-list>
-                                    <v-list-item prepend-icon="mdi-calendar-month" class="text-h5 pt-6">
+                                    <v-list-item prepend-icon="mdi-calendar-month" class="text-h5 pt-6 supreme" style="letter-spacing: 3px !important;">
                                         Date and time
                                     </v-list-item>
-                                    <v-list-item align="center" class="text-h5 text-decoration-underline mb-4">
+                                    <v-list-item align="center" class="text-h5 mb-4 pt-10 supreme" style="letter-spacing: 3px !important;">
                                         <transition name="fade">
                                             <v-icon v-if="selectedDateTime" class="text-green">mdi-check-circle</v-icon>
                                         </transition>
@@ -202,10 +203,10 @@
                             </v-col>
                             <v-col cols="12">
                                 <v-list>
-                                    <v-list-item prepend-icon="mdi-account-group" class="text-h5 pt-6">
+                                    <v-list-item prepend-icon="mdi-account-group" class="text-h5 pt-6 supreme" style="letter-spacing: 3px !important;">
                                         Party Size
                                     </v-list-item>
-                                    <v-list-item align="center" class="text-h5 text-decoration-underline mb-4">
+                                    <v-list-item align="center" class="text-h5 supreme mb-4" style="letter-spacing: 3px !important;">
                                         <transition name="fade">
                                             <v-icon class="text-green" v-if="partySize">mdi-check-circle</v-icon>
                                         </transition>
@@ -383,7 +384,6 @@ const view = reactive({});
 const restaurants = reactive([]);
 const bookings = reactive([]);
 const tables = reactive([]);
-const restaurateurs = reactive([]);
 const booking = ref({
     'restaurant_id': null,
     'table_id': null,
@@ -505,7 +505,6 @@ const fetchRestaurants = () => {
             data = JSON.parse(data);
             Object.assign(tables, data.tables);
             Object.assign(restaurants, data.restaurants);
-            Object.assign(restaurateurs, data.restaurateurs);
         },
         error: (error) => {
             alert(`ERROR ${error.status}: ${error.statusText}`);
