@@ -219,9 +219,15 @@ const fetchCustomerNotifications = () => {
             },
             success: (data, textStatus, jqXHR) => {
                 data = JSON.parse(data);
-                if (JSON.stringify(notifications) !== JSON.stringify(data.notifications))
+                if (JSON.stringify(notifications) !== JSON.stringify(data.notifications)) {
+                    // sort notifications by updated_at in descending order
+                    data.notifications.sort((a, b) => {
+                        return new Date(b.updated_at) - new Date(a.updated_at);
+                    });
+
                     Object.assign(notifications, data.notifications);
                     Object.assign(restaurateurs, data.restaurateurs);
+                }
                 setTimeout(() => {
                     fetchCustomerNotifications();
                 }, 6500);

@@ -23,8 +23,9 @@
                     >
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
-                    <v-col class="d-flex justify-center align-center">
-                        <p class="text-lg-h2 text-md-h3 text-h4 pally">Sign In</p>
+                    <v-col class="d-flex justify-center flex-column align-center">
+                        <p class="text-lg-h2 text-md-h3 text-h4 pally">Welcome Back!</p>
+                        <p class="text-subtitle-1 supreme text-grey-lighten-1">Sign in to continue</p>
                     </v-col>
                 </v-card-title>
                 <v-card-text>
@@ -33,7 +34,7 @@
                             @submit.prevent="handleSubmit"
                         >
                             <v-row>
-                                <v-col cols="12">
+                                <v-col cols="12" class="pb-0">
                                     <v-text-field
                                         label="Username"
                                         variant="outlined"
@@ -43,7 +44,7 @@
                                         required
                                     ></v-text-field>
                                 </v-col>
-                                <v-col cols="12">
+                                <v-col cols="12" class="py-0">
                                     <v-text-field
                                         label="Password"
                                         variant="outlined"
@@ -58,14 +59,14 @@
                                 </v-col>
                             </v-row>
                             <v-btn
-                                color="blue-darken-1 mt-4"
+                                color="orange-accent-1 mt-4"
                                 variant="tonal"
                                 type="submit"
                                 :loading="loading"
                                 :disabled="loading"
                                 block
                             >
-                                Login
+                                Sign in
                             </v-btn>
                         </v-form>
                     </v-container>

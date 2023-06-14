@@ -3,7 +3,8 @@
         transition="dialog-bottom-transition"
         v-model="dialog"
         persistent
-        width="1024"
+        width="700"
+
     >
         <template v-slot:activator="{ props }">
             <v-btn
@@ -24,8 +25,9 @@
                     >
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
-                    <v-col class="d-flex justify-center align-center">
+                    <v-col class="d-flex justify-center flex-column align-center">
                         <p class="text-lg-h2 text-md-h3 text-h4 pally">Create Your Account</p>
+                        <p class="text-subtitle-1 supreme text-grey-lighten-1">Describe yourself as clearly so that there are no mistakes.</p>
                     </v-col>
                 </v-card-title>
                 <v-card-text>
@@ -106,7 +108,7 @@
                                 </transition>
                             </v-row>
                             <v-btn
-                                color="blue-darken-1"
+                                color="orange-accent-1"
                                 variant="text"
                                 type="submit"
                                 block
@@ -114,14 +116,8 @@
                             >
                                 Create Account
                             </v-btn>
-
                         </v-form>
                     </v-container>
-                </v-card-text>
-                <v-card-text>
-                    <v-col class="d-flex justify-center align-center" cols="12">
-                        <p>Already have an account? Sign in Now!</p>
-                    </v-col>
                 </v-card-text>
             </v-card>
         </v-row>

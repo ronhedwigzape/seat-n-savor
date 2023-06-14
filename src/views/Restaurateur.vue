@@ -104,19 +104,19 @@
                                             <v-col>
                                                 <v-icon size="x-small" class="pb-2">mdi-bell-badge</v-icon> Notify {{ getCustomerNameById(booking.customer_id) }}
                                                 <p class="text-subtitle-1 text-grey-lighten-1 pt-1">Code: {{ booking.code }}</p>
-
-                                                <p class="text-subtitle-1 text-grey-darken-1 pt-3">Example:</p>
-                                                <p class="text-subtitle-2 text-grey-darken-1">Hello {{ getCustomerNameById(booking.customer_id) }}! </p>
-                                                <p class="text-subtitle-2 text-grey-darken-1">You're booking: {{ booking.code }} has been approved.</p>
-                                                <p class="text-subtitle-2 text-grey-darken-1">You can now come at {{ restaurant.name }} on {{ booking.date }} @{{ booking.time }}.
-                                                </p>
+                                                <p class="text-subtitle-1 text-grey-darken-1 pt-3 pb-3">Sample:</p>
+                                                <p class="text-subtitle-2 text-grey-darken-1 pb-2">Hello {{ getCustomerNameById(booking.customer_id) }}!</p>
+                                                <p class="text-subtitle-2 text-grey-darken-1">Your booking with code {{ booking.code }} has been approved.</p>
+                                                <p class="text-subtitle-2 text-grey-darken-1 pb-2">You have reserved a table for {{ booking.party_size }} people, and your table number is #{{ getTableNumberById(booking.table_id) }}.</p>
+                                                <p class="text-subtitle-2 text-grey-darken-1 pb-2">You are welcome to visit {{ restaurant.name }} on {{ booking.date }} at {{ booking.time }}.</p>
+                                                <p class="text-subtitle-2 text-grey-darken-1">Thank you.</p>
                                             </v-col>
                                         </v-card-title>
                                         <v-card-text class="px-6">
                                            <v-text-field
                                                variant="outlined"
                                                label="Message"
-                                               v-model="message"
+                                               v-model.trim="message"
                                            />
                                         </v-card-text>
                                         <v-card-actions class="px-6 pb-4 d-flex justify-space-between">
@@ -129,12 +129,14 @@
                                             <v-btn
                                                 color="red-accent-4"
                                                 @click="sendCancellation(booking.customer_id, booking.table_id, booking.code)"
+                                                :disabled="!message || message.length === 0"
                                             >
                                                 Send Cancellation
                                             </v-btn>
                                             <v-btn
                                                 color="green-accent-4"
                                                 @click="sendConfirmation(booking.customer_id, booking.table_id, booking.code)"
+                                                :disabled="!message || message.length === 0"
                                             >
                                                 Send Confirmation
                                             </v-btn>
@@ -208,7 +210,7 @@
 import TopNavbar from "@/components/navbar/TopNavbar.vue";
 import SideNavbar from "@/components/navbar/SideNavbar.vue";
 import { StreamBarcodeReader } from "vue-barcode-reader";
-import {onMounted, reactive, ref} from "vue";
+import {onMounted, reactive, ref, watch} from "vue";
 import $ from "jquery";
 import {useStore} from "@/stores";
 import {useAuthStore} from "@/stores/store-auth";
@@ -241,6 +243,12 @@ const getTableNumberById = (tableId) => {
     const table = tables.find((t) => t.id === tableId);
     return table ? table.number : '';
 };
+
+const messageHasValue = () => {
+    return message.value === null;
+}
+
+watch(message, messageHasValue);
 
 const sendConfirmation = (customerId, tableId, code) => {
     $.ajax({

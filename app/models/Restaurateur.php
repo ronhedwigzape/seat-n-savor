@@ -328,6 +328,9 @@ class Restaurateur extends User
         if (!$code)
             App::returnError('HTTP/1.1 404', 'Update Error: Code does not exist.');
 
+        // todo: make a condition if qr code value is not the same with booking or does not exist
+        // Error: booking code with the value `$code` does not exist.
+
         $stmt = $this->conn->prepare("UPDATE $bookings_table SET is_shown = ? WHERE restaurant_id = ? AND code = ? ");
         $stmt->bind_param("iis", $is_shown, $restaurant_id, $code);
         $stmt->execute();
