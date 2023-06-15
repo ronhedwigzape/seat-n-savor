@@ -1,5 +1,5 @@
 <script setup>
-import HeroImageSlide from "@/components/slides/HeroImageSlide.vue";
+import HeroImageSlide from "@/components/slides/Hero.vue";
 import TopNavbar from "@/components/navbar/TopNavbar.vue";
 import Footer from "@/components/footer/Footer.vue";
 </script>

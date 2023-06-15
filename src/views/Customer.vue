@@ -374,7 +374,7 @@ import {computed, onMounted, reactive, ref, watch} from "vue";
 import {useAuthStore} from "@/stores/store-auth";
 import {useStore} from "@/stores";
 import TopNavbar from "@/components/navbar/TopNavbar.vue";
-import HeroImageSlide from "@/components/slides/HeroImageSlide.vue";
+import HeroImageSlide from "@/components/slides/Hero.vue";
 import Footer from "@/components/footer/Footer.vue";
 import VueDatePicker from '@vuepic/vue-datepicker';
 import VueQrcode from "@chenfengyuan/vue-qrcode";

@@ -163,7 +163,7 @@
                     activator="parent"
                     :close-on-content-click="false"
                 >
-                    <v-list width="300" height="300">
+                    <v-list width="450" height="300">
                         <v-list-item-title
                             class="text-h5 px-4 py-4 position-sticky pally"
                         >

@@ -100,7 +100,7 @@
                                     >
                                         <v-card :width="$vuetify.display.smAndDown ? 300 : $vuetify.display.mdAndDown ? 450 : 750">
                                             <v-card-title class="px-2 ps-sm-6 ps-md-6 ps-lg-6 pt-3 pt-sm-6 pt-md-8 pb-3">
-                                                <v-btn v-if="$vuetify.display.mdAndUp" class="float-end rounded" variant="text" @click="view[booking.booking_id] = false"><v-icon>mdi-close</v-icon></v-btn>
+                                                <v-btn v-if="$vuetify.display.mdAndUp" class="float-end rounded me-3 me-sm-4 me-md-4 me-lg-4" variant="text" @click="view[booking.booking_id] = false"><v-icon>mdi-close</v-icon></v-btn>
                                                 <v-col class="text-subtitle-2 text-grey-darken-1 ">
                                                     <h6 class="text-h6 text-sm-h5 text-md-h5 text-lg-h5 text-white">
                                                         <v-icon size="x-small" class="pb-2">mdi-bell-badge</v-icon>
@@ -113,9 +113,9 @@
                                                     <p v-if="$vuetify.display.smAndDown" class="pt-1">{{ booking.code }}</p>
                                                     <p v-if="$vuetify.display.smAndDown" class="pt-1">has been approved.</p>
                                                     <span v-else>{{ booking.code }} has been approved.</span>
-                                                    <p class="pt-1">You have reserved a table for {{ booking.party_size }} people,</p>
-                                                    <p v-if="$vuetify.display.smAndDown" class="pb-3">and your table number is #{{ getTableNumberById(booking.table_id) }}.</p>
-                                                    <span v-else class="pb-2">and your table number is #{{ getTableNumberById(booking.table_id) }}.</span>
+                                                    <p class="pt-1">You have reserved a table for {{ booking.party_size }},</p>
+                                                    <p v-if="$vuetify.display.smAndDown" class="pb-3">and table number is #{{ getTableNumberById(booking.table_id) }}.</p>
+                                                    <span v-else class="pb-2">and table number is #{{ getTableNumberById(booking.table_id) }}.</span>
                                                     <p class="pb-2 pt-2">You are welcome to visit </p>
                                                     <p v-if="$vuetify.display.smAndDown" class="pb-1">{{ restaurant.name }} </p>
                                                     <p v-if="$vuetify.display.smAndDown" class="pb-3">on {{ booking.date }} at {{ booking.time }}</p>

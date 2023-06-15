@@ -5,6 +5,7 @@
                 <p align="center" class="text-grey-lighten-1">The fastest restaurant booking in Rinconada</p>
             <v-card
                 class="w-75 rounded-pill my-10 my-sm-13 mx-lg-10 "
+                variant="tonal"
                 :class="{
                     'w-100': $vuetify.display.mdAndUp,
                 }"
@@ -20,7 +21,6 @@
                         hide-details
                         @click:append-inner="onClick"
                     ></v-text-field>
-
             </v-card>
         </v-col>
     </v-row>
