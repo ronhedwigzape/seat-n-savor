@@ -379,6 +379,8 @@ const onDecode = (decodedText) => {
         success: (data, textStatus, jqXHR) => {
             if (jqXHR.status === 200) {
                 qrSnackbar.value = true;
+                decodedText = null;
+                decodedQr.value = null;
             }
         },
         error: (error) => {
