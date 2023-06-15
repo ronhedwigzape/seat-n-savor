@@ -1,21 +1,5 @@
 <template>
-    <div class="position-relative">
-        <v-carousel
-            cycle
-            interval="6000"
-            hide-delimiters
-            height="600"
-        >
-            <v-carousel-item
-                v-for="(image, index) in images"
-                :key="index">
-                <v-img
-                    :src="image.file"
-                    aspect-ratio="16/9"
-                    cover
-                />
-            </v-carousel-item>
-        </v-carousel>
+    <div>
         <v-row class="heading heading-top">
             <v-col>
                 <h2 class="text-h1 pally text-shades-white appName appName-header">{{ store.app.title }}</h2>
@@ -83,20 +67,7 @@ const onClick = () => {
 </script>
 
 <style scoped>
-.searchBar {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 5;
-    width: 100%;
-}
 
-.heading {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 5;
-}
 
 .appName {
     text-shadow: black 6px 6px 7px;
@@ -113,16 +84,7 @@ const onClick = () => {
     .appName-header {
         font-size: 4rem !important;
     }
-    .heading-top {
-        top: 50%;
-    }
-    .searchBar-top {
-        top: 130%;
-    }
-    .book {
-        font-size: 1rem !important;
-        top: 50%;
-    }
+
 }
 
 /* Small devices (portrait tablets and large phones, between 600px and 768px) */
@@ -130,25 +92,10 @@ const onClick = () => {
     .appName-header {
         font-size: 5rem !important;
     }
-    .heading-top {
-        top: 45%;
-    }
-    .searchBar-top {
-        top: 150%;
-    }
-    .book {
-        font-size: 1.1rem !important;
-    }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-    .heading-top {
-        top: 48%;
-    }
-    .searchBar-top {
-        top: 160%;
-    }
     .book {
         font-size: 1.3rem !important;
     }
@@ -157,12 +104,7 @@ const onClick = () => {
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
-    .heading-top {
-        top: 45%;
-    }
-    .searchBar-top {
-        top: 170%;
-    }
+
     .book {
         font-size: 1.3rem !important;
     }
@@ -170,12 +112,6 @@ const onClick = () => {
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
-    .heading-top {
-        top: 40%;
-    }
-    .searchBar-top {
-        top: 180%;
-    }
     .book {
         font-size: 1.5rem !important;
     }

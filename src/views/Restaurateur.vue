@@ -376,7 +376,7 @@ const fetchRestaurantBookings = () => {
                     Object.assign(bookings, data.restaurant_bookings);
                 setTimeout(() => {
                     fetchRestaurantBookings();
-                }, 3000);
+                }, 10000);
             },
             error: (error) => {
                 alert(`ERROR ${error.status}: ${error.statusText}`);

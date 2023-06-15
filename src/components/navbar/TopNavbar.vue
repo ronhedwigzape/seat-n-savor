@@ -230,7 +230,7 @@ const fetchCustomerNotifications = () => {
                 }
                 setTimeout(() => {
                     fetchCustomerNotifications();
-                }, 6500);
+                }, 20000);
             },
             error: (error) => {
                 alert(`ERROR ${error.status}: ${error.statusText}`);
