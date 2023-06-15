@@ -8,6 +8,11 @@
     src: local('Supreme-Regular'), url('/fonts/Supreme/Supreme-Regular.ttf') format('truetype');
 }
 
+html {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 body {
     font-family: 'Supreme', sans-serif !important;
 }

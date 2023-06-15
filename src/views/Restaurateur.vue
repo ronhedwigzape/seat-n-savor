@@ -1,13 +1,13 @@
 <template>
     <TopNavbar/>
-    <SideNavbar/>
-    <v-container v-if="authStore.isAuthenticated">
-        <v-row class="d-flex justify-center align-center flex-column mt-16 mx-auto">
-            <v-col class="me-16">
-                <h1 align="center" class="text-h4 text-md-h3 mx-5 pb-7">
-                    <v-icon>mdi-book-account</v-icon>
-                    <p class="pally">
-                        {{ restaurant.name }} Bookings
+    <v-main>
+        <v-container>
+            <v-row class="mt-2" justify="center" v-if="authStore.isAuthenticated">
+                <v-col>
+                    <h1 align="center" class="text-h4 text-md-h3 mx-5 pb-7">
+                        <v-icon>mdi-book-account</v-icon>
+                        <p class="pally">
+                            {{ restaurant.name }} Bookings
                             <v-btn size="small" class="rounded" >
                                 <v-icon>mdi-help</v-icon>
                                 <v-dialog
@@ -19,10 +19,10 @@
                                         <v-card-title class="text-h5 ps-6 pt-8 pb-3">Instructions</v-card-title>
                                         <v-divider/>
                                         <v-card-text>
-                                        <ol class="px-6">
-                                            <li>Please notify the customer first whether the booking is canceled or confirmed.</li>
-                                            <li>Ensure that if a customer arrives at your restaurant, their QR code is scanned.</li>
-                                        </ol>
+                                            <ol class="px-6">
+                                                <li>Please notify the customer first whether the booking is canceled or confirmed.</li>
+                                                <li>Ensure that if a customer arrives at your restaurant, their QR code is scanned.</li>
+                                            </ol>
                                         </v-card-text>
                                         <v-card-actions class="px-6 pb-4">
                                             <v-spacer/>
@@ -31,179 +31,207 @@
                                     </v-card>
                                 </v-dialog>
                             </v-btn>
-                    </p>
-                </h1>
-                <v-table
-                    class="mx-5"
-                >
-                    <thead>
-                    <tr>
-                        <th class="text-center">
-                            <v-icon>mdi-qrcode</v-icon>
-                            <p>Code</p>
-                        </th>
-                        <th class="text-center">
-                            <v-icon>mdi-calendar-month</v-icon>
-                            <p>Date</p>
-                        </th>
-                        <th class="text-center">
-                            <v-icon>mdi-clock-time-nine</v-icon>
-                            <p>Time</p>
-                        </th>
-                        <th class="text-center">
-                            <v-icon>mdi-account-group</v-icon>
-                            <p>Party Size</p>
-                        </th>
-                        <th class="text-center">
-                            <v-icon>mdi-account</v-icon>
-                            <p>Customer</p>
-                        </th>
-                        <th class="text-center">
-                            <v-icon>mdi-table-chair</v-icon>
-                            <p>Table</p>
-                        </th>
-                        <th class="text-center">
-                            <v-icon>mdi-list-status</v-icon>
-                            <p>Status</p>
-                        </th>
-                        <th class="text-center">
-                            <v-icon>mdi-bell-badge</v-icon>
-                            <p>Notify</p>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="(booking, bookingKey, bookingIndex) in bookings" :key="booking.booking_id">
-                        <td align="center"> {{ booking.code }} </td>
-                        <td align="center"> {{ booking.date }} </td>
-                        <td align="center"> {{ booking.time }} </td>
-                        <td align="center"> {{ booking.party_size }} </td>
-                        <td align="center"> {{ getCustomerNameById(booking.customer_id) }} </td>
-                        <td align="center"> #{{ getTableNumberById(booking.table_id) }} </td>
-                        <td align="center"
-                            class="text-uppercase"
-                            :class="{
+                        </p>
+                    </h1>
+                    <v-table
+                        class="mx-5"
+                    >
+                        <thead>
+                        <tr>
+                            <th class="text-center">
+                                <v-icon>mdi-qrcode</v-icon>
+                                <p>Code</p>
+                            </th>
+                            <th class="text-center">
+                                <v-icon>mdi-calendar-month</v-icon>
+                                <p>Date</p>
+                            </th>
+                            <th class="text-center">
+                                <v-icon>mdi-clock-time-nine</v-icon>
+                                <p>Time</p>
+                            </th>
+                            <th class="text-center">
+                                <v-icon>mdi-account-group</v-icon>
+                                <p>Party Size</p>
+                            </th>
+                            <th class="text-center">
+                                <v-icon>mdi-account</v-icon>
+                                <p>Customer</p>
+                            </th>
+                            <th class="text-center">
+                                <v-icon>mdi-table-chair</v-icon>
+                                <p>Table</p>
+                            </th>
+                            <th class="text-center">
+                                <v-icon>mdi-list-status</v-icon>
+                                <p>Status</p>
+                            </th>
+                            <th class="text-center">
+                                <v-icon>mdi-bell-badge</v-icon>
+                                <p>Notify</p>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(booking, bookingKey, bookingIndex) in bookings" :key="booking.booking_id">
+                            <td align="center"> {{ booking.code }} </td>
+                            <td align="center"> {{ booking.date }} </td>
+                            <td align="center"> {{ booking.time }} </td>
+                            <td align="center"> {{ booking.party_size }} </td>
+                            <td align="center"> {{ getCustomerNameById(booking.customer_id) }} </td>
+                            <td align="center"> #{{ getTableNumberById(booking.table_id) }} </td>
+                            <td align="center"
+                                class="text-uppercase"
+                                :class="{
                                 'text-orange-accent-4' : booking.status === 'pending',
                                 'text-red-accent-4' : booking.status === 'cancelled',
                                 'text-green-accent-4' : booking.status === 'confirmed'
                             }"
+                            >
+                                {{ booking.status }}
+                            </td>
+                            <td align="center">
+                                <v-btn color="orange-accent-2">
+                                    View
+                                    <v-dialog
+                                        v-model="view[booking.booking_id]"
+                                        activator="parent"
+                                        width="auto"
+                                    >
+                                        <v-card :width="$vuetify.display.smAndDown ? 300 : $vuetify.display.mdAndDown ? 450 : 750">
+                                            <v-card-title class="px-2 ps-sm-6 ps-md-6 ps-lg-6 pt-3 pt-sm-6 pt-md-8 pb-3">
+                                                <v-btn v-if="$vuetify.display.mdAndUp" class="float-end rounded" variant="text" @click="view[booking.booking_id] = false"><v-icon>mdi-close</v-icon></v-btn>
+                                                <v-col class="text-subtitle-2 text-grey-darken-1 ">
+                                                    <h6 class="text-h6 text-sm-h5 text-md-h5 text-lg-h5 text-white">
+                                                        <v-icon size="x-small" class="pb-2">mdi-bell-badge</v-icon>
+                                                        Notify {{ getCustomerNameById(booking.customer_id) }}
+                                                    </h6>
+                                                    <p class="text-subtitle-1 text-grey-lighten-1 pt-1">Code: {{ booking.code }}</p>
+                                                    <p class="text-subtitle-1 text-grey-darken-1 pt-3 pb-3">Sample:</p>
+                                                    <p class="pb-2">Hello {{ getCustomerNameById(booking.customer_id) }}!</p>
+                                                    <p class="pt-2">Your booking with code</p>
+                                                    <p v-if="$vuetify.display.smAndDown" class="pt-1">{{ booking.code }}</p>
+                                                    <p v-if="$vuetify.display.smAndDown" class="pt-1">has been approved.</p>
+                                                    <span v-else>{{ booking.code }} has been approved.</span>
+                                                    <p class="pt-1">You have reserved a table for {{ booking.party_size }} people,</p>
+                                                    <p v-if="$vuetify.display.smAndDown" class="pb-3">and your table number is #{{ getTableNumberById(booking.table_id) }}.</p>
+                                                    <span v-else class="pb-2">and your table number is #{{ getTableNumberById(booking.table_id) }}.</span>
+                                                    <p class="pb-2 pt-2">You are welcome to visit </p>
+                                                    <p v-if="$vuetify.display.smAndDown" class="pb-1">{{ restaurant.name }} </p>
+                                                    <p v-if="$vuetify.display.smAndDown" class="pb-3">on {{ booking.date }} at {{ booking.time }}</p>
+                                                    <span v-else class="pb-2 pt-2">{{ restaurant.name }} on {{ booking.date }} at {{ booking.time }}</span>
+                                                    <p class="pt-2">Thank you.</p>
+                                                </v-col>
+                                            </v-card-title>
+                                            <v-card-text class="px-4 px-sm-6 px-md-6 px-lg-6">
+                                                <v-text-field
+                                                    variant="outlined"
+                                                    label="Message"
+                                                    v-model.trim="message"
+                                                />
+                                            </v-card-text>
+                                            <v-card-actions class="px-4 px-lg-6 pb-4 d-flex flex-column flex-sm-column flex-md-row justify-center justify-md-space-between justify-lg-space-between">
+                                                <v-btn
+                                                    v-if="$vuetify.display.smAndDown"
+                                                    class="mb-2"
+                                                    color="orange-lighten-4"
+                                                    variant="text"
+                                                    @click="view[booking.booking_id] = false"
+                                                >
+                                                    Close
+                                                </v-btn>
+                                                <v-btn
+                                                    color="orange-accent-4"
+                                                    @click="markPending(booking.customer_id, booking.table_id, booking.code)"
+                                                    class="my-2"
+                                                    :block="$vuetify.display.smAndDown"
+                                                >
+                                                    Mark as Pending
+                                                </v-btn>
+                                                <v-btn
+                                                    color="red-accent-4"
+                                                    @click="sendCancellation(booking.customer_id, booking.table_id, booking.code)"
+                                                    :disabled="!message || message.length === 0"
+                                                    class="my-2"
+                                                    :block="$vuetify.display.smAndDown"
+                                                >
+                                                    Send Cancellation
+                                                </v-btn>
+                                                <v-btn
+                                                    color="green-accent-4"
+                                                    @click="sendConfirmation(booking.customer_id, booking.table_id, booking.code)"
+                                                    :disabled="!message || message.length === 0"
+                                                    :block="$vuetify.display.smAndDown"
+                                                    class="my-2"
+                                                >
+                                                    Send Confirmation
+                                                </v-btn>
+                                            </v-card-actions>
+                                            <v-snackbar
+                                                v-model="snackbar"
+                                                multi-line
+                                            >
+                                                <v-icon class="text-green">mdi-check-circle</v-icon>
+                                                Your notification message has been sent successfully.
+                                                <template v-slot:actions>
+                                                    <v-btn
+                                                        color="red"
+                                                        variant="text"
+                                                        @click="dialog2 = false"
+                                                    >
+                                                        Close
+                                                    </v-btn>
+                                                </template>
+                                            </v-snackbar>
+                                            <v-snackbar
+                                                v-model="pendingSnackbar"
+                                                multi-line
+                                            >
+                                                <v-icon class="text-green">mdi-check-circle</v-icon>
+                                                Booking status has been set to pending.
+                                                <template v-slot:actions>
+                                                    <v-btn
+                                                        color="red"
+                                                        variant="text"
+                                                        @click="dialog2 = false"
+                                                    >
+                                                        Close
+                                                    </v-btn>
+                                                </template>
+                                            </v-snackbar>
+                                        </v-card>
+                                    </v-dialog>
+                                </v-btn>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </v-table>
+                </v-col>
+                <v-col class="d-flex justify-center align-center flex-column mx-16">
+                    <StreamBarcodeReader v-if="isShown" @decode="onDecode"/>
+                    <v-btn class="mt-6" @click="isShown = !isShown">Toggle QR Scanner</v-btn>
+                </v-col>
+                <v-snackbar
+                    v-model="qrSnackbar"
+                    multi-line
+                >
+                    <v-icon class="text-green">mdi-check-circle</v-icon>
+                    QR code scanned successfully.
+                    <p>Decoded Value: {{ decodedQr }}</p>
+                    <template v-slot:actions>
+                        <v-btn
+                            color="red"
+                            variant="text"
+                            @click="dialog3 = false"
                         >
-                            {{ booking.status }}
-                        </td>
-                        <td align="center">
-                            <v-btn color="orange-accent-2">
-                                View
-                                <v-dialog
-                                    v-model="view[booking.booking_id]"
-                                    activator="parent"
-                                    width="auto"
-                                >
-                                    <v-card width="750">
-                                        <v-card-title class="text-h5 ps-6 pt-8 pb-3">
-                                            <v-btn class="float-end rounded" variant="text" @click="view[booking.booking_id] = false"><v-icon>mdi-close</v-icon></v-btn>
-                                            <v-col>
-                                                <v-icon size="x-small" class="pb-2">mdi-bell-badge</v-icon> Notify {{ getCustomerNameById(booking.customer_id) }}
-                                                <p class="text-subtitle-1 text-grey-lighten-1 pt-1">Code: {{ booking.code }}</p>
-                                                <p class="text-subtitle-1 text-grey-darken-1 pt-3 pb-3">Sample:</p>
-                                                <p class="text-subtitle-2 text-grey-darken-1 pb-2">Hello {{ getCustomerNameById(booking.customer_id) }}!</p>
-                                                <p class="text-subtitle-2 text-grey-darken-1">Your booking with code {{ booking.code }} has been approved.</p>
-                                                <p class="text-subtitle-2 text-grey-darken-1 pb-2">You have reserved a table for {{ booking.party_size }} people, and your table number is #{{ getTableNumberById(booking.table_id) }}.</p>
-                                                <p class="text-subtitle-2 text-grey-darken-1 pb-2">You are welcome to visit {{ restaurant.name }} on {{ booking.date }} at {{ booking.time }}.</p>
-                                                <p class="text-subtitle-2 text-grey-darken-1">Thank you.</p>
-                                            </v-col>
-                                        </v-card-title>
-                                        <v-card-text class="px-6">
-                                           <v-text-field
-                                               variant="outlined"
-                                               label="Message"
-                                               v-model.trim="message"
-                                           />
-                                        </v-card-text>
-                                        <v-card-actions class="px-6 pb-4 d-flex justify-space-between">
-                                            <v-btn
-                                                color="orange-accent-4"
-                                                @click="markPending(booking.customer_id, booking.table_id, booking.code)"
-                                            >
-                                                Mark as Pending
-                                            </v-btn>
-                                            <v-btn
-                                                color="red-accent-4"
-                                                @click="sendCancellation(booking.customer_id, booking.table_id, booking.code)"
-                                                :disabled="!message || message.length === 0"
-                                            >
-                                                Send Cancellation
-                                            </v-btn>
-                                            <v-btn
-                                                color="green-accent-4"
-                                                @click="sendConfirmation(booking.customer_id, booking.table_id, booking.code)"
-                                                :disabled="!message || message.length === 0"
-                                            >
-                                                Send Confirmation
-                                            </v-btn>
-                                        </v-card-actions>
-                                        <v-snackbar
-                                            v-model="snackbar"
-                                            multi-line
-                                        >
-                                            <v-icon class="text-green">mdi-check-circle</v-icon>
-                                            Your notification message has been sent successfully.
-                                            <template v-slot:actions>
-                                                <v-btn
-                                                    color="red"
-                                                    variant="text"
-                                                    @click="dialog2 = false"
-                                                >
-                                                    Close
-                                                </v-btn>
-                                            </template>
-                                        </v-snackbar>
-                                        <v-snackbar
-                                            v-model="pendingSnackbar"
-                                            multi-line
-                                        >
-                                            <v-icon class="text-green">mdi-check-circle</v-icon>
-                                            Booking status has been set to pending.
-                                            <template v-slot:actions>
-                                                <v-btn
-                                                    color="red"
-                                                    variant="text"
-                                                    @click="dialog2 = false"
-                                                >
-                                                    Close
-                                                </v-btn>
-                                            </template>
-                                        </v-snackbar>
-                                    </v-card>
-                                </v-dialog>
-                            </v-btn>
-                        </td>
-                    </tr>
-                    </tbody>
-                </v-table>
-            </v-col>
-            <v-col class="d-flex justify-center align-center flex-column mx-16">
-                <StreamBarcodeReader class="me-16" v-if="isShown" @decode="onDecode"/>
-                <v-btn class="mt-6 me-16" @click="isShown = !isShown">Toggle QR Scanner</v-btn>
-            </v-col>
-            <v-snackbar
-                v-model="qrSnackbar"
-                multi-line
-            >
-                <v-icon class="text-green">mdi-check-circle</v-icon>
-                QR code scanned successfully.
-                <p>Decoded Value: {{ decodedQr }}</p>
-                <template v-slot:actions>
-                    <v-btn
-                        color="red"
-                        variant="text"
-                        @click="dialog3 = false"
-                    >
-                        Close
-                    </v-btn>
-                </template>
-            </v-snackbar>
-        </v-row>
-    </v-container>
+                            Close
+                        </v-btn>
+                    </template>
+                </v-snackbar>
+            </v-row>
+        </v-container>
+        <Footer/>
+    </v-main>
 </template>
 <script setup>
 
@@ -214,6 +242,7 @@ import {onMounted, reactive, ref, watch} from "vue";
 import $ from "jquery";
 import {useStore} from "@/stores";
 import {useAuthStore} from "@/stores/store-auth";
+import Footer from "@/components/footer/Footer.vue";
 
 const isShown = ref(false);
 const dialog = ref(false);

@@ -1,31 +1,29 @@
 <template>
-    <div>
-        <v-row class="heading heading-top">
-            <v-col>
-                <h2 class="text-h1 pally text-shades-white appName appName-header">{{ store.app.title }}</h2>
-                <p align="center" class="appName-subheader">The fastest restaurant booking in Rinconada</p>
-                <v-card
-                    class="mx-auto searchBar searchBar-top "
-                    color="grey-lighten-3"
-                    max-height="300"
-                    max-width="400"
-                >
-                    <v-card-text>
-                        <v-text-field
-                            :loading="loading"
-                            density="comfortable"
-                            variant="solo"
-                            label="Search restaurants, tables.."
-                            append-inner-icon="mdi-magnify"
-                            single-line
-                            hide-details
-                            @click:append-inner="onClick"
-                        ></v-text-field>
-                    </v-card-text>
-                </v-card>
-            </v-col>
-        </v-row>
-    </div>
+    <v-row class="mx-auto">
+        <v-col class="d-flex justify-center align-center flex-column mt-10">
+                <h2 align="center" class="pally text-h3 text-sm-h2 text-md-h2 text-lg-h1">{{ store.app.title }}</h2>
+                <p align="center" class="text-grey-lighten-1">The fastest restaurant booking in Rinconada</p>
+            <v-card
+                class="w-75 rounded-pill my-10 my-sm-13 mx-lg-10 "
+                :class="{
+                    'w-100': $vuetify.display.mdAndUp,
+                }"
+                color="grey-lighten-3"
+            >
+                    <v-text-field
+                        :loading="loading"
+                        density="comfortable"
+                        variant="solo"
+                        label="Search restaurants, tables.."
+                        append-inner-icon="mdi-magnify"
+                        single-line
+                        hide-details
+                        @click:append-inner="onClick"
+                    ></v-text-field>
+
+            </v-card>
+        </v-col>
+    </v-row>
 </template>
 <script setup>
 import {reactive, ref} from "vue";
@@ -81,39 +79,28 @@ const onClick = () => {
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-    .appName-header {
-        font-size: 4rem !important;
-    }
+
 
 }
 
 /* Small devices (portrait tablets and large phones, between 600px and 768px) */
 @media only screen and (min-width: 600px) and (max-width: 768px) {
-    .appName-header {
-        font-size: 5rem !important;
-    }
+
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-    .book {
-        font-size: 1.3rem !important;
-    }
+
 }
 
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
 
-    .book {
-        font-size: 1.3rem !important;
-    }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
-    .book {
-        font-size: 1.5rem !important;
-    }
+
 }
 </style>

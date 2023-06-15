@@ -6,8 +6,12 @@ import Footer from "@/components/footer/Footer.vue";
 
 <template>
     <TopNavbar/>
-    <HeroImageSlide/>
-    <Footer/>
+    <v-main>
+        <v-container>
+            <HeroImageSlide/>
+        </v-container>
+        <Footer/>
+    </v-main>
 </template>
 
 <style scoped>

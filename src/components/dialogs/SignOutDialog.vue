@@ -1,5 +1,4 @@
 <template>
-    <!--	Sign out	-->
     <v-dialog
         v-model="dialog"
         max-width="400"
@@ -10,8 +9,8 @@
                     v-slot:activator="{ props }"
                 >
                     <v-btn
-                        :class="$vuetify.display.mdAndDown ? 'ma-1' : 'ma-3'"
                         icon="mdi-dots-vertical"
+                        flat
                         v-bind="props"/>
                 </template>
                 <v-list>

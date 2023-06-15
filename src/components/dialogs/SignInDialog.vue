@@ -8,7 +8,11 @@
             <v-btn
                 color="text-white"
                 v-bind="props"
-                stacked
+                :variant="{
+                    'flat': $vuetify.display.smAndDown
+                }"
+                :stacked="$vuetify.display.mdAndUp"
+                :block="$vuetify.display.smAndDown"
             >
                 Sign In
             </v-btn>
@@ -38,23 +42,23 @@
                                     <v-text-field
                                         label="Username"
                                         variant="outlined"
-                                        v-model="username"
+                                        v-model.trim="username"
                                         prepend-inner-icon="mdi-account-circle"
                                         :rules="[rules.required]"
-                                        required
+                                        :density="$vuetify.display.mdAndDown ? 'compact' : 'comfortable'"
                                     ></v-text-field>
                                 </v-col>
                                 <v-col cols="12" class="py-0">
                                     <v-text-field
                                         label="Password"
                                         variant="outlined"
-                                        v-model="password"
+                                        v-model.trim="password"
                                         prepend-inner-icon="mdi-lock"
                                         :append-inner-icon="isPasswordShown ? 'mdi-eye' : 'mdi-eye-off'"
                                         :type="isPasswordShown ? 'text' : 'password'"
                                         :rules="[rules.required]"
                                         @click:append-inner="isPasswordShown = !isPasswordShown"
-                                        required
+                                        :density="$vuetify.display.mdAndDown ? 'compact' : 'comfortable'"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -63,7 +67,7 @@
                                 variant="tonal"
                                 type="submit"
                                 :loading="loading"
-                                :disabled="loading"
+                                :disabled="loading || !username || username.length === 0 || !password || password.length === 0"
                                 block
                             >
                                 Sign in

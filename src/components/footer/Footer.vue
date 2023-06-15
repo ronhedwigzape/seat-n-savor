@@ -9,12 +9,12 @@ const rightFooterLinks = reactive(['Support', 'Contact Us', 'Terms of Use']);
 
 </script>
 <template>
-    <v-footer class="mt-16">
-        <v-row class="d-flex ma-16">
-            <v-col>
-                <ul>
+    <v-footer class="mt-lg-16">
+        <v-row class="d-flex flex-column flex-sm-row flex-md-row flex-lg-row ma-lg-16 py-10 px-8">
+            <v-col class="d-flex justify-start justify-sm-center justify-md-center">
+                <ul class="text-center">
                     <li v-for="leftLink in leftFooterLinks"
-                        class="d-flex justify-end py-5"
+                        class="d-flex justify-lg-end py-2 py-lg-5"
                         :class="{
                             'underlined-text underlined-text-left' : leftLink === store.app.title
                         }"
@@ -23,15 +23,15 @@ const rightFooterLinks = reactive(['Support', 'Contact Us', 'Terms of Use']);
                     </li>
                 </ul>
             </v-col>
-            <v-col class="d-flex justify-center align-center px-8">
+            <v-col class="d-flex justify-start justify-sm-center justify-md-center align-center py-10 px-lg-8">
                 <ul>
-                    <li class=" text-h2 pally py-5">{{ store.app.title }}</li>
+                    <li class="text-h4 text-lg-h2 pally py-lg-5">{{ store.app.title }}</li>
                 </ul>
             </v-col>
-            <v-col>
+            <v-col class="d-flex justify-start justify-sm-center justify-md-center">
                 <ul>
                     <li v-for="rightLink in rightFooterLinks"
-                        class="d-flex justify-start py-5"
+                        class="d-flex justify-lg-start py-2 py-lg-5"
                         :class="{
                             'underlined-text underlined-text-right': rightLink === 'Support'
                         }"

@@ -6,6 +6,9 @@ import SideNavbar from "@/components/navbar/SideNavbar.vue";
 <template>
     <TopNavbar/>
     <SideNavbar/>
+    <v-main>
+
+    </v-main>
 </template>
 
 <style scoped>

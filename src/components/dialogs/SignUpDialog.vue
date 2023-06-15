@@ -10,7 +10,11 @@
             <v-btn
                 color="text-white"
                 v-bind="props"
-                stacked
+                :variant="{
+                    'flat': $vuetify.display.smAndDown
+                }"
+                :stacked="$vuetify.display.mdAndUp"
+                :block="$vuetify.display.smAndDown"
             >
                 Sign Up
             </v-btn>
@@ -19,103 +23,191 @@
             <v-card width="1500">
                 <v-card-title>
                     <v-btn
+                        v-if="$vuetify.display.mdAndUp"
                         variant="text"
                         class="mt-2 float-end rounded"
                         @click="dialog = false"
                     >
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
-                    <v-col class="d-flex justify-center flex-column align-center">
-                        <p class="text-lg-h2 text-md-h3 text-h4 pally">Create Your Account</p>
-                        <p class="text-subtitle-1 supreme text-grey-lighten-1">Describe yourself as clearly so that there are no mistakes.</p>
+                    <v-col class="d-flex justify-center flex-column align-center pt-8 pt-sm-0 pt-md-0">
+                        <p class="text-lg-h2 text-md-h3 text-sm-h4 text-h5 pally">Create Your Account</p>
+                        <div class="text-caption text-md-subtitle-1 text-lg-subtitle-1 supreme text-grey-lighten-1 text-center">
+                            Describe yourself clearly so that <p v-if="$vuetify.display.smAndDown">there are no mistakes.</p> <span v-else>there are no mistakes.</span>
+                        </div>
                     </v-col>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
                         <v-form @submit.prevent="createAccount">
                             <v-row>
-                                <v-col cols="12" sm="6" md="6">
+                                <v-col cols="12" sm="6" md="6" class="py-0">
                                     <v-text-field
                                         v-model="name"
                                         label="Fullname*"
                                         variant="outlined"
                                         hint="This will be your account name."
-                                        prepend-inner-icon="mdi-account"
-                                    ></v-text-field>
+                                        :density="$vuetify.display.mdAndDown ? 'compact' : 'comfortable'"
+                                    >
+                                        <template v-slot:prepend-inner>
+                                            <v-icon v-if="$vuetify.display.smAndDown" size="20">mdi-account</v-icon>
+                                            <v-icon v-else>mdi-account</v-icon>
+                                        </template>
+                                    </v-text-field>
                                 </v-col>
-                                <v-col cols="12" sm="6" md="6">
+                                <v-col cols="12" sm="6" md="6" class="py-0">
                                     <v-text-field
                                         v-model="username"
                                         label="Username*"
                                         variant="outlined"
                                         hint="This will be used for your login credentials."
-                                        prepend-inner-icon="mdi-account-circle"
-                                    ></v-text-field>
+                                        :density="$vuetify.display.mdAndDown ? 'compact' : 'comfortable'"
+                                    >
+                                        <template v-slot:prepend-inner>
+                                            <v-icon v-if="$vuetify.display.smAndDown" size="20">mdi-account-circle</v-icon>
+                                            <v-icon v-else>mdi-account-circle</v-icon>
+                                        </template>
+                                    </v-text-field>
                                 </v-col>
-                                <v-col cols="6">
+                                <v-col cols="12" sm="6" md="6" lg="6" class="py-0">
                                     <v-text-field
                                         v-model="email"
                                         label="Email*"
                                         variant="outlined"
-                                        prepend-inner-icon="mdi-email"
                                         :error-messages="emailError"
-                                    ></v-text-field>
+                                        :density="$vuetify.display.mdAndDown ? 'compact' : 'comfortable'"
+                                        @input="onEmailInputChange"
+                                    >
+                                        <template v-slot:prepend-inner>
+                                            <v-icon v-if="$vuetify.display.smAndDown" size="20">mdi-email</v-icon>
+                                            <v-icon v-else>mdi-email</v-icon>
+                                        </template>
+                                    </v-text-field>
                                 </v-col>
-                                <v-col cols="6">
+                                <v-col cols="12" sm="6" md="6" lg="6" class="py-0">
                                     <v-text-field
                                         v-model="phone"
                                         label="Phone Number*"
                                         type="number"
                                         variant="outlined"
-                                        prepend-inner-icon="mdi-phone"
-                                    ></v-text-field>
+                                        :density="$vuetify.display.mdAndDown ? 'compact' : 'comfortable'"
+                                    >
+                                        <template v-slot:prepend-inner>
+                                            <v-icon v-if="$vuetify.display.smAndDown" size="20">mdi-phone</v-icon>
+                                            <v-icon v-else>mdi-phone</v-icon>
+                                        </template>
+                                    </v-text-field>
                                 </v-col>
-                                <v-col cols="12">
+                                <v-col cols="12" class="py-0">
                                     <v-text-field
                                         v-model="address"
                                         label="Address*"
                                         variant="outlined"
-                                        prepend-inner-icon="mdi-map-marker"
-                                    ></v-text-field>
+                                        :density="$vuetify.display.mdAndDown ? 'compact' : 'comfortable'"
+                                    >
+                                        <template v-slot:prepend-inner>
+                                            <v-icon v-if="$vuetify.display.smAndDown" size="20">mdi-map-marker</v-icon>
+                                            <v-icon v-else>mdi-map-marker</v-icon>
+                                        </template>
+                                    </v-text-field>
                                 </v-col>
-                                <v-col cols="12">
+                                <v-col cols="12" class="py-0">
                                     <v-text-field
                                         v-model="password"
                                         label="Password*"
                                         variant="outlined"
                                         hint="This will be used for your login credentials."
-                                        prepend-inner-icon="mdi-lock"
-                                        :append-inner-icon="isPasswordShown1 ? 'mdi-eye' : 'mdi-eye-off'"
                                         :type="isPasswordShown1 ? 'text' : 'password'"
                                         @click:append-inner="isPasswordShown1 = !isPasswordShown1"
-                                    ></v-text-field>
+                                        :density="$vuetify.display.mdAndDown ? 'compact' : 'comfortable'"
+                                    >
+                                        <template v-slot:prepend-inner>
+                                            <v-icon v-if="$vuetify.display.smAndDown" size="20">mdi-lock</v-icon>
+                                            <v-icon v-else>mdi-lock</v-icon>
+                                        </template>
+                                        <template v-slot:append-inner>
+                                            <v-btn
+                                                v-if="$vuetify.display.smAndDown"
+                                                @click="isPasswordShown1 = !isPasswordShown1"
+                                                size="20"
+                                                :ripple="false"
+                                                flat
+                                            >
+                                                <v-icon size="20">{{ isPasswordShown1 ? 'mdi-eye' : 'mdi-eye-off' }}</v-icon>
+                                            </v-btn>
+                                            <v-btn
+                                                v-else
+                                                @click="isPasswordShown1 = !isPasswordShown1"
+                                                :ripple="false"
+                                                flat
+                                            >
+                                                <v-icon>{{ isPasswordShown1 ? 'mdi-eye' : 'mdi-eye-off' }}</v-icon>
+                                            </v-btn>
+                                        </template>
+                                    </v-text-field>
                                 </v-col>
-                                <v-col cols="12">
+                                <v-col cols="12" class="py-0">
                                     <v-text-field
                                         v-model="confirmPassword"
                                         label="Confirm Password*"
                                         variant="outlined"
-                                        prepend-inner-icon="mdi-lock"
-                                        :append-inner-icon="isPasswordShown2 ? 'mdi-eye' : 'mdi-eye-off'"
                                         :type="isPasswordShown2 ? 'text' : 'password'"
                                         @click:append-inner="isPasswordShown2 = !isPasswordShown2"
-                                    ></v-text-field>
+                                        :density="$vuetify.display.mdAndDown ? 'compact' : 'comfortable'"
+                                    >
+                                        <template v-slot:prepend-inner>
+                                            <v-icon v-if="$vuetify.display.smAndDown" size="20">mdi-lock</v-icon>
+                                            <v-icon v-else>mdi-lock</v-icon>
+                                        </template>
+                                        <template v-slot:append-inner>
+                                            <v-btn
+                                                v-if="$vuetify.display.smAndDown"
+                                                @click="isPasswordShown2 = !isPasswordShown2"
+                                                size="20"
+                                                :ripple="false"
+                                                flat
+                                            >
+                                                <v-icon size="20">{{ isPasswordShown2 ? 'mdi-eye' : 'mdi-eye-off' }}</v-icon>
+                                            </v-btn>
+                                            <v-btn
+                                                v-else
+                                                @click="isPasswordShown2 = !isPasswordShown2"
+                                                :ripple="false"
+                                                flat
+                                            >
+                                                <v-icon>{{ isPasswordShown2 ? 'mdi-eye' : 'mdi-eye-off' }}</v-icon>
+                                            </v-btn>
+                                        </template>
+                                    </v-text-field>
                                 </v-col>
                                 <transition name="fade">
-                                    <v-col cols="12" v-if="passwordMismatch" class="bg-red-accent-1">Passwords do not
-                                        match
+                                    <v-col
+                                        cols="12" v-if="passwordMismatch"
+                                        class="bg-red-accent-1 py-0"
+                                    >
+                                        Passwords do not match
                                     </v-col>
                                 </transition>
                             </v-row>
-                            <v-btn
-                                color="orange-accent-1"
-                                variant="text"
-                                type="submit"
-                                block
-                                :disabled="!isFormValid"
-                            >
-                                Create Account
-                            </v-btn>
+                            <v-card-actions class="py-0 d-flex justify-center">
+                                <v-btn
+                                    v-if="$vuetify.display.smAndDown"
+                                    @click="dialog = false"
+                                    color="orange-accent-1"
+                                >
+                                    Close
+                                </v-btn>
+                                <v-spacer v-if="$vuetify.display.smAndDown"/>
+                                <v-btn
+                                    color="orange-accent-4"
+                                    variant="text"
+                                    type="submit"
+                                    :disabled="!isFormValid"
+                                    :block="$vuetify.display.mdAndUp"
+                                >
+                                    Create Account
+                                </v-btn>
+                            </v-card-actions>
                         </v-form>
                     </v-container>
                 </v-card-text>
@@ -179,7 +271,7 @@ const isFormValid = computed(() => {
         password.value !== '' &&
         confirmPassword.value !== '' &&
         !passwordMismatch.value &&
-        emailError.value === 'Invalid email address.'
+        emailError.value === ''
     );
 });
 
@@ -192,6 +284,11 @@ const validateEmail = () => {
         emailError.value = '';
     }
 };
+
+const onEmailInputChange = () => {
+    validateEmail();
+};
+
 
 // watch
 watch(email, () => {
