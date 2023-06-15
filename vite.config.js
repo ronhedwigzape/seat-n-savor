@@ -34,7 +34,7 @@ export default ({mode}) => {
   process.env = {...process.env, ...loadEnv(mode, process.cwd())};
   const SKIP_BASE_PATH = process.env.VITE_SKIP_BASE_PATH;
   if (SKIP_BASE_PATH === undefined || SKIP_BASE_PATH === 'false')
-    config.base = '/seat.n.savor/';
+    config.base = '/seat-n-savor/';
 
   return defineConfig(config);
 };

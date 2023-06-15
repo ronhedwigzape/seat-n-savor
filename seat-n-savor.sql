@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2023 at 06:03 PM
+-- Generation Time: Jun 15, 2023 at 10:36 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `seat.n.savor`
+-- Database: `seat-n-savor`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tables structure for table `admins`
+-- Table structure for table `admins`
 --
 
 CREATE TABLE `admins` (
@@ -50,7 +50,7 @@ INSERT INTO `admins` (`id`, `username`, `password`, `avatar`, `name`, `email`, `
 -- --------------------------------------------------------
 
 --
--- Tables structure for table `bookings`
+-- Table structure for table `bookings`
 --
 
 CREATE TABLE `bookings` (
@@ -72,7 +72,7 @@ CREATE TABLE `bookings` (
 -- --------------------------------------------------------
 
 --
--- Tables structure for table `customers`
+-- Table structure for table `customers`
 --
 
 CREATE TABLE `customers` (
@@ -100,7 +100,7 @@ INSERT INTO `customers` (`id`, `username`, `password`, `avatar`, `name`, `email`
 -- --------------------------------------------------------
 
 --
--- Tables structure for table `notifications`
+-- Table structure for table `notifications`
 --
 
 CREATE TABLE `notifications` (
@@ -115,7 +115,7 @@ CREATE TABLE `notifications` (
 -- --------------------------------------------------------
 
 --
--- Tables structure for table `restaurants`
+-- Table structure for table `restaurants`
 --
 
 CREATE TABLE `restaurants` (
@@ -135,7 +135,7 @@ CREATE TABLE `restaurants` (
 INSERT INTO `restaurants` (`id`, `name`, `address`, `image`, `phone`, `created_at`, `updated_at`) VALUES
 (1, 'Chowking - Iriga', 'New, Public Market, City of Iriga, 4431 Camarines Sur', 'chowking.jpg', '0917 628 2476', '2023-06-07 07:20:20', '2023-06-08 08:18:59'),
 (2, 'Desny Grill Bar Resto & Cafe', 'Lourdes Hospital Rd, City of Iriga, 4431 Camarines Sur', 'desny.jpg', '(054) 456 1512', '2023-06-07 18:22:37', '2023-06-10 12:48:57'),
-(3, 'Yhanyhan Frappe Restaurants', 'Buhi, Camarines Sur', 'yhanyhan.jpg', '0917 555 4867', '2023-06-07 18:22:37', '2023-06-08 08:19:30'),
+(3, 'Yhanyhan Frappe Restaurant', 'Buhi, Camarines Sur', 'yhanyhan.jpg', '0917 555 4867', '2023-06-07 18:22:37', '2023-06-08 08:19:30'),
 (4, 'Pomodoro - Iriga', 'Nabua - Iriga Rd, City of Iriga, Camarines Sur', 'pomodoro.jpg', '09214452234', '2023-06-07 18:25:06', '2023-06-08 08:21:58'),
 (5, 'Above Sea Level - Iriga', 'City of Iriga, 4431 Camarines Sur', 'above-sea-level.jpg', '0917 107 3738', '2023-06-07 18:25:58', '2023-06-08 08:35:03'),
 (6, 'Bigg\'s Diner - Iriga', 'Highway 1, Trinidad Bldg, San Roque, City of Iriga, 4431 Camarines Sur', 'biggs.jpg', '(054) 299 1111', '2023-06-07 18:27:20', '2023-06-08 08:35:08'),
@@ -147,7 +147,7 @@ INSERT INTO `restaurants` (`id`, `name`, `address`, `image`, `phone`, `created_a
 -- --------------------------------------------------------
 
 --
--- Tables structure for table `restaurateurs`
+-- Table structure for table `restaurateurs`
 --
 
 CREATE TABLE `restaurateurs` (
