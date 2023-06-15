@@ -15,7 +15,7 @@
                                     activator="parent"
                                     width="auto"
                                 >
-                                    <v-card width="600">
+                                    <v-card :width="$vuetify.display.mdAndUp && $vuetify.display.mdAndDown ? 400 : $vuetify.display.smAndUp && $vuetify.display.smAndDown ? 300 : 600">
                                         <v-card-title class="text-h5 ps-6 pt-8 pb-3">Instructions</v-card-title>
                                         <v-divider/>
                                         <v-card-text>

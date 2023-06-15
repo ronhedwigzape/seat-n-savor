@@ -163,13 +163,17 @@
                     activator="parent"
                     :close-on-content-click="false"
                 >
-                    <v-list width="450" height="300">
+                    <v-list
+                        :width="$vuetify.display.mdAndDown ? 380 : 400"
+                        :height="$vuetify.display.smAndDown ? 350: 300">
                         <v-list-item-title
                             class="text-h5 px-4 py-4 position-sticky pally"
                         >
                             Notifications
                         </v-list-item-title>
                         <v-list-item v-for="notification in notifications" class="bg-grey-darken-3 pt-3">
+                            <!--  todo: make a condition when notifications are not available  -->
+                            <!--  For example: No notifications to display currently. Please check back later for updates.  -->
                             <div class="d-flex">
                                 <div class="me-1">
                                     <v-avatar>

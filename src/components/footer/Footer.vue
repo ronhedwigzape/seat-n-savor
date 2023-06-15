@@ -9,7 +9,7 @@ const rightFooterLinks = reactive(['Support', 'Contact Us', 'Terms of Use']);
 
 </script>
 <template>
-    <v-footer class="mt-lg-16">
+    <v-footer class="mt-lg-16 mb-0 pb-0">
         <v-row class="d-flex flex-column flex-sm-row flex-md-row flex-lg-row ma-lg-16 py-10 px-8">
             <v-col class="d-flex justify-start justify-sm-center justify-md-center">
                 <ul class="text-center">
