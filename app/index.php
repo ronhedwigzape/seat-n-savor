@@ -38,7 +38,7 @@ else if (isset($_POST['createAccount'])) {
 
 //
 else if (isset($_POST['g-recaptcha-response'])) {
-    $secret_key = "SECRET_KEY";
+    $secret_key = SECRET_KEY;
     $response = $_POST['g-recaptcha-response'];
     $url = "https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$response}";
     $verify = json_decode(file_get_contents($url));
