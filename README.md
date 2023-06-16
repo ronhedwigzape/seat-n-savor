@@ -49,15 +49,15 @@ Follow these steps to set up the APIs for this project:
 
 3. Add `localhost` as the domain for the project. Obtain your `SITE_KEY` and `SECRET_KEY`.
 
-4. In the [index.html](index.html) file, replace the placeholder `SITE_KEY` with your actual `SITE_KEY` at [line #7](index.html#L7) in the following line of code:
-```javascript
+4. In the [**`index.html`**](index.html) file, replace the placeholder `SITE_KEY` with your actual `SITE_KEY` at [line #7](index.html#L7) in the following line of code:
+   ```javascript
     <script src="https://www.google.com/recaptcha/api.js?render=SITE_KEY"></script>
-```
+   ```
 
-5. In the [index.php](app/index.php) file, replace the placeholder `SECRET_KEY` with your actual `SECRET_KEY` at [line #39](app/index.php#L39) in the following line of code:
-```php
-   $secret_key = "SECRET_KEY";
-```
+5. In your **`app/config/database.php`**, replace the placeholder `SECRET_KEY` with your actual `SECRET_KEY` at [line #41](app/config/database.example.php#L41) in the following line of code:
+   ```php
+   const SECRET_KEY = 'SECRET_KEY';
+   ```
 
 By following these steps, you will have the necessary API keys configured for your project.
 
