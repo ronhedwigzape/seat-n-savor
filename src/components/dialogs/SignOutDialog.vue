@@ -35,7 +35,7 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
-                    color="orange-accent-1"
+                    color="orange-accent-2"
                     variant="text"
                     @click="dialog = false"
                     :disabled="signingOut"

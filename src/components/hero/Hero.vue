@@ -1,16 +1,34 @@
 <template>
-    <v-row class="mx-auto">
-        <v-col class="d-flex justify-center align-center flex-column mt-10">
-                <h2 align="center" class="pally text-h3 text-sm-h2 text-md-h2 text-lg-h1">{{ store.app.title }}</h2>
-                <p align="center" class="text-grey-lighten-1">The fastest restaurant booking in Rinconada</p>
-            <v-card
-                class="w-75 rounded-pill my-10 my-sm-13 mx-lg-10 "
-                variant="tonal"
-                :class="{
+    <v-card :image="images[0].file" class="py-6">
+        <v-row class="mx-auto">
+            <v-col class="d-flex justify-center align-center flex-column mt-10 px-9">
+                <h2 align="center"
+                    class="pally text-h3 text-sm-h2 text-md-h2 text-lg-h1"
+                    :class="{
+                        'appName-dark' : theme.global.name.value === 'dark',
+                        'appName-light' : theme.global.name.value === 'light'
+                    }"
+                >
+                    {{ store.app.title }}
+                </h2>
+                <p
+                    align="center"
+                    class="font-weight-bold"
+                    :class="{
+                        'appName-subheader-dark' : theme.global.name.value === 'dark',
+                        'appName-subheader-light' : theme.global.name.value === 'light'
+                    }"
+                >
+                    The fastest restaurant booking in Rinconada
+                </p>
+                <v-card
+                    class="w-100 rounded-pill my-10 my-sm-13 mx-lg-10"
+                    variant="tonal"
+                    :class="{
                     'w-100': $vuetify.display.mdAndUp,
                 }"
-                color="grey-lighten-3"
-            >
+                    color="grey-lighten-3"
+                >
                     <v-text-field
                         :loading="loading"
                         density="comfortable"
@@ -21,17 +39,20 @@
                         hide-details
                         @click:append-inner="onClick"
                     ></v-text-field>
-            </v-card>
-        </v-col>
-    </v-row>
+                </v-card>
+            </v-col>
+        </v-row>
+    </v-card>
 </template>
 <script setup>
 import {reactive, ref} from "vue";
 import {useStore} from "@/stores";
+import {useTheme} from "vuetify";
 
 const store = useStore();
 const loaded = ref(false);
 const loading = ref(false);
+const theme = useTheme();
 
 
 const images = reactive([
@@ -65,42 +86,20 @@ const onClick = () => {
 </script>
 
 <style scoped>
-
-
-.appName {
-    text-shadow: black 6px 6px 7px;
+.appName-dark {
+    text-shadow: #000000 3px 3px 5px !important;
 }
 
-.appName-subheader {
-    text-shadow: black 2px 2px 2px;
-    color: white !important;
+.appName-light {
+    text-shadow: #ffffff 3px 3px 5px !important;
 }
 
-
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-
-
+.appName-subheader-dark {
+    text-shadow: #000000 1px 1px 2px !important;
 }
 
-/* Small devices (portrait tablets and large phones, between 600px and 768px) */
-@media only screen and (min-width: 600px) and (max-width: 768px) {
-
+.appName-subheader-light {
+    text-shadow: #ffffff 1px 1px 2px !important;
 }
 
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-
-}
-
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-
-}
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-
-}
 </style>

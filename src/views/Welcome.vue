@@ -7,9 +7,7 @@ import Footer from "@/components/footer/Footer.vue";
 <template>
     <TopNavbar/>
     <v-main>
-        <v-container>
-            <HeroImageSlide/>
-        </v-container>
+        <HeroImageSlide/>
         <Footer/>
     </v-main>
 </template>

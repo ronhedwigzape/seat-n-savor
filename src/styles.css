@@ -1,3 +1,15 @@
+/* Global styles */
+html {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+}
+
 @font-face {
     font-family: 'Pally';
     src: local('Pally-Bold'), url('/fonts/Pally/Pally-Bold.ttf') format('truetype');
@@ -6,11 +18,6 @@
 @font-face {
     font-family: 'Supreme';
     src: local('Supreme-Regular'), url('/fonts/Supreme/Supreme-Regular.ttf') format('truetype');
-}
-
-html {
-    margin: 0 !important;
-    padding: 0 !important;
 }
 
 body {
@@ -25,8 +32,29 @@ body {
     font-family: 'Pally', sans-serif !important;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none !important;
-    margin: 0 !important;
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+
+}
+
+/* Small devices (portrait tablets and large phones, between 600px and 768px) */
+@media only screen and (min-width: 600px) and (max-width: 768px) {
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
 }

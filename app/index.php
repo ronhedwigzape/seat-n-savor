@@ -14,18 +14,20 @@ if(isset($_GET['getUser'])) {
 // Create customer's account
 else if (isset($_POST['createAccount'])) {
     require_once 'models/App.php';
-    // todo: add a captcha at frontend if website is registered under a domain
+
+    $customers_table = 'customers';
+    $avatar = 'avatar.png'; // default avatar
+    $phCode = '63'; // philippine code
 
     $username = $_POST['userName'];
     $password = $_POST['passWord'];
     $name = $_POST['name'];
     $email = $_POST['email'];
-    $phone = $_POST['phone'];
+    $phone_number = $_POST['phone'];
     $address = $_POST['address'];
+    $phone = $phCode . $phone_number;
 
-    $avatar = 'avatar.png';
-    $customers_table = 'customers';
-
+    // check if all variables are stored
     if (!$username || !$password || !$name || !$email || !$phone || !$address)
         App::returnError('HTTP/1.1 404', 'Error: Account form is invalid.');
 

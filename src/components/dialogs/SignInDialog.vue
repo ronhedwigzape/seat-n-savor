@@ -63,7 +63,7 @@
                                 </v-col>
                             </v-row>
                             <v-btn
-                                color="orange-accent-1 mt-4"
+                                color="orange-accent-2 mt-4"
                                 variant="tonal"
                                 type="submit"
                                 :loading="loading"

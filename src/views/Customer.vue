@@ -1,8 +1,8 @@
 <template>
     <TopNavbar/>
     <v-main>
+        <HeroImageSlide/>
         <v-container>
-            <HeroImageSlide/>
             <v-divider class="mt-10"/>
             <v-row class="mt-10" justify="center" v-if="authStore.isAuthenticated">
                 <v-btn
@@ -242,7 +242,7 @@
                                                         </v-card-text>
                                                         <v-card-actions class="px-5">
                                                             <v-spacer/>
-                                                            <v-btn color="orange-accent-1" @click="dialog1 = false">Close</v-btn>
+                                                            <v-btn color="orange-accent-2" @click="dialog1 = false">Close</v-btn>
                                                             <v-btn color="orange-accent-4" @click="saveBooking">Confirm booking</v-btn>
                                                         </v-card-actions>
                                                     </v-card>

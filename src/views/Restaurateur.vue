@@ -134,7 +134,7 @@
                                                 <v-btn
                                                     v-if="$vuetify.display.smAndDown"
                                                     class="mb-2"
-                                                    color="orange-lighten-4"
+                                                    color="orange-accent-2"
                                                     variant="text"
                                                     @click="view[booking.booking_id] = false"
                                                 >
@@ -251,7 +251,6 @@ const dialog3 = ref(false);
 const snackbar = ref(false);
 const qrSnackbar = ref(false);
 const pendingSnackbar = ref(false);
-const timer = ref(null);
 const bookings = reactive([]);
 const customers = reactive([]);
 const tables = reactive([]);
