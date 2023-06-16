@@ -183,12 +183,22 @@
                                 <transition name="fade">
                                     <v-col
                                         cols="12" v-if="passwordMismatch"
-                                        class="bg-red-accent-1 py-0"
+                                        style="z-index: 3;"
+                                        class="bg-red-accent-1 py-3"
                                     >
                                         Passwords do not match
                                     </v-col>
                                 </transition>
                             </v-row>
+                            <v-btn
+                                @click="verifyUser"
+                                variant="tonal"
+                                :prepend-icon="solved ? 'mdi-check-decagram' : ''"
+                                :color="solved ? 'green-accent-2' : ''"
+                                block
+                            >
+                                {{ solved ? 'User Verified' : 'Verify User' }}
+                            </v-btn>
                             <v-card-actions class="py-0 d-flex justify-center">
                                 <v-btn
                                     v-if="$vuetify.display.smAndDown"
@@ -213,12 +223,28 @@
                 </v-card-text>
             </v-card>
         </v-row>
+        <v-snackbar
+            v-model="invalidSnackbar"
+            multi-line
+        >
+            <v-icon class="text-red pb-1">mdi-close-circle</v-icon>
+            User verification failed. Please provide valid credentials for authentication.
+            <template v-slot:actions>
+                <v-btn
+                    color="red"
+                    variant="text"
+                    @click="dialog2 = false"
+                >
+                    Close
+                </v-btn>
+            </template>
+        </v-snackbar>
     </v-dialog>
     <v-snackbar
         v-model="snackbar"
         multi-line
     >
-        <v-icon class="text-green">mdi-check-circle</v-icon>
+        <v-icon class="text-green pb-1">mdi-check-circle</v-icon>
         Your account has been created successfully.
         <template v-slot:actions>
             <v-btn
@@ -243,10 +269,13 @@ const store = useStore();
 // data
 const dialog = ref(false);
 const dialog1 = ref(false);
+const dialog2 = ref(false);
 const loading = ref(false);
 const isPasswordShown1 = ref(false);
 const isPasswordShown2 = ref(false);
 const snackbar = ref(false);
+const invalidSnackbar = ref(false);
+const solved = ref(false);
 const name = ref('');
 const username = ref('');
 const password = ref('');
@@ -255,6 +284,7 @@ const emailError = ref('');
 const phone = ref('');
 const address = ref('');
 const confirmPassword = ref('');
+
 
 // computed
 const passwordMismatch = computed(
@@ -271,7 +301,8 @@ const isFormValid = computed(() => {
         password.value !== '' &&
         confirmPassword.value !== '' &&
         !passwordMismatch.value &&
-        emailError.value === ''
+        emailError.value === '' &&
+        solved.value !== false
     );
 });
 
@@ -289,13 +320,53 @@ const onEmailInputChange = () => {
     validateEmail();
 };
 
-
 // watch
 watch(email, () => {
     validateEmail();
 });
 
 // ajax
+const verifyUser = () => {
+    loading.value = true;
+    if (name.value !== '' &&
+        username.value !== '' &&
+        email.value !== '' &&
+        phone.value !== '' &&
+        address.value !== '' &&
+        password.value !== '' &&
+        confirmPassword.value !== '' &&
+        !passwordMismatch.value &&
+        emailError.value === '') {
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LfuJp0mAAAAAAl8pZfTn87EnZOoqWM3pOVNN3X1', {action: 'submit'}).then(function(token) {
+                $.ajax({
+                    url: `${store.appURL}/index.php`,
+                    type: 'POST',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    data: {
+                        'g-recaptcha-response': token
+                    },
+                    success: (data, textStatus, jqXHR) => {
+                        data = JSON.parse(data);
+                        if (jqXHR.status === 200) {
+                            solved.value = data.solved;
+                            loading.value = false;
+                        }
+                    },
+                    error: (error) => {
+                        alert(`ERROR ${error.status}: ${error.statusText}`);
+                    },
+                });
+            });
+        });
+    }
+    else {
+        invalidSnackbar.value = true;
+    }
+}
+
 const createAccount = () => {
     loading.value = true;
      $.ajax({

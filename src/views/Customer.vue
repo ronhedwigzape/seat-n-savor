@@ -259,7 +259,7 @@
                     v-model="snackbar"
                     multi-line
                 >
-                    <v-icon class="text-green">mdi-check-circle</v-icon>
+                    <v-icon class="text-green pb-1">mdi-check-circle</v-icon>
                     Your booking has been created successfully.
                     <template v-slot:actions>
                         <v-btn
@@ -309,6 +309,9 @@
                                 <v-icon>mdi-list-status</v-icon>
                                 <p>Status</p>
                             </th>
+                            <!--  todo: add is_shown if customer has arrived the restaurant
+                                    and after booking customer should receive an SMS
+                            -->
                         </tr>
                         </thead>
                         <tbody>

@@ -171,7 +171,7 @@
                                                 v-model="snackbar"
                                                 multi-line
                                             >
-                                                <v-icon class="text-green">mdi-check-circle</v-icon>
+                                                <v-icon class="text-green pb-1">mdi-check-circle</v-icon>
                                                 Your notification message has been sent successfully.
                                                 <template v-slot:actions>
                                                     <v-btn
@@ -187,7 +187,7 @@
                                                 v-model="pendingSnackbar"
                                                 multi-line
                                             >
-                                                <v-icon class="text-green">mdi-check-circle</v-icon>
+                                                <v-icon class="text-green pb-1">mdi-check-circle</v-icon>
                                                 Booking status has been set to pending.
                                                 <template v-slot:actions>
                                                     <v-btn
@@ -215,7 +215,7 @@
                     v-model="qrSnackbar"
                     multi-line
                 >
-                    <v-icon class="text-green">mdi-check-circle</v-icon>
+                    <v-icon class="text-green pb-1">mdi-check-circle</v-icon>
                     QR code scanned successfully.
                     <p>Decoded Value: {{ decodedQr }}</p>
                     <template v-slot:actions>
