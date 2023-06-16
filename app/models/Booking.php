@@ -10,6 +10,7 @@ class Booking extends App
     protected $customer_id;
     protected $restaurant_id;
     protected $table_id;
+    protected $reference_number;
     protected $code;
     protected $date;
     protected $time;
@@ -40,6 +41,7 @@ class Booking extends App
                 $this->customer_id          = $row['customer_id'];
                 $this->restaurant_id        = $row['restaurant_id'];
                 $this->table_id             = $row['table_id'];
+                $this->reference_number     = $row['reference_number'];
                 $this->code                 = $row['code'];
                 $this->date                 = $row['date'];
                 $this->time                 = $row['time'];
@@ -113,6 +115,7 @@ class Booking extends App
             'customer_id'           => $this->customer_id,
             'restaurant_id'         => $this->restaurant_id,
             'table_id'              => $this->table_id,
+            'reference_number'      => $this->reference_number,
             'code'                  => $this->code,
             'date'                  => $this->date,
             'time'                  => $this->time,
@@ -233,8 +236,8 @@ class Booking extends App
         if(!self::stored($this->customer_id, $this->restaurant_id, $this->table_id, $this->code)) {
 
             // proceed with insert
-            $stmt = $this->conn->prepare("INSERT INTO $this->table(customer_id, restaurant_id, table_id, code, date, time, party_size, status, cancellation_reason) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("iiisssiss", $this->customer_id, $this->restaurant_id, $this->table_id, $this->code,$this->date, $this->time, $this->party_size, $this->status, $this->cancellation_reason);
+            $stmt = $this->conn->prepare("INSERT INTO $this->table(customer_id, restaurant_id, table_id, reference_number, code, date, time, party_size, status, cancellation_reason) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("iiissssiss", $this->customer_id, $this->restaurant_id, $this->table_id, $this->reference_number, $this->code,$this->date, $this->time, $this->party_size, $this->status, $this->cancellation_reason);
             $stmt->execute();
             $this->id = $this->conn->insert_id;
         }
@@ -264,9 +267,9 @@ class Booking extends App
         $this->checkId();
 
         // proceed with update
-        $stmt = $this->conn->prepare("UPDATE $this->table SET customer_id = ?,  restaurant_id = ?, table_id = ?, is_shown = ?, code = ?, date = ?, time = ?, party_size = ?, status = ? WHERE id = ?");
+        $stmt = $this->conn->prepare("UPDATE $this->table SET customer_id = ?,  restaurant_id = ?, table_id = ?, reference_number = ?, is_shown = ?, code = ?, date = ?, time = ?, party_size = ?, status = ? WHERE id = ?");
         $is_shown = $this->is_shown ? 1 : 0;
-        $stmt->bind_param("iiiisssisi", $this->customer_id, $this->restaurant_id, $this->table_id, $is_shown, $this->code, $this->date, $this->time, $this->party_size, $this->status, $this->id);
+        $stmt->bind_param("iiisisssisi", $this->customer_id, $this->restaurant_id, $this->table_id, $this->reference_number, $is_shown, $this->code, $this->date, $this->time, $this->party_size, $this->status, $this->id);
         $stmt->execute();
     }
 
@@ -330,6 +333,17 @@ class Booking extends App
     public function setTableId($table_id)
     {
         $this->table_id = $table_id;
+    }
+
+
+    /***************************************************************************
+     * Set reference number
+     *
+     * @param mixed $reference_number
+     */
+    public function setReferenceNumber($reference_number): void
+    {
+        $this->reference_number = $reference_number;
     }
 
 
@@ -455,6 +469,17 @@ class Booking extends App
 
 
     /***************************************************************************
+     * Get reference number
+     *
+     * @return mixed
+     */
+    public function getReferenceNumber()
+    {
+        return $this->reference_number;
+    }
+
+
+    /***************************************************************************
      * Get code
      *
      * @return mixed
@@ -474,6 +499,7 @@ class Booking extends App
     {
         return $this->date;
     }
+
 
     /***************************************************************************
      * Get time

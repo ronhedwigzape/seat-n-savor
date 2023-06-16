@@ -38,15 +38,25 @@
                                     <v-row>
                                         <v-col cols="12">
                                             <v-list>
-                                                <v-list-item class="text-h3 pt-4 pally">Create your Booking</v-list-item>
-                                                <v-list-item prepend-icon="mdi-map-marker" class="text-h5 pt-6 text-orange-lighten-4 supreme" style="letter-spacing: 3px !important;">
+                                                <v-list-item class="text-h3 pt-4 pally">
+                                                    Create your Booking
+                                                </v-list-item>
+                                                <v-list-item
+                                                    prepend-icon="mdi-map-marker"
+                                                    class="text-h5 pt-6 text-orange-lighten-4 supreme"
+                                                    style="letter-spacing: 3px !important;"
+                                                >
                                                     Setting
                                                 </v-list-item>
                                             </v-list>
                                         </v-col>
                                         <v-col cols="12">
                                             <v-list>
-                                                <v-list-item align="center" class="text-h5 supreme mb-4" style="letter-spacing: 3px !important;">
+                                                <v-list-item
+                                                    align="center"
+                                                    class="text-h5 supreme mb-4"
+                                                    style="letter-spacing: 3px !important;"
+                                                >
                                                     Select your preferred restaurant
                                                 </v-list-item>
                                             </v-list>
@@ -101,10 +111,15 @@
                                                         <v-sheet
                                                             v-if="restaurantModel != null"
                                                         >
-                                                            <div class="d-flex flex-column align-center justify-center px-8 pb-10">
-                                                                <h1><v-icon class="text-green">mdi-check-circle</v-icon> {{ restaurants[restaurantModel].name }}</h1>
+                                                            <div
+                                                                class="d-flex flex-column align-center justify-center px-8 pb-10">
+                                                                <h1>
+                                                                    <v-icon class="text-green">mdi-check-circle</v-icon>
+                                                                    {{ restaurants[restaurantModel].name }}
+                                                                </h1>
                                                                 <h4>{{ restaurants[restaurantModel].address }}</h4>
-                                                                <h4>Landline/Phone: {{ restaurants[restaurantModel].phone }}</h4>
+                                                                <h4>Landline/Phone:
+                                                                    {{ restaurants[restaurantModel].phone }}</h4>
                                                             </div>
                                                         </v-sheet>
                                                     </transition>
@@ -113,7 +128,8 @@
                                         </v-col>
                                         <v-col cols="12">
                                             <v-list>
-                                                <v-list-item align="center" class="text-h5 supreme mb-4 " style="letter-spacing: 3px !important;">
+                                                <v-list-item align="center" class="text-h5 supreme mb-4 "
+                                                             style="letter-spacing: 3px !important;">
                                                     Select your preferred table
                                                 </v-list-item>
                                             </v-list>
@@ -168,8 +184,12 @@
                                                         <v-sheet
                                                             v-if="tableModel != null"
                                                         >
-                                                            <div class="d-flex flex-column align-center justify-center px-8 pb-10">
-                                                                <h1><v-icon class="text-green">mdi-check-circle</v-icon> Table #{{ tables[tableModel].number }}</h1>
+                                                            <div
+                                                                class="d-flex flex-column align-center justify-center px-8 pb-10">
+                                                                <h1>
+                                                                    <v-icon class="text-green">mdi-check-circle</v-icon>
+                                                                    Table #{{ tables[tableModel].number }}
+                                                                </h1>
                                                                 <h4>{{ tables[tableModel].description }}</h4>
                                                             </div>
                                                         </v-sheet>
@@ -179,18 +199,23 @@
                                         </v-col>
                                         <v-col cols="12">
                                             <v-list>
-                                                <v-list-item prepend-icon="mdi-calendar-month" class="text-h5 pt-6 supreme text-orange-lighten-4" style="letter-spacing: 3px !important;">
+                                                <v-list-item prepend-icon="mdi-calendar-month"
+                                                             class="text-h5 pt-6 supreme text-orange-lighten-4"
+                                                             style="letter-spacing: 3px !important;">
                                                     Date and time
                                                 </v-list-item>
-                                                <v-list-item align="center" class="text-h5 mb-4 pt-10 supreme" style="letter-spacing: 3px !important;">
+                                                <v-list-item align="center" class="text-h5 mb-4 pt-10 supreme"
+                                                             style="letter-spacing: 3px !important;">
                                                     <transition name="fade">
-                                                        <v-icon v-if="selectedDateTime" class="text-green">mdi-check-circle</v-icon>
+                                                        <v-icon v-if="selectedDateTime" class="text-green">
+                                                            mdi-check-circle
+                                                        </v-icon>
                                                     </transition>
                                                     Select your preferred date and time
                                                 </v-list-item>
                                             </v-list>
                                             <VueDatePicker
-                                                v-model="selectedDateTime"
+                                                v-model.trim="selectedDateTime"
                                                 placeholder="Click here to select your preferred date and time ..."
                                                 text-input
                                                 ignore-time-validation
@@ -198,16 +223,22 @@
                                         </v-col>
                                         <v-col cols="12">
                                             <v-list>
-                                                <v-list-item prepend-icon="mdi-account-group" class="text-h5 pt-6 supreme text-orange-lighten-4" style="letter-spacing: 3px !important;">
+                                                <v-list-item prepend-icon="mdi-account-group"
+                                                             class="text-h5 pt-6 supreme text-orange-lighten-4"
+                                                             style="letter-spacing: 3px !important;">
                                                     Party Size
                                                 </v-list-item>
-                                                <v-list-item align="center" class="text-h5 supreme mb-4" style="letter-spacing: 3px !important;">
+                                                <v-list-item align="center" class="text-h5 supreme mb-4"
+                                                             style="letter-spacing: 3px !important;">
                                                     <transition name="fade">
-                                                        <v-icon class="text-green" v-if="partySize">mdi-check-circle</v-icon>
+                                                        <v-icon class="text-green" v-if="partySize">mdi-check-circle
+                                                        </v-icon>
                                                     </transition>
                                                     How many are you in size?
                                                 </v-list-item>
-                                                <v-list-item align="center" class="text-h3" v-if="partySize">{{ partySize }}</v-list-item>
+                                                <v-list-item align="center" class="text-h3" v-if="partySize">
+                                                    {{ partySize }}
+                                                </v-list-item>
                                             </v-list>
                                             <v-slider
                                                 step="1"
@@ -233,17 +264,23 @@
                                                 >
                                                     <v-card>
                                                         <v-card-title class="px-5 pt-5 text-orange-lighten-4">
-                                                            <v-icon class="pb-1 text-orange-accent-4">mdi-alert-circle</v-icon>
+                                                            <v-icon class="pb-1 text-orange-accent-4">mdi-alert-circle
+                                                            </v-icon>
                                                             Booking Confirmation
                                                         </v-card-title>
                                                         <v-divider/>
                                                         <v-card-text class="mx-auto px-5">
-                                                            <p>Are you certain about your booking? Once the booking is made, it cannot be undone.</p>
+                                                            <p>Are you certain about your booking? Once the booking is
+                                                                made, it cannot be undone.</p>
                                                         </v-card-text>
                                                         <v-card-actions class="px-5">
                                                             <v-spacer/>
-                                                            <v-btn color="orange-accent-2" @click="dialog1 = false">Close</v-btn>
-                                                            <v-btn color="orange-accent-4" @click="saveBooking">Confirm booking</v-btn>
+                                                            <v-btn color="orange-accent-2" @click="dialog1 = false">
+                                                                Close
+                                                            </v-btn>
+                                                            <v-btn color="orange-accent-4" @click="saveBooking">Confirm
+                                                                booking
+                                                            </v-btn>
                                                         </v-card-actions>
                                                     </v-card>
                                                 </v-dialog>
@@ -273,7 +310,8 @@
                 </v-snackbar>
                 <v-divider class="my-10"/>
                 <v-col>
-                    <div align="center" class="text-h3 pb-7 pally"><v-icon>mdi-book-account</v-icon>
+                    <div align="center" class="text-h3 pb-7 pally">
+                        <v-icon>mdi-book-account</v-icon>
                         <p class="text-h3 pb-7 pally">My Current Bookings</p>
                     </div>
                     <v-table
@@ -290,8 +328,8 @@
                                 <p>Time</p>
                             </th>
                             <th class="text-center">
-                                <v-icon>mdi-qrcode</v-icon>
-                                <p>QR Code</p>
+                                <v-icon>mdi-book-information-variant</v-icon>
+                                <p>Booking Info</p>
                             </th>
                             <th class="text-center">
                                 <v-icon>mdi-account-group</v-icon>
@@ -309,15 +347,25 @@
                                 <v-icon>mdi-list-status</v-icon>
                                 <p>Status</p>
                             </th>
+                            <th class="text-center">
+                                <v-icon>mdi-eye</v-icon>
+                                <p>Arrived</p>
+                            </th>
                             <!--  todo: add is_shown if customer has arrived the restaurant
                                     and after booking customer should receive an SMS
                             -->
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(booking, bookingKey, bookingIndex) in bookings" :key="booking.booking_id">
-                            <td align="center"> {{ booking.date }} </td>
-                            <td align="center"> {{ booking.time }} </td>
+                        <tr
+                            v-for="(booking, bookingKey, bookingIndex) in bookings"
+                            :key="booking.booking_id"
+                            :class="{
+                                'bg-grey-darken-3': booking.is_shown === 0,
+                            }"
+                        >
+                            <td align="center"> {{ booking.date }}</td>
+                            <td align="center"> {{ booking.time }}</td>
                             <td align="center">
                                 <v-btn color="orange-accent-2">
                                     View
@@ -327,7 +375,8 @@
                                         width="auto"
                                     >
                                         <v-card
-                                            :width="$vuetify.display.mdAndDown ? 300 : 600"
+                                            :width="$vuetify.display.mdAndUp && $vuetify.display.mdAndDown ? 300 :
+                                            $vuetify.display.smAndUp && $vuetify.display.smAndDown ? 280 : 600"
                                         >
                                             <v-card-text class="d-flex justify-center flex-column">
                                                 <VueQrcode
@@ -336,31 +385,47 @@
                                                     :value="booking.code"
                                                     :options="{ width: $vuetify.display.mdAndDown ? 230 : 280 }"
                                                 />
-                                                <p align="center">QR Code Value:</p>
-                                                <p align="center" class="text-subtitle-2 text-grey-lighten-1 font-weight-bold">{{ booking.code }}</p>
-                                                <p class="text-caption text-grey-darken-1" align="center">Please don't share this QR Code to anyone.</p>
+                                                <p align="center">Booking Reference Number:</p>
+                                                <p align="center"
+                                                   class="text-subtitle-2 text-grey-lighten-1 font-weight-bold">
+                                                    {{ booking.reference_number }}</p>
+                                                <p class="text-caption text-grey-darken-1" align="center">
+                                                    Kindly present this QR code exclusively to the restaurant manager and
+                                                    ensure its confidentiality by refraining from sharing it with any other
+                                                    individuals.
+                                                </p>
                                             </v-card-text>
                                             <v-card-actions class="d-flex justify-center px-16 pb-6 pt-3">
-                                                <v-btn color="orange-accent-2" @click="view[booking.booking_id] = false">Close Dialog</v-btn>
+                                                <v-btn color="orange-accent-2"
+                                                       @click="view[booking.booking_id] = false">Close Dialog
+                                                </v-btn>
                                                 <v-spacer/>
-                                                <v-btn color="orange-accent-4" @click="downloadQR(booking.booking_id)">Download QR</v-btn>
+                                                <v-btn color="orange-accent-4" @click="downloadQR(booking.booking_id)">
+                                                    Download QR
+                                                </v-btn>
                                             </v-card-actions>
                                         </v-card>
                                     </v-dialog>
                                 </v-btn>
                             </td>
-                            <td align="center"> {{ booking.party_size }} </td>
-                            <td align="center"> {{ getRestaurantNameById(booking.restaurant_id) }}  </td>
-                            <td align="center"> #{{ getTableNumberById(booking.table_id) }} </td>
-                            <td align="center"
+                            <td align="center"> {{ booking.party_size }}</td>
+                            <td align="center"> {{ getRestaurantNameById(booking.restaurant_id) }}</td>
+                            <td align="center"> #{{ getTableNumberById(booking.table_id) }}</td>
+                            <td
+                                align="center"
                                 class="text-uppercase "
                                 :class="{
-                                'text-orange-accent-4' : booking.status === 'pending',
-                                'text-red-accent-4' : booking.status === 'cancelled',
-                                'text-green-accent-4' : booking.status === 'confirmed'
-                            }"
+                                    'text-orange-accent-4' : booking.status === 'pending',
+                                    'text-red-accent-4' : booking.status === 'cancelled',
+                                    'text-green-accent-4' : booking.status === 'confirmed'
+                                }"
                             >
                                 {{ booking.status }}
+                            </td>
+                            <td align="center">
+                                <v-icon :color="booking.is_shown ? 'green' : 'red'">
+                                    {{ booking.is_shown ? 'mdi-eye' : 'mdi-eye-off'}}
+                                </v-icon>
                             </td>
                         </tr>
                         </tbody>
@@ -438,6 +503,7 @@ const isBookingFormDone = computed(() => {
         selectedTable.value !== null &&
         selectedTable.value !== undefined &&
         selectedDateTime.value !== null &&
+        selectedDateTime.value !== undefined &&
         partySize.value !== null &&
         partySize.value !== 0 &&
         partySize.value <= selectedTable.value.capacity
@@ -550,13 +616,13 @@ const saveBooking = () => {
             if (jqXHR.status === 200) {
                 setTimeout(() => {
                     snackbar.value = true;
-                    restaurantModel.value = null;
-                    tableModel.value = null;
-                    selectedRestaurant.value = null;
-                    selectedTable.value = null;
-                    selectedDateTime.value = null;
-                    partySize.value = 0;
-                }, 1500);
+                }, 4500);
+                restaurantModel.value = null;
+                tableModel.value = null;
+                selectedRestaurant.value = null;
+                selectedTable.value = null;
+                selectedDateTime.value = null;
+                partySize.value = 0;
                 dialog.value = false;
                 dialog1.value = false;
             }
@@ -584,7 +650,7 @@ const fetchCustomerBookings = () => {
                     Object.assign(bookings, data.bookings);
                 setTimeout(() => {
                     fetchCustomerBookings();
-                }, 3200);
+                }, 4300);
             },
             error: (error) => {
                 alert(`ERROR ${error.status}: ${error.statusText}`);

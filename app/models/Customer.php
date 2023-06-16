@@ -203,7 +203,7 @@ class Customer extends User
      * @param int $party_size
      * @return void
      */
-    public function makeBooking($restaurant, $table, $code, $date, $time, $party_size)
+    public function makeBooking($restaurant, $table, $reference_number, $code, $date, $time, $party_size)
     {
         require_once 'Booking.php';
         $status = 'pending';
@@ -218,6 +218,7 @@ class Customer extends User
         $booking->setCustomerId($this->id);
         $booking->setRestaurantId($restaurant_id);
         $booking->setTableId($table_id);
+        $booking->setReferenceNumber($reference_number);
         $booking->setCode($code);
         $booking->setDate($date);
         $booking->setTime($time);
@@ -265,6 +266,19 @@ class Customer extends User
 
 
     /***************************************************************************
+     * Generates a random reference number for booking
+     *
+     * @return string
+     */
+    public function generateReferenceNumber() {
+        $part1 = mt_rand(1000, 9999);
+        $part2 = mt_rand(100, 999);
+        $part3 = mt_rand(100000, 999999);
+        return ($part1 . $part2 . $part3);
+    }
+
+
+    /***************************************************************************
      * Get all customer bookings in array
      *
      * @return array
@@ -286,6 +300,7 @@ class Customer extends User
                     'customer_id' => $row['customer_id'],
                     'restaurant_id' => $row['restaurant_id'],
                     'table_id' => $row['table_id'],
+                    'reference_number' => $row['reference_number'],
                     'code' => $row['code'],
                     'date' => $row['date'],
                     'time' => $row['time'],

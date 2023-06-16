@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 16, 2023 at 10:27 AM
+-- Generation Time: Jun 16, 2023 at 01:19 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -58,6 +58,7 @@ CREATE TABLE `bookings` (
   `customer_id` int(255) UNSIGNED NOT NULL,
   `restaurant_id` int(255) UNSIGNED NOT NULL,
   `table_id` int(255) UNSIGNED NOT NULL,
+  `reference_number` varchar(500) NOT NULL,
   `code` varchar(255) NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
@@ -107,7 +108,7 @@ CREATE TABLE `notifications` (
   `id` int(255) UNSIGNED NOT NULL,
   `recipient_id` int(255) UNSIGNED NOT NULL,
   `sender_id` int(255) UNSIGNED NOT NULL,
-  `message` varchar(255) NOT NULL,
+  `message` varchar(500) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

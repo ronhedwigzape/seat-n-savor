@@ -116,6 +116,7 @@ class Admin extends User
                     'restaurant_id' => $row['restaurant_id'],
                     'customer_id' => $row['customer_id'],
                     'table_id' => $row['table_id'],
+                    'reference_number' => $row['reference_number'],
                     'code' => $row['code'],
                     'date' => $row['date'],
                     'time' => $row['time'],

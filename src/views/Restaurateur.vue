@@ -15,13 +15,14 @@
                                     activator="parent"
                                     width="auto"
                                 >
-                                    <v-card :width="$vuetify.display.mdAndUp && $vuetify.display.mdAndDown ? 400 : $vuetify.display.smAndUp && $vuetify.display.smAndDown ? 300 : 600">
+                                    <v-card :width="$vuetify.display.mdAndUp && $vuetify.display.mdAndDown ? 400 :
+                                                    $vuetify.display.smAndUp && $vuetify.display.smAndDown ? 300 : 600">
                                         <v-card-title class="text-h5 ps-6 pt-8 pb-3">Instructions</v-card-title>
                                         <v-divider/>
                                         <v-card-text>
                                             <ol class="px-6">
                                                 <li>Please notify the customer first whether the booking is canceled or confirmed.</li>
-                                                <li>Ensure that if a customer arrives at your restaurant, their QR code is scanned.</li>
+                                                <li>Ensure that when a customer arrives at your restaurant, their QR code is scanned and they have successfully secured their table.</li>
                                             </ol>
                                         </v-card-text>
                                         <v-card-actions class="px-6 pb-4">
@@ -39,16 +40,16 @@
                         <thead>
                         <tr>
                             <th class="text-center">
-                                <v-icon>mdi-qrcode</v-icon>
-                                <p>Code</p>
-                            </th>
-                            <th class="text-center">
                                 <v-icon>mdi-calendar-month</v-icon>
                                 <p>Date</p>
                             </th>
                             <th class="text-center">
                                 <v-icon>mdi-clock-time-nine</v-icon>
                                 <p>Time</p>
+                            </th>
+                            <th class="text-center">
+                                <v-icon>mdi-book-information-variant</v-icon>
+                                <p>Booking Info</p>
                             </th>
                             <th class="text-center">
                                 <v-icon>mdi-account-group</v-icon>
@@ -70,13 +71,64 @@
                                 <v-icon>mdi-bell-badge</v-icon>
                                 <p>Notify</p>
                             </th>
+                            <th class="text-center">
+                                <v-icon>mdi-eye</v-icon>
+                                <p>Arrived</p>
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(booking, bookingKey, bookingIndex) in bookings" :key="booking.booking_id">
-                            <td align="center"> {{ booking.code }} </td>
+                        <tr
+                            v-for="(booking, bookingKey, bookingIndex) in bookings"
+                            :key="booking.booking_id"
+                            :class="{
+                                'bg-grey-darken-3': booking.is_shown === 0,
+                            }"
+                        >
                             <td align="center"> {{ booking.date }} </td>
                             <td align="center"> {{ booking.time }} </td>
+                            <td align="center">
+                                <v-btn color="orange-accent-2">
+                                    View
+                                    <v-dialog
+                                        v-model="see[booking.booking_id]"
+                                        activator="parent"
+                                        width="auto"
+                                    >
+                                        <v-card
+                                            :width="$vuetify.display.mdAndUp && $vuetify.display.mdAndDown ? 300 :
+                                            $vuetify.display.smAndUp && $vuetify.display.smAndDown ? 280 : 600"
+                                        >
+                                            <v-card-text class="d-flex justify-center flex-column">
+                                                <VueQrcode
+                                                    :id="`qr${booking.booking_id}`"
+                                                    class="pt-4 mt-3 mb-5 mx-auto"
+                                                    :value="booking.code"
+                                                    :options="{ width: $vuetify.display.mdAndDown ? 230 : 280 }"
+                                                />
+                                                <p align="center">Booking Reference Number:</p>
+                                                <p align="center"
+                                                   class="text-subtitle-2 text-grey-lighten-1 font-weight-bold">
+                                                    {{ booking.reference_number }}</p>
+                                                <p class="text-caption text-grey-darken-1" align="center">
+                                                    Kindly refrain from sharing this QR code with any other individuals,
+                                                    as you may be held liable in the event that a customer fails to secure
+                                                    a table at your esteemed restaurant.
+                                                </p>
+                                            </v-card-text>
+                                            <v-card-actions class="d-flex justify-center px-16 pb-6 pt-3">
+                                                <v-btn color="orange-accent-2"
+                                                       @click="see[booking.booking_id] = false">Close Dialog
+                                                </v-btn>
+                                                <v-spacer/>
+                                                <v-btn color="orange-accent-4" @click="downloadQR(booking.booking_id)">
+                                                    Download QR
+                                                </v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-dialog>
+                                </v-btn>
+                            </td>
                             <td align="center"> {{ booking.party_size }} </td>
                             <td align="center"> {{ getCustomerNameById(booking.customer_id) }} </td>
                             <td align="center"> #{{ getTableNumberById(booking.table_id) }} </td>
@@ -92,7 +144,7 @@
                             </td>
                             <td align="center">
                                 <v-btn color="orange-accent-2">
-                                    View
+                                    Create
                                     <v-dialog
                                         v-model="view[booking.booking_id]"
                                         activator="parent"
@@ -203,6 +255,11 @@
                                     </v-dialog>
                                 </v-btn>
                             </td>
+                            <td align="center">
+                                <v-icon :color="booking.is_shown ? 'green' : 'red'">
+                                    {{ booking.is_shown ? 'mdi-eye' : 'mdi-eye-off'}}
+                                </v-icon>
+                            </td>
                         </tr>
                         </tbody>
                     </v-table>
@@ -243,6 +300,7 @@ import $ from "jquery";
 import {useStore} from "@/stores";
 import {useAuthStore} from "@/stores/store-auth";
 import Footer from "@/components/footer/Footer.vue";
+import VueQrcode from "@chenfengyuan/vue-qrcode";
 
 const isShown = ref(false);
 const dialog = ref(false);
@@ -255,6 +313,7 @@ const bookings = reactive([]);
 const customers = reactive([]);
 const tables = reactive([]);
 const view = reactive({});
+const see = reactive({});
 const restaurant = reactive({});
 const message = ref('');
 const decodedQr = ref('');
@@ -406,7 +465,7 @@ const fetchRestaurantBookings = () => {
                     Object.assign(bookings, data.restaurant_bookings);
                 setTimeout(() => {
                     fetchRestaurantBookings();
-                }, 10000);
+                }, 15000);
             },
             error: (error) => {
                 alert(`ERROR ${error.status}: ${error.statusText}`);
