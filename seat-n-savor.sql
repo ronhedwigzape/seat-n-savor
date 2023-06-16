@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2023 at 10:36 AM
+-- Generation Time: Jun 16, 2023 at 10:27 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -45,7 +45,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `username`, `password`, `avatar`, `name`, `email`, `phone`, `address`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin', 'avatar.png', 'ADMIN', 'admin@email.com', '09123456789', 'Admin Street, Admin City', '2023-06-07 07:13:52', '2023-06-10 16:03:22');
+(1, 'admin', 'admin', 'avatar.png', 'ADMIN', 'admin@email.com', '639123456789', 'Admin Street, Admin City', '2023-06-07 07:13:52', '2023-06-16 08:26:44');
 
 -- --------------------------------------------------------
 
@@ -93,9 +93,9 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `username`, `password`, `avatar`, `name`, `email`, `phone`, `address`, `created_at`, `updated_at`) VALUES
-(1, 'customer01', 'customer01', 'avatar.png', 'CUSTOMER 01', 'customer1@email.com', '09133678462', 'Iriga City, Camarines Sur', '2023-06-07 07:15:39', '2023-06-07 11:20:23'),
-(2, 'customer02', 'customer02', 'avatar.png', 'CUSTOMER 02', 'customer2@email.com', '09133648462', 'Nabua, Camarines Sur', '2023-06-07 07:17:28', '2023-06-07 11:20:26'),
-(3, 'customer03', 'customer03', 'avatar03.jpg', 'CUSTOMER 03', 'customer3@email.com', '09133648463', 'Sta. Cruz, Iriga City, Camarines Sur', '2023-06-07 07:17:28', '2023-06-07 11:20:31');
+(1, 'customer01', 'customer01', 'avatar.png', 'CUSTOMER 01', 'customer1@email.com', '639133678462', 'Iriga City, Camarines Sur', '2023-06-07 07:15:39', '2023-06-16 08:08:35'),
+(2, 'customer02', 'customer02', 'avatar.png', 'CUSTOMER 02', 'customer2@email.com', '639133648462', 'Nabua, Camarines Sur', '2023-06-07 07:17:28', '2023-06-16 08:08:29'),
+(3, 'customer03', 'customer03', 'avatar03.jpg', 'CUSTOMER 03', 'customer3@email.com', '639133648463', 'Sta. Cruz, Iriga City, Camarines Sur', '2023-06-07 07:17:28', '2023-06-16 08:08:45');
 
 -- --------------------------------------------------------
 
