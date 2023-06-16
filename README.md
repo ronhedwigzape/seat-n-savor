@@ -37,6 +37,31 @@ Here are the steps to set up the development environment for this project:
 9. Open your web browser and access <http://localhost:5001/seat-n-savor/> to view the application.
 
 ---
+## API Setup
+
+Follow these steps to set up the APIs for this project:
+
+### Google reCAPTCHA
+
+1. Sign up for free at [https://developers.google.com/recaptcha/](https://developers.google.com/recaptcha/), if you haven't already. Don't worry, Google provides this service for free.
+
+2. After signing up, **Go to Settings** and create a label for the reCAPTCHA (preferably the project name).
+
+3. Add `localhost` as the domain for the project. Obtain your `SITE_KEY` and `SECRET_KEY`.
+
+4. In the [index.html](index.html) file, replace the placeholder `SITE_KEY` with your actual `SITE_KEY` at [line #7](index.html#L7) in the following line of code:
+```javascript
+    <script src="https://www.google.com/recaptcha/api.js?render=SITE_KEY"></script>
+```
+
+5. In the [index.php](app/index.php) file, replace the placeholder `SECRET_KEY` with your actual `SECRET_KEY` at [line #39](app/index.php#L39) in the following line of code:
+```php
+   $secret_key = "SECRET_KEY";
+```
+
+By following these steps, you will have the necessary API keys configured for your project.
+
+---
 ## Production Deployment
 Here's how to compile the project for production deployment:
 
