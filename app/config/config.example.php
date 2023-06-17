@@ -30,12 +30,16 @@ if($conn->connect_error) {
 
 /*
 |-----------------------------------------------------------------------
-| API Configuration
+| API SECRET_KEY Configuration
 |-----------------------------------------------------------------------
 | Enter your SECRET_KEY for your Google reCAPTCHA.
-|
-|    SECRET_KEY    ->  your SECRET_KEY
+| Enter your VONAGE_API_KEY for your Vonage SMS API.
+| Enter your VONAGE_API_SECRET for your Vonage SMS API.
 |
 */
 
-const SECRET_KEY = 'SECRET_KEY';
+const SECRET_KEY = 'YOUR_SECRET_KEY';
+const VONAGE_API_KEY = 'YOUR_VONAGE_API_KEY';
+const VONAGE_API_SECRET = 'YOUR_VONAGE_API_SECRET';
+
+

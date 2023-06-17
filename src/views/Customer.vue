@@ -351,9 +351,6 @@
                                 <v-icon>mdi-eye</v-icon>
                                 <p>Arrived</p>
                             </th>
-                            <!--  todo: add is_shown if customer has arrived the restaurant
-                                    and after booking customer should receive an SMS
-                            -->
                         </tr>
                         </thead>
                         <tbody>
@@ -385,9 +382,15 @@
                                                     :value="booking.code"
                                                     :options="{ width: $vuetify.display.mdAndDown ? 230 : 280 }"
                                                 />
+                                                <p align="center">Code:</p>
+                                                <p align="center"
+                                                   class="text-subtitle-2 text-grey-lighten-1 font-weight-bold pb-3"
+                                                >
+                                                    {{ booking.code }}</p>
                                                 <p align="center">Booking Reference Number:</p>
                                                 <p align="center"
-                                                   class="text-subtitle-2 text-grey-lighten-1 font-weight-bold">
+                                                   class="text-subtitle-2 text-grey-lighten-1 font-weight-bold pb-3"
+                                                >
                                                     {{ booking.reference_number }}</p>
                                                 <p class="text-caption text-grey-darken-1" align="center">
                                                     Kindly present this QR code exclusively to the restaurant manager and

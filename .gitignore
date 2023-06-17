@@ -17,7 +17,7 @@ coverage
 public
 app/_test.php
 app/_env.php
-app/config/database.php
+app/config/config.php
 !assets/avatar.png
 /cypress/videos/
 /cypress/screenshots/

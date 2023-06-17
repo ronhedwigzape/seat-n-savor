@@ -16,8 +16,8 @@ Here are the steps to set up the development environment for this project:
 3. Clone or download this repository to your XAMPP **htdocs** folder.
    The final path should be `path_to/xampp/htdocs/seat-n-savor`.
 
-4. Copy [**`app/config/database.example.php`**](app/config/database.example.php)
-   to **`app/config/database.php`**, then modify the database connection settings in the new file.
+4. Copy [**`app/config/config.example.php`**](app/config/config.example.php)
+   to **`app/config/config.php`**, then modify the database connection settings in the new file.
 
 5. Inside [phpMyAdmin](http://localhost/phpmyadmin),
    create a MySQL database named `seat-n-savor` and import [seat-n-savor.sql](seat-n-savor.sql) into it.
@@ -43,18 +43,18 @@ Follow these steps to set up the APIs for this project:
 
 ### Google reCAPTCHA
 
-1. Sign up for free at [https://developers.google.com/recaptcha/](https://developers.google.com/recaptcha/), if you haven't already. Don't worry, Google provides this service for free.
+1. Sign up for free at [**`https://developers.google.com/recaptcha/`**](https://developers.google.com/recaptcha/), if you haven't already. Don't worry, Google provides this service for free.
 
 2. After signing up, **Go to Settings** and create a label for the reCAPTCHA (preferably the project name).
 
 3. Add `localhost` as the domain for the project. Obtain your `SITE_KEY` and `SECRET_KEY`.
 
-4. In the [**`index.html`**](index.html) file, replace the placeholder `SITE_KEY` with your actual `SITE_KEY` at [line #7](index.html#L7) in the following line of code:
+4. In the [**`index.html`**](index.html) file, replace the placeholder `SITE_KEY` with your actual `SITE_KEY` at [**line #7**](index.html#L7) in the following line of code:
    ```javascript
     <script src="https://www.google.com/recaptcha/api.js?render=SITE_KEY"></script>
    ```
 
-5. In your **`app/config/database.php`**, replace the placeholder `SECRET_KEY` with your actual `SECRET_KEY` at [line #41](app/config/database.example.php#L41) in the following line of code:
+5. In your **`app/config/config.php`**, replace the placeholder `SECRET_KEY` with your actual `SECRET_KEY` at [**line #41**](app/config/config.example.php#L41) in the following line of code:
    ```php
    const SECRET_KEY = 'SECRET_KEY';
    ```

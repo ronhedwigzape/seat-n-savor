@@ -53,48 +53,42 @@ else {
 
             $customer->makeBooking($restaurant, $table, $reference_number, $code, $booking_date, $booking_time, $party_size);
 
-//            $to = 'PHONE_NUMBER';
-//            $message = "Reservation Confirmation - $restaurant_name
-//
-//                        Reservation Details:
-//                        - Restaurant: $restaurant_name
-//                        - Date: $booking_date
-//                        - Time: $booking_time
-//                        - Table Number: $table_number
-//
-//                        Remember to bring your QR code and present it to the restaurant manager upon arrival.
-//
-//                        Please arrive on time for a seamless experience. Notify us ASAP for any changes or cancellations.
-//
-//                        Contact us for assistance.
-//
-//                        Enjoy your dining experience at $restaurant_name!
-//
-//                        Thank you,
-//                        Seat N' Savor";
+            // send booking details through sms for
+            $to = $customer->getPhone();
+            $message = "Seat.N.Savor Booking - $restaurant_name
+            Details:
+            - Reference Number: $reference_number
+            - Code: $code
+            - Date: $booking_date
+            - Time: $booking_time
+            - Table Number: $table_number
+            - Party Size: $party_size
+            
+            Please wait for the restaurant manager's notification on our app.
+            
+            Contact us for assistance.
+            
+            Thank you,
+            Seat N' Savor";
 
-//            define("VONAGE_API_KEY", 'VONAGE_API_KEY');
-//            define("VONAGE_API_SECRET", 'VONAGE_API_SECRET');
-//
-//            $basic  = new \Vonage\Client\Credentials\Basic(VONAGE_API_KEY, VONAGE_API_SECRET);
-//            $client = new \Vonage\Client($basic);
-//
-//            try {
-//                $response = $client->sms()->send(
-//                    new \Vonage\SMS\Message\SMS($to, 'VONAGE', $message)
-//                );
-//
-//                $messages = $response->current();
-//
-//                if ($messages->getStatus() == 0) {
-//                    echo "The message was sent successfully\n";
-//                } else {
-//                    echo "The message failed with status: " . $messages->getStatus() . "\n";
-//                }
-//            } catch (Exception $e) {
-//                echo "Error: " . $e->getMessage() . "\n";
-//            }
+            $basic  = new \Vonage\Client\Credentials\Basic(VONAGE_API_KEY, VONAGE_API_SECRET);
+            $client = new \Vonage\Client($basic);
 
+            try {
+                $response = $client->sms()->send(
+                    new \Vonage\SMS\Message\SMS($to, 'VONAGE', $message)
+                );
+
+                $messages = $response->current();
+
+                if ($messages->getStatus() == 0) {
+                    echo "The message was sent successfully\n";
+                } else {
+                    echo "The message failed with status: " . $messages->getStatus() . "\n";
+                }
+            } catch (Exception $e) {
+                echo "Error: " . $e->getMessage() . "\n";
+            }
         }
 
         // get all customer bookings
