@@ -45,18 +45,18 @@ Follow these steps to set up the APIs for this project:
 
 1. Sign up for free at [**`reCAPTCHA | Google for Developers`**](https://developers.google.com/recaptcha/), if you haven't already. Don't worry, Google provides this service for free.
 
-2. After signing up, **Go to Settings** and create a label for the reCAPTCHA (preferably the project name).
+2. After signing up, **Go to Settings** and create a label for the reCAPTCHA (preferably the project name, Ex: *seat-n-savor*). 
 
 3. Add `localhost` as the domain for the project. Obtain your `SITE_KEY` and `SECRET_KEY`.
 
-4. In the **index.html** file, replace the placeholder `SITE_KEY` with your actual `SITE_KEY` at [**line #7**](index.html#L7) in the following line of code:
+4. In the **index.html** file, replace the placeholder `YOUR_RECAPTCHA_SITE_KEY` with your actual `SITE_KEY` at [**line #7**](index.html#L7) in the following line of code:
    ```javascript
-   <script src="https://www.google.com/recaptcha/api.js?render=SITE_KEY"></script>
+   <script src="https://www.google.com/recaptcha/api.js?render=YOUR_RECAPTCHA_SITE_KEY"></script>
    ```
 
-5. In your **`app/config/config.php`**, replace the placeholder `YOUR_SECRET_KEY` with your actual `SECRET_KEY` at [**line #41**](app/config/config.example.php#L41) in the following line of code:
+5. In your **`app/config/config.php`**, replace the placeholder `YOUR_RECAPTCHA_SECRET_KEY` with your actual `SECRET_KEY` at [**line #41**](app/config/config.example.php#L41) in the following line of code:
    ```php
-   const SECRET_KEY = 'YOUR_SECRET_KEY';
+   const RECAPTCHA_SECRET_KEY = 'YOUR_RECAPTCHA_SECRET_KEY';
    ```
    
 ### Vonage SMS API
