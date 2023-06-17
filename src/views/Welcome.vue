@@ -1,5 +1,5 @@
 <script setup>
-import HeroImageSlide from "@/components/hero/Hero.vue";
+import Hero from "@/components/hero/Hero.vue";
 import TopNavbar from "@/components/navbar/TopNavbar.vue";
 import Footer from "@/components/footer/Footer.vue";
 </script>
@@ -7,7 +7,7 @@ import Footer from "@/components/footer/Footer.vue";
 <template>
     <TopNavbar/>
     <v-main>
-        <HeroImageSlide/>
+        <Hero/>
         <Footer/>
     </v-main>
 </template>

@@ -1,5 +1,6 @@
 <template>
     <v-dialog
+        v-if="$vuetify.display.mdAndUp"
         v-model="dialog"
         max-width="400"
     >
@@ -9,16 +10,18 @@
                     v-slot:activator="{ props }"
                 >
                     <v-btn
-                        icon="mdi-dots-vertical"
                         flat
-                        v-bind="props"/>
+                        v-bind="props"
+                        stacked
+                    >
+                        <v-icon>mdi-dots-vertical</v-icon>
+                    </v-btn>
                 </template>
                 <v-list>
                     <v-list-item
                         v-bind="props"
                         class="text-red-darken-3 text-uppercase"
                         style="font-size: 1rem;"
-                        variant="text"
                     >
                         <v-icon icon="mdi-logout"/>
                         Sign Out
@@ -53,6 +56,14 @@
             </v-card-actions>
         </v-card>
     </v-dialog>
+    <v-btn
+        v-if="$vuetify.display.smAndDown"
+        prepend-icon="mdi-logout"
+        class="px-16 text-red-darken-3 text-uppercase"
+        variant="tonal"
+    >
+        Sign out
+    </v-btn>
 </template>
 
 <script setup>

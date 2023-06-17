@@ -73,6 +73,8 @@
                             </v-avatar>
                             {{ authStore.getUser.name }}
                         </v-chip>
+                    </v-list-item>
+                    <v-list-item v-if="authStore.isAuthenticated" class="py-2 d-flex justify-center">
                         <SignOut/>
                     </v-list-item>
                 </v-list>
@@ -164,8 +166,10 @@
                     :close-on-content-click="false"
                 >
                     <v-list
-                        :width="$vuetify.display.mdAndDown ? 380 : 400"
-                        :height="$vuetify.display.smAndDown ? 350: 300">
+                        :width="$vuetify.display.mdAndUp && $vuetify.display.mdAndDown ? 380 :
+                                $vuetify.display.smAndUp && $vuetify.display.smAndDown ? 320: 400"
+                        :height="$vuetify.display.smAndUp && $vuetify.display.smAndDown ? 280: 300"
+                    >
                         <v-list-item-title
                             class="text-h5 px-4 py-4 position-sticky pally"
                         >

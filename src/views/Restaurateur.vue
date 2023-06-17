@@ -22,7 +22,7 @@
                                         <v-card-text>
                                             <ol class="px-6">
                                                 <li>Please notify the customer first whether the booking is canceled or confirmed.</li>
-                                                <li>Ensure that when a customer arrives at your restaurant, their QR code is scanned and they have successfully secured their table.</li>
+                                                <li>If the customer's booking is confirmed, their QR code must be scanned, and they must successfully secure their table.</li>
                                             </ol>
                                         </v-card-text>
                                         <v-card-actions class="px-6 pb-4">
@@ -73,7 +73,7 @@
                             </th>
                             <th class="text-center">
                                 <v-icon>mdi-eye</v-icon>
-                                <p>Arrived</p>
+                                <p>Customer Arrived</p>
                             </th>
                         </tr>
                         </thead>
@@ -111,9 +111,9 @@
                                                    class="text-subtitle-2 text-grey-lighten-1 font-weight-bold">
                                                     {{ booking.reference_number }}</p>
                                                 <p class="text-caption text-grey-darken-1" align="center">
-                                                    Kindly refrain from sharing this QR code with any other individuals,
-                                                    as you may be held liable in the event that a customer fails to secure
-                                                    a table at your esteemed restaurant.
+                                                    Kindly refrain from sharing this QR code with any other individuals or
+                                                    scanning this QR code in this system, as you may be held liable in the
+                                                    event that a customer fails to secure a table at your esteemed restaurant.
                                                 </p>
                                             </v-card-text>
                                             <v-card-actions class="d-flex justify-center px-16 pb-6 pt-3">

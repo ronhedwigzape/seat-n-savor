@@ -11,6 +11,9 @@
                 :variant="{
                     'flat': $vuetify.display.smAndDown
                 }"
+                :class="{
+                    'px-16': $vuetify.display.smAndDown
+                }"
                 :stacked="$vuetify.display.mdAndUp"
                 :block="$vuetify.display.smAndDown"
             >

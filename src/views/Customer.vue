@@ -1,7 +1,7 @@
 <template>
     <TopNavbar/>
     <v-main>
-        <HeroImageSlide/>
+        <Hero/>
         <v-container>
             <v-divider class="mt-10"/>
             <v-row class="mt-10" justify="center" v-if="authStore.isAuthenticated">
@@ -349,7 +349,7 @@
                             </th>
                             <th class="text-center">
                                 <v-icon>mdi-eye</v-icon>
-                                <p>Arrived</p>
+                                <p>Customer Arrived</p>
                             </th>
                         </tr>
                         </thead>
@@ -445,7 +445,7 @@ import {computed, onMounted, reactive, ref, watch} from "vue";
 import {useAuthStore} from "@/stores/store-auth";
 import {useStore} from "@/stores";
 import TopNavbar from "@/components/navbar/TopNavbar.vue";
-import HeroImageSlide from "@/components/hero/Hero.vue";
+import Hero from "@/components/hero/Hero.vue";
 import Footer from "@/components/footer/Footer.vue";
 import VueDatePicker from '@vuepic/vue-datepicker';
 import VueQrcode from "@chenfengyuan/vue-qrcode";
@@ -476,7 +476,7 @@ const view = reactive({});
 const restaurants = reactive([]);
 const bookings = reactive([]);
 const tables = reactive([]);
-const booking = ref({
+const booking = reactive({
     'restaurant_id': null,
     'table_id': null,
     'date': null,
@@ -552,11 +552,11 @@ watch(partySize, () => {
 
 // methods
 const updateBooking = () => {
-    booking.value.restaurant_id = selectedRestaurant.value?.id;
-    booking.value.table_id = selectedTable.value?.id;
-    booking.value.date = selectedDate.value;
-    booking.value.time = selectedTime.value;
-    booking.value.party_size = partySize.value;
+    booking.restaurant_id = selectedRestaurant.value?.id;
+    booking.table_id = selectedTable.value?.id;
+    booking.date = selectedDate.value;
+    booking.time = selectedTime.value;
+    booking.party_size = partySize.value;
 };
 
 const getRestaurantNameById = (restaurantId) => {
@@ -612,7 +612,7 @@ const saveBooking = () => {
             withCredentials: true
         },
         data: {
-            booking: booking.value
+            booking: booking
         },
         success: (data, textStatus, jqXHR) => {
             console.log(`${jqXHR.status}: ${jqXHR.statusText}`);

@@ -1,5 +1,5 @@
 <template>
-    <v-card :image="images[0].file" class="py-6">
+    <v-card :image="images[3].file" class="py-6">
         <v-row class="mx-auto">
             <v-col class="d-flex justify-center align-center flex-column mt-10 px-9">
                 <h2 align="center"
