@@ -15,8 +15,5 @@ export default createVuetify({
             lg: 800,
             xl: 1280,
         },
-    },
-    theme: {
-        defaultTheme: "light",
-    },
+    }
 })
