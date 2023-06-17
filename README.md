@@ -43,20 +43,36 @@ Follow these steps to set up the APIs for this project:
 
 ### Google reCAPTCHA
 
-1. Sign up for free at [**`https://developers.google.com/recaptcha/`**](https://developers.google.com/recaptcha/), if you haven't already. Don't worry, Google provides this service for free.
+1. Sign up for free at [**`reCAPTCHA | Google for Developers`**](https://developers.google.com/recaptcha/), if you haven't already. Don't worry, Google provides this service for free.
 
 2. After signing up, **Go to Settings** and create a label for the reCAPTCHA (preferably the project name).
 
 3. Add `localhost` as the domain for the project. Obtain your `SITE_KEY` and `SECRET_KEY`.
 
-4. In the [**`index.html`**](index.html) file, replace the placeholder `SITE_KEY` with your actual `SITE_KEY` at [**line #7**](index.html#L7) in the following line of code:
+4. In the **index.html** file, replace the placeholder `SITE_KEY` with your actual `SITE_KEY` at [**line #7**](index.html#L7) in the following line of code:
    ```javascript
-    <script src="https://www.google.com/recaptcha/api.js?render=SITE_KEY"></script>
+   <script src="https://www.google.com/recaptcha/api.js?render=SITE_KEY"></script>
    ```
 
-5. In your **`app/config/config.php`**, replace the placeholder `SECRET_KEY` with your actual `SECRET_KEY` at [**line #41**](app/config/config.example.php#L41) in the following line of code:
+5. In your **`app/config/config.php`**, replace the placeholder `YOUR_SECRET_KEY` with your actual `SECRET_KEY` at [**line #41**](app/config/config.example.php#L41) in the following line of code:
    ```php
-   const SECRET_KEY = 'SECRET_KEY';
+   const SECRET_KEY = 'YOUR_SECRET_KEY';
+   ```
+   
+### Vonage SMS API
+
+1. Sign up for free at [**`Vonage`**](https://ui.idp.vonage.com/ui/auth/registration), if you haven't already. Vonage has €2.00 for free trial after signup. 
+
+2. After signing up, login and copy your **API key** and **API Secret** 
+
+3. In your **`app/config/config.php`**, replace the placeholder `YOUR_VONAGE_API_KEY` with your actual `VONAGE_API_KEY` at [**line #42**](app/config/config.example.php#L42) in the following line of code:
+   ```php
+   const VONAGE_API_KEY = 'YOUR_VONAGE_API_KEY';
+   ```
+
+4. Similarly, replace the placeholder `YOUR_VONAGE_API_SECRET` with your actual `VONAGE_API_SECRET` at [**line #43**](app/config/config.example.php#L43) in the following line of code:
+   ```php
+   const VONAGE_API_SECRET = 'YOUR_VONAGE_API_SECRET';
    ```
 
 By following these steps, you will have the necessary API keys configured for your project.
