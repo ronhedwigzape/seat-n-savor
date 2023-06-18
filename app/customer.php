@@ -57,19 +57,11 @@ else {
             $to = $customer->getPhone();
             $message = "Seat.N.Savor Booking - $restaurant_name
             Details:
-            - Reference Number: $reference_number
+            - Reference #: $reference_number
             - Code: $code
-            - Date: $booking_date
-            - Time: $booking_time
-            - Table Number: $table_number
-            - Party Size: $party_size
-            
-            Please wait for the restaurant manager's notification on our app.
-            
-            Contact us for assistance.
-            
-            Thank you,
-            Seat N' Savor";
+            - Date/Time: $booking_date - $booking_time
+            - Table #: $table_number
+            - Party Size: $party_size";
 
             $basic  = new \Vonage\Client\Credentials\Basic(VONAGE_API_KEY, VONAGE_API_SECRET);
             $client = new \Vonage\Client($basic);

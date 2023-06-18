@@ -293,7 +293,6 @@
 <script setup>
 
 import TopNavbar from "@/components/navbar/TopNavbar.vue";
-import SideNavbar from "@/components/navbar/SideNavbar.vue";
 import { StreamBarcodeReader } from "vue-barcode-reader";
 import {onMounted, reactive, ref, watch} from "vue";
 import $ from "jquery";
