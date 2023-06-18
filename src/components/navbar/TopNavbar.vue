@@ -251,9 +251,9 @@ const getRestaurateurAvatarById = (senderId) => {
 };
 
 const notificationTimestamp = (updatedAt) => {
-    const timestamp = new Date(updatedAt).getTime();
-    const now = Date.now();
-    const timeDifference = now - timestamp;
+    const timestamp = new Date(updatedAt).toLocaleString("en-US", { timeZone: "Asia/Manila" });
+    const now = new Date().toLocaleString("en-US", { timeZone: "Asia/Manila" });
+    const timeDifference = new Date(now) - new Date(timestamp);
 
     if (timeDifference < 1000) {
         return 'Just now';
