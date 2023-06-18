@@ -175,7 +175,14 @@
                         >
                             Notifications
                         </v-list-item-title>
-                        <v-list-item v-for="notification in notifications" class="bg-grey-darken-3 pt-3">
+                        <v-list-item
+                            v-for="notification in notifications"
+                            class="pt-3"
+                            :class="{
+                                'bg-grey-darken-3': theme.global.name.value === 'dark',
+                                'bg-grey-lighten-3': theme.global.name.value === 'light',
+                            }"
+                        >
                             <!--  todo: make a condition when notifications are not available  -->
                             <!--  For example: No notifications to display currently. Please check back later for updates.  -->
                             <div class="d-flex">
