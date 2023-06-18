@@ -358,7 +358,8 @@
                             v-for="(booking, bookingKey, bookingIndex) in bookings"
                             :key="booking.booking_id"
                             :class="{
-                                'bg-grey-darken-3': booking.is_shown === 0,
+                                'bg-grey-darken-3': booking.is_shown === 0 && theme.global.name.value === 'dark',
+                                'bg-grey-lighten-3': booking.is_shown === 0 && theme.global.name.value === 'light',
                             }"
                         >
                             <td align="center"> {{ booking.date }}</td>
@@ -452,10 +453,12 @@ import VueQrcode from "@chenfengyuan/vue-qrcode";
 import '@vuepic/vue-datepicker/dist/main.css'
 import $ from "jquery";
 import dayjs from 'dayjs';
+import {useTheme} from "vuetify";
 
-// stores
+// stores and theme
 const authStore = useAuthStore();
 const store = useStore();
+const theme = useTheme();
 
 // data
 const dialog = ref(false);

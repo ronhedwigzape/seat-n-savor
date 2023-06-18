@@ -82,7 +82,8 @@
                             v-for="(booking, bookingKey, bookingIndex) in bookings"
                             :key="booking.booking_id"
                             :class="{
-                                'bg-grey-darken-3': booking.is_shown === 0,
+                                'bg-grey-darken-3': booking.is_shown === 0 && theme.global.name.value === 'dark',
+                                'bg-grey-lighten-3': booking.is_shown === 0 && theme.global.name.value === 'light',
                             }"
                         >
                             <td align="center"> {{ booking.date }} </td>
@@ -300,6 +301,7 @@ import {useStore} from "@/stores";
 import {useAuthStore} from "@/stores/store-auth";
 import Footer from "@/components/footer/Footer.vue";
 import VueQrcode from "@chenfengyuan/vue-qrcode";
+import {useTheme} from "vuetify";
 
 const isShown = ref(false);
 const dialog = ref(false);
@@ -319,6 +321,7 @@ const decodedQr = ref('');
 
 const store = useStore();
 const authStore = useAuthStore();
+const theme = useTheme();
 
 const getCustomerNameById = (customerId) => {
     const customer = customers.find((r) => r.id === customerId);
