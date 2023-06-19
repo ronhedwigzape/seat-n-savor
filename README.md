@@ -45,9 +45,9 @@ Follow these steps to set up the APIs for this project:
 
 1. Sign up for free at [**`reCAPTCHA | Google for Developers`**](https://developers.google.com/recaptcha/), if you haven't already. Don't worry, Google provides this service for free.
 
-2. After signing up, **Go to Settings** and create a label for the reCAPTCHA (preferably the project name, Ex: *seat-n-savor*). 
+2. After signing up, **Go to Settings** and create a label for the reCAPTCHA (preferably the project name, Ex: `seat-n-savor`). 
 
-3. Add `localhost` as the domain for the project. Obtain your `SITE_KEY` and `SECRET_KEY`.
+3. Add your **domain name** (Ex: `ronhedwigzape.com`), or if the program is running on localhost, mark it as `localhost` as the domain for the project. Obtain your `SITE_KEY` and `SECRET_KEY`.
 
 4. In the **index.html** file, replace the placeholder `YOUR_RECAPTCHA_SITE_KEY` with your actual `SITE_KEY` at [**line #7**](index.html#L7) in the following line of code:
    ```javascript
